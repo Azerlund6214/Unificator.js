@@ -64,19 +64,14 @@ function logText00000   цветастые и тд.  разные методы, 
 
 
 
-function logCustom(t, fontSize=16, color='black', bgColor='none')
-{
-    console.log( t , 'color:'+color+'; font-size:'+fontSize+'px; background-color:'+bgColor+';');
-
-    console.log('%c**** Заблочен iframe **** \n '+'123123123123','color:red;font-size:28px');
-}
+function logCustom(t, fontSize=16, color='black', bgColor='none'){ console.log( '%c'+t , 'color:'+color+'; font-size:'+fontSize+'px; background-color:'+bgColor+';'); }
+//logCustom('123 test 123');
 
 function logLine(symb='#=', len=61, emptyOffsets=1){ var t='';  t+=''.padStart(emptyOffsets,'\n');  t+=''.padStart(len,symb);  t+=''.padStart(emptyOffsets,'\n');  t+='\n';  console.log( t ); }
 //logLine(); logLine('-'); logLine('=',60,3); logLine('#',60,5);
 
 
 
-чекать логи в зеркалах.
 
 
 
@@ -95,15 +90,12 @@ function errorPrinter(e){ console.log(`${e.stack}\n\nMsg: ${e.message}\nName: ${
 
 
 
-function detectRunningInIframe(){ return (Boolean)( document.location.ancestorOrigins.length >= 1); } /* У топа 0, у фреймов 1. Там список родителей. */
-function detectRunningInIframe_v2(){ try { isFramed = window != window.top || document != top.document || self.location != top.location; return false; } catch (e) { isFramed = true; }  }
 
 
 
 
-function jqueryLoaded(){ return ! ((typeof($) == 'undefined') || (typeof(jQuery) == 'undefined')); }; // Костыльненько :)
-function jqueryVersion{()console.log('JQuery = v'+jQuery.fn.jquery); } // ... = v3.5.0
 
+// глор
 function redirect(target){ console.log('Redirect: -> '+target); window.location.replace(target); }
 
 
@@ -137,6 +129,14 @@ function getAllUriInfo()
 
 
 
+
+// Поку пусть лежит тут
+
+function detectRunningInIframe(){ return (Boolean)( document.location.ancestorOrigins.length >= 1); } /* У топа 0, у фреймов 1. Там список родителей. */
+function detectRunningInIframe_v2(){ try { isFramed = window != window.top || document != top.document || self.location != top.location; return false; } catch (e) { isFramed = true; }  }
+
+function jqueryLoaded(){ return ! ((typeof($) == 'undefined') || (typeof(jQuery) == 'undefined')); }; // Костыльненько :)
+function jqueryVersion(){ console.log('JQuery = v'+jQuery.fn.jquery); } // ... = v3.5.0
 
 
 
