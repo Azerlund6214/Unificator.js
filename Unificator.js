@@ -11,7 +11,7 @@
 // ### ### ### ### ### ###
 // **/     Правила     \**
 // - Деление групп методов на главы.
-// - Все методы многострочные. Без ужатий в 1 строку.
+// - Все методы многострочные. Без ужатий в 1 строку. (Кроме коротких и красивых)
 // - Между методоми пустая строка.
 // - У каждого метода коментарий в 1 строку.
 // - Аргумент с элементом называется 'e'
@@ -58,21 +58,21 @@ function isElement( t ){ return (Boolean)( t.nodeType ); }
 // ### ### ### ### ### ###
 // **/ Логи в консоль  \**
 function log( t ){ console.log(t); }
+
 function logEmpty(count=1)   пустая строка   без "", а прям пустая(в идеале)    либо строка с переносами
 function logText00000   цветастые и тд.  разные методы, много
-function logCustom(target, fontSize=00, color=black, ...)
-
-function logLine(symb='#', len=30, emptyOffsets=1)
+function logCustom(t, fontSize=16, color='black', ...)
 {
-
-
-
+    console.log( t , 'color:'+color+'; font-size:'+fontSize+'px');
 }
-найти аналог.   либо просто  -------- или ====== или #####
 
-    console.log('\n\n====================\n');     юзать php_strpad для \n.    а первый дополнительный добавлять ели офсет 1+
+function logLine(symb='#=', len=61, emptyOffsets=1){ var t='';  t+=''.padStart(emptyOffsets,'\n');  t+=''.padStart(len,symb);  t+=''.padStart(emptyOffsets,'\n');  t+='\n';  console.log( t ); }
+//logLine(); logLine('-'); logLine('=',60,3); logLine('#',60,5);
+
+
 
 чекать логи в зеркалах.
+
 
 
 
@@ -90,6 +90,10 @@ function errorPrinter(e){ console.log(`${e.stack}\n\nMsg: ${e.message}\nName: ${
 
 
 
+function page_checkIsIframe(){ return (Boolean)( document.location.ancestorOrigins.length >= 1); /* У топа 0, у фреймов 1. Там список родителей. */ }
 
+
+/* ### *** ### *** ### *** ### *** ### */
+/* #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=# */
 
 // End

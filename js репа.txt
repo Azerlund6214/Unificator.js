@@ -36,12 +36,16 @@ page_getFaviconUrls()   (вернет массив ссылок)
 pageJoke_destroyCss()
 
 
+
+
 elem_isSpan( e ){ return (Boolean)(e.nodeType === Node.имя ); }
 elem_isDiv( e )
 elem_isInput( e )
 elem_isForm( e )
 elem_isP( e )
 elem_isButton( e )
+elem_isIframe( e )
+elem_is( e )
 elem_is( e )
 elem_is( e )
 
@@ -65,6 +69,20 @@ elemForm_replaceUrlTarget(e, newTargetUrl)
 elem_GetSubElementBy...    брать из скипта вк
 
 
+
+elem_CREATE()
+elem_CREATE_Comment()
+elem_CREATE_Meta()
+elem_CREATE_Script()
+var delimiterTag1 = document.createElement('meta');   delimiterTag1.content = '#### #### ####';
+var script = document.createElement('script');
+  script.src = src;
+  script.async = true;
+
+
+head_addScript( e )
+head_addElem( e )
+document.head.appendChild(delimiterTag1);
 
 
 
