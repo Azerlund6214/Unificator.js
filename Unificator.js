@@ -146,6 +146,11 @@ function checkFunctionExist( callableFunc ){ return (typeof callableFunc === "fu
 // Все готовые
 
 
+// ### ### ### ### ### ### ###
+// **/ Лоадеры скриптов \**
+function loadScript_JQuery(){}    // На базе методов добавки в хед
+
+
 
 /* <+++> 123 <+++> */
 // #### #### #### ####
