@@ -147,9 +147,20 @@ function checkFunctionExist( callableFunc ){ return (typeof callableFunc === "fu
 
 
 // ### ### ### ### ### ### ###
-// **/ Лоадеры скриптов \**
-function loadScript_JQuery(){}    // На базе методов добавки в хед
+// **/  \**
+function head_addScriptBySrc ( src  ){  var TAG = document.createElement('script');  TAG.type = 'text/javascript';  TAG.src = src;         document.head.appendChild(TAG); }
+function head_addScriptByText( code ){  var TAG = document.createElement('script');  TAG.type = 'text/javascript';  TAG.innerHTML = code;  document.head.appendChild(TAG); }
+function head_addStyleBySrc  ( src  ){  var TAG = document.createElement('style');   TAG.type = 'text/css';         TAG.src = src;         document.head.appendChild(TAG); }
+function head_addStyleByText ( code ){  var TAG = document.createElement('style');   TAG.type = 'text/css';         TAG.innerHTML = code;  document.head.appendChild(TAG); }
 
+
+// ### ### ### ### ### ### ###
+// **/ Лоадеры скриптов \**
+function loadScript_(){ head_addScriptBySrc(''); }
+function loadScript__(){ head_addScriptByText(''); }
+function loadScript_JQuery(){ head_addScriptBySrc(''); }
+
+function loadScript_Snowstorm(){ head_addScriptBySrc('https://cdnjs.cloudflare.com/ajax/libs/Snowstorm/20131208/snowstorm-min.js'); head_addScriptByText('snowStorm.autoStart = true; snowStorm.flakesMaxActive = 128;'); } // http://www.schillmania.com/projects/snowstorm/
 
 
 /* <+++> 123 <+++> */
