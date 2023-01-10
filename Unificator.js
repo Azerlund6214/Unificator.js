@@ -136,13 +136,14 @@ function getAllUriInfo()
 
 
 
-// Поку пусть лежит тут
-
+// ### ### ### ### ### ### ###
+// **/ Пока пусть лежит тут \**
 function detectRunningInIframe(){ return (Boolean)( document.location.ancestorOrigins.length >= 1); } /* У топа 0, у фреймов 1. Там список родителей. */
 function detectRunningInIframe_v2(){ try { isFramed = window != window.top || document != top.document || self.location != top.location; return false; } catch (e) { isFramed = true; }  }
-
-function jqueryLoaded(){ return ! ((typeof($) == 'undefined') || (typeof(jQuery) == 'undefined')); }; // Костыльненько :)
-function jqueryVersion(){ console.log('JQuery = v'+jQuery.fn.jquery); } // ... = v3.5.0
+function jqueryLoaded(){ return ( (typeof(jQuery) !== 'undefined') ); /* typeof($) ложно срабатывал  |  jQuery.isReady  */ }; // Костыльненько :)
+function jqueryVersion(){ console.log('JQuery = v'+jQuery.fn.jquery); } // "JQuery = v3.5.0"
+function checkFunctionExist( callableFunc ){ return (typeof callableFunc === "function"); } // !!! Оборачивать вызов в TryCatch
+// Все готовые
 
 
 
