@@ -36,51 +36,38 @@
 
 // ### ### ### ### ### ###
 // **/ Проверки типов  \**
-function isUndef( t )
-{
-    return (bool)( typeof(t) == 'undefined' );
-}
-function isNull( t )
-{
-    return (bool)( t === null );
-}
+function isUndef( t ) { return (Boolean)( t === undefined ); }
+function isNull( t )  { return (Boolean)( t === null ); }
+function isBool( t )  { return (Boolean)( t.constructor == Boolean ); }
+function isNumber( t ){ return (Boolean)( t.constructor == Number  ); }
+function isNumberFloat( t ){ return (Boolean)(  ); }
+function isNumberInt( t ){ return (Boolean)(  ); }
+function isFunc( t )  { return (Boolean)( t.constructor == Function ); }
+function isString( t ){ return (Boolean)( t.constructor == String ); }
+function isObject( t ){ return (Boolean)( t.constructor == Object ); }
+function isArray( t ) { return (Boolean)( t.constructor == Array ); }
+function isArrayOfStrings( t ){ function check(elem,index,array){ return ( elem.constructor == String ); }  return t.every(check); }
+function isArrayOfNumbers( t ){ function check(elem,index,array){ return ( elem.constructor == Number ); }  return t.every(check); }
+function isArrayOfArrays( t ) { function check(elem,index,array){ return ( elem.constructor == Array  ); }  return t.every(check); }
+function isJsonString( t ){ try { JSON.parse( t ); return true; } catch (e) { return false; } }
+
+
+
 function isElement( t )
 {
-    return (bool)( t.nodeType );
+    return (Boolean)( t.nodeType );
 }
 
-function isString( t )
-{
-    return (bool)( typeof t == 'string' );
 
-}
-function isObject( t )
-{
-    return (bool)( (t != null) && (typeof t == 'object') );
-}
-function isArray( t )
-{
-    return (bool)( Array.isArray(t) );
-}
-function isArrayOne( t )
+
+function makeError( ){ try { undefVar } catch (err) { console.log(err); return err; } }
+
+
+function errorPrinter(error)
 {
 
-}
-function isArrayTwo( t )
-{
 
 }
-function isArrayAsoc( t )
-{
-
-}
-
-
-
-function isJson( t )
-{
-}
-
 
 
 
