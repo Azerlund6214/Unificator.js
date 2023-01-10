@@ -19,6 +19,7 @@ e_getFullInfo( e )
 
 makeReload(waitMs=0)
 makeRedirect(url,waitMs=0)
+		function redirect(target){ console.log('Redirect: -> '+target); window.location.replace(target); }
 makeCloseTab(waitMs=0)
 makeTabUri()
 
@@ -84,6 +85,63 @@ head_addScript( e )
 head_addElem( e )
 document.head.appendChild(delimiterTag1);
 
+function addInHead_Style(textContent)
+{
+	var TAG = document.createElement('style');
+	TAG.type = 'text/css';
+	TAG.innerHTML = textContent;
+	document.head.appendChild(TAG);
+	
+	console.log('addInHead_Style = Тег style добален в хед');
+}
+//addInHead_Style('123 123 123');
+
+
+function addInHead_Script(url)
+{
+	var TAG = document.createElement('script');
+	TAG.type = 'text/javascript';
+	TAG.src = url;
+	document.head.appendChild(TAG);
+	
+	console.log('addInHead_Script = Тег script добален в хед = '+url);
+}
+
+
+
+
+function jqueryLoaded(){ return ! ((typeof($) == 'undefined') || (typeof(jQuery) == 'undefined')); }; // Костыльненько :)
+
+
+function getAnyUrlDomain(url)
+{
+	url = url.replace("https://", '');
+	url = url.replace("http://", '');
+	
+	if( PHP_str_contains(url, '/') )
+		return PHP_explode('/', url)[0];
+	//if( url.indexOf('/') > -1 )
+	//	return url.split('/')[0];
+	
+	return url;
+}
+function getAnyUrlSubDomain(url)
+{
+	var domainFull = getAnyUrlDomain(url); // 'www.test.real.com'
+	domainFull = domainFull.replace(domainReal, ''); // www.test.real.com -> www.test.   с точкой
+	
+	if( domainFull === '' ) // Не было поддомена   real.com -> ''
+		return false;
+	
+	var subdomain = domainFull.substring(0, domainFull.length - 1); // Убираю последний симв(точку).
+	return subdomain;
+}
+//getAnyUrlDomain('https://www.test.123.com.ua/aaa/f&?ffd=123');   = 'www.test.fake.com.ua'
+//getAnyUrlSubDomain('https://www.test.123.com.ua/aaa/f&?ffd=123');
+
+
+
+дописать пхп аналоги
 
 
 

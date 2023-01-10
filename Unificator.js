@@ -61,9 +61,14 @@ function log( t ){ console.log(t); }
 
 function logEmpty(count=1)   пустая строка   без "", а прям пустая(в идеале)    либо строка с переносами
 function logText00000   цветастые и тд.  разные методы, много
-function logCustom(t, fontSize=16, color='black', ...)
+
+
+
+function logCustom(t, fontSize=16, color='black', bgColor='none')
 {
-    console.log( t , 'color:'+color+'; font-size:'+fontSize+'px');
+    console.log( t , 'color:'+color+'; font-size:'+fontSize+'px; background-color:'+bgColor+';');
+
+    console.log('%c**** Заблочен iframe **** \n '+'123123123123','color:red;font-size:28px');
 }
 
 function logLine(symb='#=', len=61, emptyOffsets=1){ var t='';  t+=''.padStart(emptyOffsets,'\n');  t+=''.padStart(len,symb);  t+=''.padStart(emptyOffsets,'\n');  t+='\n';  console.log( t ); }
@@ -90,9 +95,53 @@ function errorPrinter(e){ console.log(`${e.stack}\n\nMsg: ${e.message}\nName: ${
 
 
 
-function page_checkIsIframe(){ return (Boolean)( document.location.ancestorOrigins.length >= 1); /* У топа 0, у фреймов 1. Там список родителей. */ }
+function page_checkIsIframe(){ return (Boolean)( document.location.ancestorOrigins.length >= 1); } /* У топа 0, у фреймов 1. Там список родителей. */
+
+function page_checkIsIframe(){ return (Boolean)( document.location.ancestorOrigins.length >= 1); }
+var isFramed = false;
+try {
+    isFramed = window != window.top || document != top.document || self.location != top.location;
+    console.log('Лоадер: Это не iframe');
+} catch (e) { isFramed = true; console.log('Лоадер: Это iframe, выпиливаюсь!'); }
 
 
+
+
+
+
+
+
+
+// FINAL = Получить всю инфу о текущей ссылке. Особенно path.
+function getAllUriInfo()
+{
+    // <protocol>//<hostname>:<port>/<pathname><search><hash>  https://stackoverflow.com/a/20746566
+    return {
+        'URI' : window.location.href, // https://ru.wikipedia.org/wiki/123/?var=123123#test
+        'URI_alt' : document.baseURI, // https://ru.wikipedia.org/wiki/123/?var=123123#test
+
+        'PROTOCOL' : window.location.protocol, // https:
+
+        'HOSTNAME' : window.location.hostname, // ru.wikipedia.org  возможно для впс и тд
+        'HOST' : window.location.host,     // ru.wikipedia.org
+
+        'PATH' : window.location.pathname, //  /wiki/123.php    Без слеша в конце
+
+        'SEARCH' : window.location.search, // ?ggg=789   ?var=123123
+        'ORIGIN' : window.location.origin, // https://site.com
+
+        'HASH' : window.location.hash, //   #test
+        'PORT' : window.location.port, // Пусто, видимо надо сокет, тогда покажет = 123123.com:8956
+    };
+}
+
+
+
+
+
+
+/* <+++> 123 <+++> */
+// #### #### #### ####
 /* ### *** ### *** ### *** ### *** ### */
 /* #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=# */
 
