@@ -115,8 +115,12 @@ function addInHead_Script(url)
 
 
 
+// ### ### ### ### ### ### ###
+// **/ Генераторы и рандом \**
+generateRandom_Int( min=0, max=10 )
+generateRandom_String( len=0, alphabet=' тут будет англ' )
+generateRandom_ColorHex(  )  // #...
 
-function jqueryLoaded(){ return ! ((typeof($) == 'undefined') || (typeof(jQuery) == 'undefined')); }; // Костыльненько :)
 
 
 function getAnyUrlDomain(url)

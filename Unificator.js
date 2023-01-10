@@ -17,7 +17,7 @@
 // - Аргумент с элементом называется 'e'
 // - Аргумент с target    называется 't'
 // - Только нативный JS, без JQuery.
-// - Методы могут использовать друг друга.
+// - Методы могут использовать друг друга. Однако по возможности избегать использования соседей, если они совсем простые и короткие.
 // - Без защит от дурака.
 // - Файл используется(объявляется) только целиком, а не отдельные методы. (Тк они могут быть завязаны друг на друга)
 // - Подключается либо через тег(в проектах), либо вставкой целиком в консоль.
@@ -25,10 +25,12 @@
 // - Если в аргументах только элемент или target , то вокруг ставятся пробелы ---> func123( e )
 // - Все фигурные скобки с новой строки. (Не оставлять первую наверху, бесит)
 // - Концепт спонтанно придуман 100123. И сразу описано 20-30шт будущих методов. Почти 3500 символов текста, 130 строк.
-// - Всегда пишу URL вместо URI
+// - Всегда пишу URL вместо URI, бесит.
 // - Наиболее универсальные и простые(самые законченые и безпроблемные) группы методов - ближе к вверху файла.
 // - В конце файла стоит комментарий-заглушка --> // End
 // - Кодировка = UTF-8 без BOM
+// - Все сразу тестировать.  Если не протестирован - писать коммент.
+// - Между секциями - отступ 2 строки.   Между большими методами - одна.    Между однострочными - без.
 
 // ### ### ### ### ### ###
 // **/  \**
@@ -64,18 +66,7 @@ function logLine(symb='#=', len=61, emptyOffsets=1){ var t='';  t+=''.padStart(e
 function logCustom(t, fontSize=16, color='black', bgColor='none'){ console.log( '%c'+t , 'color:'+color+'; font-size:'+fontSize+'px; background-color:'+bgColor+';'); }
 //logLine(); logLine('-'); logLine('=',60,3); logLine('#',60,5);
 //logCustom('123 test 123');
-
-//function logText00000   цветастые и тд.  разные методы, много
-
-
-
-
-
-
-
-
-document.getElementById("demo").innerHTML
-
+// TODO:   function logText00000   цветастые и тд.  разные методы, много    сразу разные заготовки.
 
 
 // ### ### ### ### ### ### ###
@@ -90,6 +81,9 @@ function tag_getAllOrFalse(target){   var res = document.querySelectorAll(target
 tag_getFirstOrFalse
 tag_getOneOrFalse
 
+document.getElementById("demo").innerHTML
+
+
 
 
 // ### ### ### ### ### ### ###
@@ -98,6 +92,7 @@ function makeReload(waitMs=0){ console.log('# Reload #\n\nTimeMs: '+waitMs);  se
 function makeTabUrl( url ){ history.pushState(null, null, '/'); history.pushState(null, null, url); }
 function makeRedirect(url, waitMs=0){ console.log('# Redirect #\n\nURL: '+url+'\nTimeMs: '+waitMs);  setTimeout(function(){ window.location.replace(url); }, waitMs); }
 // makeRedirect('/'); makeRedirect('/', 5000);
+
 
 
 
