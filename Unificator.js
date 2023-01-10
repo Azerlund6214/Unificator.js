@@ -52,7 +52,7 @@ function isArrayOfArrays( t ) { function check(elem,index,array){ return ( elem.
 function isJsonString( t ){ try { JSON.parse( t ); return true; } catch (e) { return false; } }
 
 
-
+// Тестить
 function isElement( t )
 {
     return (Boolean)( t.nodeType );
@@ -60,14 +60,17 @@ function isElement( t )
 
 
 
-function makeError( ){ try { undefVar } catch (err) { console.log(err); return err; } }
 
 
-function errorPrinter(error)
-{
 
 
-}
+
+
+// ### ### ### ### ### ### ###
+// **/  Работа с ошибками  \**
+function makeError( ){ try { undefVar } catch (err) { return err; } }
+function errorPrinter(e){ console.log(`${e.stack}\n\nMsg: ${e.message}\nName: ${e.name}\n\nFile: ${e.fileName}\nLine: ${e.lineNumber}\nCol:  ${e.columnNumber}\n\nCause: ${e.cause}`); }
+//errorPrinter( makeError() );
 
 
 
