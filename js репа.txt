@@ -1,19 +1,19 @@
 
 
-сбросить туда:
+СЃР±СЂРѕСЃРёС‚СЊ С‚СѓРґР°:
 
-мои методы-аналоги пхп
+РјРѕРё РјРµС‚РѕРґС‹-Р°РЅР°Р»РѕРіРё РїС…Рї
 
-писать методы:
+РїРёСЃР°С‚СЊ РјРµС‚РѕРґС‹:
 elementor_...
 
-все про работу с элементами.  без жкури
+РІСЃРµ РїСЂРѕ СЂР°Р±РѕС‚Сѓ СЃ СЌР»РµРјРµРЅС‚Р°РјРё.  Р±РµР· Р¶РєСѓСЂРё
 
 
 
 e_getFullInfo( e )
-вернет асоц массив со всей инфой.   тег классы ид, хтмл , иннер, текст и тд.     и поле SUCCESS - все ли норм.
-    можно обернуть тупо в трайкатч    в начале проверка на undefined
+РІРµСЂРЅРµС‚ Р°СЃРѕС† РјР°СЃСЃРёРІ СЃРѕ РІСЃРµР№ РёРЅС„РѕР№.   С‚РµРі РєР»Р°СЃСЃС‹ РёРґ, С…С‚РјР» , РёРЅРЅРµСЂ, С‚РµРєСЃС‚ Рё С‚Рґ.     Рё РїРѕР»Рµ SUCCESS - РІСЃРµ Р»Рё РЅРѕСЂРј.
+    РјРѕР¶РЅРѕ РѕР±РµСЂРЅСѓС‚СЊ С‚СѓРїРѕ РІ С‚СЂР°Р№РєР°С‚С‡    РІ РЅР°С‡Р°Р»Рµ РїСЂРѕРІРµСЂРєР° РЅР° undefined
 
 
 
@@ -25,18 +25,18 @@ makeTabUri()
 
 formSend_byId()
 formSend_byElement(e)
-formGetInfo(e)    вытащит все в асоц массив.   аналог метода из елементора.
+formGetInfo(e)    РІС‹С‚Р°С‰РёС‚ РІСЃРµ РІ Р°СЃРѕС† РјР°СЃСЃРёРІ.   Р°РЅР°Р»РѕРі РјРµС‚РѕРґР° РёР· РµР»РµРјРµРЅС‚РѕСЂР°.
 
 
 
-page_getAllFormsElems()   найдет и вернет массив с elem всех форм
+page_getAllFormsElems()   РЅР°Р№РґРµС‚ Рё РІРµСЂРЅРµС‚ РјР°СЃСЃРёРІ СЃ elem РІСЃРµС… С„РѕСЂРј
 page_getFullPageHtml()
 page_getFullPageText()
-page_getFaviconUrls()   (вернет массив ссылок)
+page_getFaviconUrls()   (РІРµСЂРЅРµС‚ РјР°СЃСЃРёРІ СЃСЃС‹Р»РѕРє)
 pageJoke_destroyCss()
 
 
-elem_isSpan( e ){ return (Boolean)(e.nodeType === Node.имя ); }
+elem_isSpan( e ){ return (Boolean)(e.nodeType === Node.РёРјСЏ ); }
 elem_isDiv( e )
 elem_isInput( e )
 elem_isForm( e )
@@ -45,8 +45,8 @@ elem_isButton( e )
 elem_is( e )
 elem_is( e )
 
-elem_textAdd(e, text)   прибавить к тексту
-elem_textReplace(e, newText)   заменить на новый
+elem_textAdd(e, text)   РїСЂРёР±Р°РІРёС‚СЊ Рє С‚РµРєСЃС‚Сѓ
+elem_textReplace(e, newText)   Р·Р°РјРµРЅРёС‚СЊ РЅР° РЅРѕРІС‹Р№
 elem_textGet(e)
 elem_delete(e)
 elem_htmlReplace(e, newHtml)
@@ -56,13 +56,13 @@ alert( someVariable && someVariable.nodeType === Node.ELEMENT_NODE );
 
 
 
-// Работа с конкретной формой
-elemForm_fillOneInput(e,    inputName или id, думать    , text)
+// Р Р°Р±РѕС‚Р° СЃ РєРѕРЅРєСЂРµС‚РЅРѕР№ С„РѕСЂРјРѕР№
+elemForm_fillOneInput(e,    inputName РёР»Рё id, РґСѓРјР°С‚СЊ    , text)
 elemForm_addOneInput(e, type, name, )
 elemForm_replaceUrlTarget(e, newTargetUrl)
 
 
-elem_GetSubElementBy...    брать из скипта вк
+elem_GetSubElementBy...    Р±СЂР°С‚СЊ РёР· СЃРєРёРїС‚Р° РІРє
 
 
 
@@ -70,7 +70,7 @@ elem_GetSubElementBy...    брать из скипта вк
 
 
 
-файл будет лежать в корне паблика.  Всегда подключается.  добавить в шаблон
+С„Р°Р№Р» Р±СѓРґРµС‚ Р»РµР¶Р°С‚СЊ РІ РєРѕСЂРЅРµ РїР°Р±Р»РёРєР°.  Р’СЃРµРіРґР° РїРѕРґРєР»СЋС‡Р°РµС‚СЃСЏ.  РґРѕР±Р°РІРёС‚СЊ РІ С€Р°Р±Р»РѕРЅ
 
 
 
