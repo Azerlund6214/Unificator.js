@@ -58,19 +58,17 @@ function isElement( t ){ return (Boolean)( t.nodeType ); }
 // ### ### ### ### ### ###
 // **/ Логи в консоль  \**
 function log( t ){ console.log(t); }
-
-function logEmpty(count=1)   пустая строка   без "", а прям пустая(в идеале)    либо строка с переносами
-function logText00000   цветастые и тд.  разные методы, много
-
-
-
-function logCustom(t, fontSize=16, color='black', bgColor='none'){ console.log( '%c'+t , 'color:'+color+'; font-size:'+fontSize+'px; background-color:'+bgColor+';'); }
-//logCustom('123 test 123');
+function logEmpty(height=2){ console.log(''.padStart(height,'\n')) }
 
 function logLine(symb='#=', len=61, emptyOffsets=1){ var t='';  t+=''.padStart(emptyOffsets,'\n');  t+=''.padStart(len,symb);  t+=''.padStart(emptyOffsets,'\n');  t+='\n';  console.log( t ); }
 //logLine(); logLine('-'); logLine('=',60,3); logLine('#',60,5);
 
+function logCustom(t, fontSize=16, color='black', bgColor='none'){ console.log( '%c'+t , 'color:'+color+'; font-size:'+fontSize+'px; background-color:'+bgColor+';'); }
+//logCustom('123 test 123');
 
+
+
+function logText00000   цветастые и тд.  разные методы, много
 
 
 
