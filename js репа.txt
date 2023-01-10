@@ -17,11 +17,7 @@ e_getFullInfo( e )
 
 
 
-makeReload(waitMs=0)
-makeRedirect(url,waitMs=0)
-		function redirect(target){ console.log('Redirect: -> '+target); window.location.replace(target); }
-makeCloseTab(waitMs=0)
-makeTabUri()
+
 
 
 formSend_byId()
@@ -31,33 +27,43 @@ formGetInfo(e)    вытащит все в асоц массив.   аналог
 
 
 page_getAllFormsElems()   найдет и вернет массив с elem всех форм
+page_getAllLinksElems()   найдет и вернет массив с elem всех a
+page_getAllLinksHrefs()   сразу вытащит хрефы
 page_getFullPageHtml()
+page_setTitle(text)
 page_getFullPageText()
 page_getFaviconUrls()   (вернет массив ссылок)
 pageJoke_destroyCss()
 
+document.querySelectorAll('.filter__field').forEach((input)=>{
+  input.addEventListener('input',(e)=>{
+    input.form.elements.page.value = 1;
+  })
+})
 
 
 
-elem_isSpan( e ){ return (Boolean)(e.nodeType === Node.имя ); }
-elem_isDiv( e )
-elem_isInput( e )
-elem_isForm( e )
-elem_isP( e )
-elem_isButton( e )
-elem_isIframe( e )
-elem_is( e )
-elem_is( e )
-elem_is( e )
 
-elem_textAdd(e, text)   прибавить к тексту
-elem_textReplace(e, newText)   заменить на новый
-elem_textGet(e)
-elem_delete(e)
-elem_htmlReplace(e, newHtml)
-elem_htmlGet(e)
 
 alert( someVariable && someVariable.nodeType === Node.ELEMENT_NODE );  
+e_isSpan( e ){ return (Boolean)(e.nodeType === Node.имя ); }
+e_isDiv( e )
+e_isInput( e )
+e_isForm( e )
+e_isP( e )
+e_isButton( e )
+e_isIframe( e )
+e_is( e )
+e_is( e )
+e_is( e )
+
+e_textAdd(e, text)   прибавить к тексту    что-то типа  e.text = e.text+text;
+e_textReplace(e, newText)   заменить на новый
+e_textGet(e)
+e_delete(e)
+e_htmlReplace(e, newHtml)
+e_htmlGet(e)
+
 
 
 

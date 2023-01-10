@@ -86,16 +86,31 @@ function errorPrinter(e){ console.log(`${e.stack}\n\nMsg: ${e.message}\nName: ${
 
 
 
+function tag_getAllOrFalse(target){   var res = document.querySelectorAll(target);   if( ! res.length  ) return false;  else   return res;   }
+tag_getFirstOrFalse
+tag_getOneOrFalse
+
+
+
+// ### ### ### ### ### ### ###
+// **/   Работа с окном   \**
+function makeReload(waitMs=0){ console.log('# Reload #\n\nTimeMs: '+waitMs);  setTimeout(function(){ window.location.reload(); }, waitMs); }
+function makeTabUrl( url ){ history.pushState(null, null, '/'); history.pushState(null, null, url); }
+function makeRedirect(url, waitMs=0){ console.log('# Redirect #\n\nURL: '+url+'\nTimeMs: '+waitMs);  setTimeout(function(){ window.location.replace(url); }, waitMs); }
+// makeRedirect('/'); makeRedirect('/', 5000);
 
 
 
 
-
-// глор
-function redirect(target){ console.log('Redirect: -> '+target); window.location.replace(target); }
-
-
-
+// ### ### ### ### ### ### ###
+// **/ Работа со строками  \**
+function str_extraTrim( str )
+{
+    for( ; str.indexOf('  ') > -1 ; )  str = str.replace('  ',' ');
+    for( ; str.indexOf('\n\n') > -1 ; ) str = str.replace('\n\n','\n');
+    for( ; str.indexOf('\n \n') > -1 ; ) str = str.replace('\n \n','\n');
+    return str;
+}
 
 
 
