@@ -16,19 +16,12 @@ e_getFullInfo( e )
     можно обернуть тупо в трайкатч    в начале проверка на undefined
 
 
-// Проверки типов
-isUndef()   и внутри проверки
-isElement()
-isJson()
-isObject()
-isArrayOne
-isArrayTwo
-isArrayAsoc
-
 
 makeReload(waitMs=0)
 makeRedirect(url,waitMs=0)
 makeCloseTab(waitMs=0)
+makeTabUri()
+
 
 formSend_byId()
 formSend_byElement(e)
@@ -48,6 +41,10 @@ elem_textGet(e)
 elem_delete(e)
 elem_htmlReplace(e, newHtml)
 elem_htmlGet(e)
+
+alert( someVariable && someVariable.nodeType === Node.ELEMENT_NODE );  
+
+
 
 // Работа с конкретной формой
 elemForm_fillOneInput(e,    inputName или id, думать    , text)

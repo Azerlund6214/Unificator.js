@@ -34,12 +34,52 @@
 // **/  \**
 
 
+// ### ### ### ### ### ###
+// **/ Проверки типов  \**
+function isUndef( t )
+{
+    return (bool)( typeof(t) == 'undefined' );
+}
+function isNull( t )
+{
+    return (bool)( t === null );
+}
+function isElement( t )
+{
+    return (bool)( t.nodeType );
+}
+
+function isString( t )
+{
+    return (bool)( typeof t == 'string' );
+
+}
+function isObject( t )
+{
+    return (bool)( (t != null) && (typeof t == 'object') );
+}
+function isArray( t )
+{
+    return (bool)( Array.isArray(t) );
+}
+function isArrayOne( t )
+{
+
+}
+function isArrayTwo( t )
+{
+
+}
+function isArrayAsoc( t )
+{
+
+}
 
 
 
-
-
-
+function isJson( t )
+{
+}
 
 
 
