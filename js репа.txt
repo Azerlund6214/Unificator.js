@@ -32,8 +32,18 @@ formGetInfo(e)    вытащит все в асоц массив.   аналог метода из елементора.
 page_getAllFormsElems()   найдет и вернет массив с elem всех форм
 page_getFullPageHtml()
 page_getFullPageText()
-pageJoke_destroyCss()
 page_getFaviconUrls()   (вернет массив ссылок)
+pageJoke_destroyCss()
+
+
+elem_isSpan( e ){ return (Boolean)(e.nodeType === Node.имя ); }
+elem_isDiv( e )
+elem_isInput( e )
+elem_isForm( e )
+elem_isP( e )
+elem_isButton( e )
+elem_is( e )
+elem_is( e )
 
 elem_textAdd(e, text)   прибавить к тексту
 elem_textReplace(e, newText)   заменить на новый
@@ -56,42 +66,11 @@ elem_GetSubElementBy...    брать из скипта вк
 
 
 
-log(что)     либо logAny(что) если занято
-logAlert()
-logEmpty(count=1)   пустая строка   без "", а прям пустая(в идеале)    либо строка с переносами
-logText00000   цветастые и тд.  разные методы, много
-logCustom(target, fontSize=00, color=black, ...)
-
-logLine(symb='#', len=30, emptyOffsets=1);   найти аналог.   либо просто  -------- или ====== или #####
-console.log('\n\n====================\n');     юзать php_strpad для \n.    а первый дополнительный добавлять ели офсет 1+
-
 
 
 
 
 файл будет лежать в корне паблика.  Всегда подключается.  добавить в шаблон
-репа под все это
-
-Unificator.js
-
-!!!! Сделать главы из комментов, как в веб пхп    заголовки
-
-
-
-нач файла
-
-
-
-
-
-errorPrinter(error)
-
-let printError = function(error, explicit) {
-  console.log(`[${explicit ? 'EXPLICIT' : 'INEXPLICIT'}] ${error.name}: ${error.message}`);
-  }
-
-
-
 
 
 

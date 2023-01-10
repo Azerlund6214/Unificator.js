@@ -22,7 +22,7 @@
 // - Файл используется(объявляется) только целиком, а не отдельные методы. (Тк они могут быть завязаны друг на друга)
 // - Подключается либо через тег(в проектах), либо вставкой целиком в консоль.
 // - Замыкания нежелательны.
-// - Если в аргументах только елемент, то вокруг стасятся пробелы ---> func123( e )
+// - Если в аргументах только элемент или target , то вокруг ставятся пробелы ---> func123( e )
 // - Все фигурные скобки с новой строки. (Не оставлять первую наверху, бесит)
 // - Концепт спонтанно придуман 100123. И сразу описано 20-30шт будущих методов. Почти 3500 символов текста, 130 строк.
 // - Всегда пишу URL вместо URI
@@ -40,8 +40,8 @@ function isUndef( t ) { return (Boolean)( t === undefined ); }
 function isNull( t )  { return (Boolean)( t === null ); }
 function isBool( t )  { return (Boolean)( t.constructor == Boolean ); }
 function isNumber( t ){ return (Boolean)( t.constructor == Number  ); }
-function isNumberFloat( t ){ return (Boolean)(  ); }
-function isNumberInt( t ){ return (Boolean)(  ); }
+function isNumberFloat( t ){ return (Boolean)(  ); }       // TODO
+function isNumberInt  ( t ){ return (Boolean)(  ); }       // TODO
 function isFunc( t )  { return (Boolean)( t.constructor == Function ); }
 function isString( t ){ return (Boolean)( t.constructor == String ); }
 function isObject( t ){ return (Boolean)( t.constructor == Object ); }
@@ -51,18 +51,34 @@ function isArrayOfNumbers( t ){ function check(elem,index,array){ return ( elem.
 function isArrayOfArrays( t ) { function check(elem,index,array){ return ( elem.constructor == Array  ); }  return t.every(check); }
 function isJsonString( t ){ try { JSON.parse( t ); return true; } catch (e) { return false; } }
 
-
 // Тестить
-function isElement( t )
+function isElement( t ){ return (Boolean)( t.nodeType ); }
+
+
+// ### ### ### ### ### ###
+// **/ Логи в консоль  \**
+function log( t ){ console.log(t); }
+function logEmpty(count=1)   пустая строка   без "", а прям пустая(в идеале)    либо строка с переносами
+function logText00000   цветастые и тд.  разные методы, много
+function logCustom(target, fontSize=00, color=black, ...)
+
+function logLine(symb='#', len=30, emptyOffsets=1)
 {
-    return (Boolean)( t.nodeType );
+
+
+
 }
+найти аналог.   либо просто  -------- или ====== или #####
+
+    console.log('\n\n====================\n');     юзать php_strpad для \n.    а первый дополнительный добавлять ели офсет 1+
+
+чекать логи в зеркалах.
 
 
 
 
 
-
+document.getElementById("demo").innerHTML
 
 
 
