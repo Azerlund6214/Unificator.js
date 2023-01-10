@@ -61,14 +61,12 @@ function log( t ){ console.log(t); }
 function logEmpty(height=2){ console.log(''.padStart(height,'\n')) }
 
 function logLine(symb='#=', len=61, emptyOffsets=1){ var t='';  t+=''.padStart(emptyOffsets,'\n');  t+=''.padStart(len,symb);  t+=''.padStart(emptyOffsets,'\n');  t+='\n';  console.log( t ); }
-//logLine(); logLine('-'); logLine('=',60,3); logLine('#',60,5);
-
 function logCustom(t, fontSize=16, color='black', bgColor='none'){ console.log( '%c'+t , 'color:'+color+'; font-size:'+fontSize+'px; background-color:'+bgColor+';'); }
+//logLine(); logLine('-'); logLine('=',60,3); logLine('#',60,5);
 //logCustom('123 test 123');
 
+//function logText00000   цветастые и тд.  разные методы, много
 
-
-function logText00000   цветастые и тд.  разные методы, много
 
 
 
