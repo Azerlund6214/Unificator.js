@@ -95,16 +95,16 @@ function errorPrinter(e){ console.log(`${e.stack}\n\nMsg: ${e.message}\nName: ${
 
 
 
-function page_checkIsIframe(){ return (Boolean)( document.location.ancestorOrigins.length >= 1); } /* У топа 0, у фреймов 1. Там список родителей. */
-
-function page_checkIsIframe(){ return (Boolean)( document.location.ancestorOrigins.length >= 1); }
-var isFramed = false;
-try {
-    isFramed = window != window.top || document != top.document || self.location != top.location;
-    console.log('Лоадер: Это не iframe');
-} catch (e) { isFramed = true; console.log('Лоадер: Это iframe, выпиливаюсь!'); }
+function detectRunningInIframe(){ return (Boolean)( document.location.ancestorOrigins.length >= 1); } /* У топа 0, у фреймов 1. Там список родителей. */
+function detectRunningInIframe_v2(){ try { isFramed = window != window.top || document != top.document || self.location != top.location; return false; } catch (e) { isFramed = true; }  }
 
 
+
+
+function jqueryLoaded(){ return ! ((typeof($) == 'undefined') || (typeof(jQuery) == 'undefined')); }; // Костыльненько :)
+function jqueryVersion{()console.log('JQuery = v'+jQuery.fn.jquery); } // ... = v3.5.0
+
+function redirect(target){ console.log('Redirect: -> '+target); window.location.replace(target); }
 
 
 
