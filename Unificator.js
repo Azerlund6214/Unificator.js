@@ -93,7 +93,6 @@ function num_toInt( mixed_var ){ return Math.floor(mixed_var); }
 
 // ### ### ### ### ### ### ###
 // **/ Работа с массивами  \**
-// тестить
 function arr_keyExists( key , arr ){ return (arr[key] !== undefined); }
 function arr_inArray( arr, search ){ return arr.includes(search); }
 function arr_deleteByIndex( arr, index ){ arr.splice(index , 1); /* Возврат не нужен, тут по ссылке */ }
@@ -134,7 +133,6 @@ function logCustom(t, fontSize=16, color='black', bgColor='none'){ console.log( 
 
 // ### ### ### ### ### ### ###
 // **/  Работа с ошибками  \**
-function makeError( ){ try { undefVar } catch (err) { return err; } }
 function errorPrinter(e){ console.log(`${e.stack}\n\nMsg: ${e.message}\nName: ${e.name}\n\nFile: ${e.fileName}\nLine: ${e.lineNumber}\nCol:  ${e.columnNumber}\n\nCause: ${e.cause}`); }
 //errorPrinter( makeError() );
 
@@ -219,7 +217,7 @@ function checkFunctionExist( callableFunc ){ return (typeof callableFunc === "fu
 
 function getAnyUrlDomain(url)
 {
-    // Визуализация --> [https://] [translate.yandex.ru] [/] [?target_lang=ru]
+    // Визуализация --> [https://] [translate.yandex.ru] [/] [?target_lang=ru] ...
     url = url.replace("https://", ''); // первее
     url = url.replace("http://", '');
 
@@ -246,8 +244,6 @@ function getAnyUrlSubDomain(url)
     var res = zonesArr.join('.');
     return res;
 }
-//getAnyUrlDomain('https://www.test.123.com.ua/aaa/f&?ffd=123');   = 'www.test.fake.com.ua'
-getAnyUrlSubDomain('https://www.test.123.com.ua/aaa/f&?ffd=123');
 
 
 
@@ -327,6 +323,16 @@ function getAllUriInfo()
         'PORT' : window.location.port, // Пусто, видимо надо сокет, тогда покажет = 123123.com:8956
     };
 }
+
+
+
+function dev_makeError( ){ try { undefVar } catch (err) { return err; } }
+function dev_makeArray( ){ return ['a','b','c','d',42,55,[0,1,2]]; }
+function dev_makeBase64Utf8( ){ return 'IyBhc0YgIyA0ODMgIyDQsNCf0LIgIyDihJYlPyooXyAj'; /* # asF # 483 # аПв # №%?*(_ # */ }
+function dev_makeBigStr( ){ return 'foo_BAR_123_$%#*&'; }
+function dev_makeBigUrl( ){ return 'https://www.test.123.com/aaa/f&?ffd=123'; }
+function dev_makeObj( ){ return {'a':234,'b':42,'c':[0,1,2],'d':25.837}; }
+function dev_makeJsonStr( ){ return '{"a":234,"b":42,"c":[0,1,2],"d":25.837}'; }
 
 
 /* <+++> 123 <+++> */
