@@ -33,8 +33,11 @@
 // - Между секциями - отступ 2 строки.   Между большими методами - одна.    Между однострочными - без.
 
 
-// ### ### ### ### ### ###
-// **/  \**
+// ### ### ### ### ### ### ### ###
+// **/  Комментарии с форумов  \**
+// - Какой же маразм js. Надстройка над надстройкой, надстройкой погоняет. никакой красоты, одни выкрутасы.
+// - мы прототипизировали, прототипизировали, да не выпрототипизировали.   а потом функционал пропадает...
+
 
 
 // ### ### ### ### ### ###
@@ -97,6 +100,21 @@ function makeRedirect(url, waitMs=0){ console.log('# Redirect #\n\nURL: '+url+'\
 
 
 
+// ### ### ### ### ### ### ###
+// **/  Работа с числами   \**
+function num_toInt( mixed_var ){ return Math.floor(mixed_var); }
+// TODO: function num_numberFormat( num, decimals=2, delimiter='.' ){ num = num.replace(/\s/ig, '');/*Уборка пробелов*/   } // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat
+// тестить
+
+
+// ### ### ### ### ### ### ###
+// **/ Работа с массивами  \**
+// тестить
+function array_keyExists( key , arr ){ return (arr[key] !== undefined); }
+function array_keys( arr ){ return Object.keys(arr); }
+function array_inArray( arr, search ){ return arr.includes(search); }
+
+
 
 // ### ### ### ### ### ### ###
 // **/ Работа со строками  \**
@@ -112,8 +130,14 @@ function str_trimRecursive( str )
 function str_contains(haystack,needle){ return ( haystack.indexOf(needle) > -1 ); }
 function str_replaceOnce(search,replace,subject){ return subject.replace(search, replace); }  // !!!! Только первое вождение
 function str_replaceALL(search,replace,subject){ while( subject.indexOf(search) >= 0 ) { subject = subject.replace(search, replace); } return subject; }
-function str_explode(separator,string){ return string.split(separator); }
-function str_implode(haystack,glue){ return haystack.join(glue); }
+
+// Тестить
+function str_explode(separator,string){ return string.split(separator.toString()); }
+function str_implode(haystack,glue){ return haystack.join(glue.toString()); }
+function str_toUpper(text){ return text.toUpperCase(); }
+function str_toLower(text){ return text.toLowerCase(); }
+function str_strPos(text, search){ var i = text.indexOf( search );  return i >= 0 ? i : false; }
+
 
 
 // ### ### ### ### ### ### ###

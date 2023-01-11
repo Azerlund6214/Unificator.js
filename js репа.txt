@@ -102,6 +102,14 @@ var script = document.createElement('script');
 // ### ### ### ### ### ### ###
 // **/ Генераторы и рандом \**
 generateRandom_Int( min=0, max=10 )
+function rand( min, max ) {
+	if( max ) {
+		return Math.floor(Math.random() * (max - min + 1)) + min;
+	} else {
+		return Math.floor(Math.random() * (min + 1));
+	}
+}
+
 generateRandom_String( len=0, alphabet=' тут будет англ' )
 generateRandom_ColorHex(  )  // #...
 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=
