@@ -107,9 +107,6 @@ function obj_keys( obj ){ return Object.keys(obj); } // Только объек�
 function obj_deleteByKey( obj, key ){ delete obj[ key ]; /* Возврат не нужен, тут по ссылке */ }
 
 
-
-
-
 // ### ### ### ### ### ### ###
 // **/ Генераторы и рандом \**
 function genRandom_Int( min=0, max=10 ) { if( max ) { return Math.floor(Math.random() * (max - min + 1)) + min; } else { return Math.floor(Math.random() * (min + 1)); } }
@@ -134,7 +131,7 @@ function logCustom(t, fontSize=16, color='black', bgColor='none'){ console.log( 
 // ### ### ### ### ### ### ###
 // **/  Работа с ошибками  \**
 function errorPrinter(e){ console.log(`${e.stack}\n\nMsg: ${e.message}\nName: ${e.name}\n\nFile: ${e.fileName}\nLine: ${e.lineNumber}\nCol:  ${e.columnNumber}\n\nCause: ${e.cause}`); }
-//errorPrinter( makeError() );
+
 
 
 
@@ -145,10 +142,27 @@ function tag_getAllOrFalse  (target){ var res = document.querySelectorAll(target
 function tag_getFirstOrFalse(target){ var res = document.querySelectorAll(target);  if( ! res.length  ) return false;  else  return res[0];  }
 function tag_getOneOrFalse  (target){ var res = document.querySelectorAll(target);  if(res.length!== 1) return false;  else  return res[0];  }
 
-//elem_GetSubElementBy...    брать из скипта вк
+//elem_GetSubElements_AllOrFalse...    брать из скипта вк
+//elem_GetSubElements_FirstOrFalse
+//elem_GetSubElements_OneOrFalse
+
 
 // ### ### ### ### ### ### ###
-// **/ Проверка типа тего  \**
+// **/  Страничные методы  \**
+function page_titleGet(){ return document.querySelector('title'); }
+function page_titleSet(t){ return document.querySelector('title').text = t; }
+function page_getFullPageText(){ return document.querySelector('html').innerText; }
+function page_getFullPageHtml(){ return document.querySelector('html').outerHTML; }
+function page_getAllFormsElems(){ return document.querySelectorAll('form'); }
+function page_getAllLinksElems(){ return document.querySelectorAll('a'); }
+function page_getAllImageElems(){ return document.querySelectorAll('img'); }
+function page_getAllImgSrc(){  }
+function page_getAllLinksHrefs(){  }
+
+
+
+// ### ### ### ### ### ### ###
+// **/ Проверка типа тега  \**
 function e_isDiv( e )  { return (Boolean)(e.nodeName === 'DIV'); }
 function e_isA( e )    { return (Boolean)(e.nodeName === 'A'); }
 function e_isForm( e ) { return (Boolean)(e.nodeName === 'FORM'); }

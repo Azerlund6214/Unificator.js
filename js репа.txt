@@ -26,15 +26,11 @@ formGetInfo(e)    вытащит все в асоц массив.   аналог
 
 
 
-page_getAllFormsElems()   найдет и вернет массив с elem всех форм
-page_getAllLinksElems()   найдет и вернет массив с elem всех a
 page_getAllLinksHrefs()   сразу вытащит хрефы
-page_getAllImgElems()   найдет и вернет массив с elem всех img
 page_getAllImgSrc()   найдет и вернет массив с elem всех img
-page_getFullPageHtml()
-page_titleGet()
-page_titleSet(text)
-page_getFullPageText()
+
+
+
 page_getFaviconUrls()   (вернет массив ссылок)
 pageJoke_destroyCss()
 
