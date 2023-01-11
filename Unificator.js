@@ -148,23 +148,34 @@ function checkFunctionExist( callableFunc ){ return (typeof callableFunc === "fu
 
 
 // ### ### ### ### ### ### ### ###
-// **/  Быстрая добавка в хед  \**
+// **/  Быстрая добавка тегов  \**
 function head_addElem( e ){ document.head.appendChild(e); }
 function body_addElem( e ){ document.body.appendChild(e); }
-function univTagInserter(tagName, type, targetTag) // Чисто технический метод !!!   // Пока только хед и боди.
+function univTagInserter(tagName, type, insertTo, srcOrCode) // Чисто технический метод !!!   // Пока только хед и боди.
 {
     var TAG = document.createElement(tagName);
-    if( tagName === 'script' ) TAG.type = 'text/javascript';
-    if( tagName === 'style'  ) TAG.type = 'text/css';
+    switch(tagName)
+    {
+        case 'style': TAG.type = 'text/css';  break;
+        case 'link':  TAG.rel  = 'stylesheet'; break;
+        case 'script':TAG.type = 'text/javascript'; break;
+    }
+    if( type === 'href' ) TAG.href = srcOrCode;
+    if( type === 'src'  ) TAG.src = srcOrCode;
+    if( type === 'code' ) TAG.innerHTML = srcOrCode;
 
+    TAG.title = "#### #### #### #### #### #### ####"; // Для выдимости
 
-
-    if( targetTag === 'head' ) head_addElem(TAG); else body_addElem(TAG);
+    if( insertTo === 'head' ) head_addElem(TAG); else body_addElem(TAG);
 }
-function head_addScriptBySrc ( src  ){  var TAG = document.createElement('script');  TAG.type = 'text/javascript';  TAG.src = src;         document.head.appendChild(TAG); }
-function head_addScriptByText( code ){  var TAG = document.createElement('script');  TAG.type = 'text/javascript';  TAG.innerHTML = code;  document.head.appendChild(TAG); }
-function head_addStyleBySrc  ( src  ){  var TAG = document.createElement('style');   TAG.type = 'text/css';         TAG.src = src;         document.head.appendChild(TAG); }
-function head_addStyleByText ( code ){  var TAG = document.createElement('style');   TAG.type = 'text/css';         TAG.innerHTML = code;  document.head.appendChild(TAG); }
+function head_addScriptBySrc ( src  ){ univTagInserter('script', 'src' , 'head', src ); }
+function head_addScriptByText( code ){ univTagInserter('script', 'code', 'head', code); }
+function body_addScriptBySrc ( src  ){ univTagInserter('script', 'src' , 'body', src ); }
+function body_addScriptByText( code ){ univTagInserter('script', 'code', 'body', code); }
+
+function head_addStyleBySrc ( href ){ univTagInserter('link' , 'href', 'head', href); }
+function head_addStyleByText( code ){ univTagInserter('style', 'code', 'head', code); }
+function body_addStyleByText( code ){ univTagInserter('style', 'code', 'body', code); }
 
 
 // ### ### ### ### ### ### ### ###
@@ -172,12 +183,16 @@ function head_addStyleByText ( code ){  var TAG = document.createElement('style'
 function loadScript_(){ head_addScriptBySrc(''); } //
 function loadScript__(){ head_addScriptByText(''); } //
 function loadScript___(){ head_addScriptBySrc(''); head_addScriptByText(''); } //
+function loadScript____(){ head_addScriptBySrc(''); setTimeout(function(){ body_addScriptByText(''); }, 3000);} //
 function loadScript_JQuery_My() { head_addScriptBySrc('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js' ); } // Payeer
 function loadScript_JQuery_New(){ head_addScriptBySrc('https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js'); } // Мой
 
-function loadScript___(){ head_addScriptBySrc('https://s.siteapi.org/frontend/static/snowflakes.min.js'); head_addScriptByText('var sf = new Snowflakes();'); } // https://github.com/hcodes/snowflakes/releases
-function loadScript_Snowstorm(){ head_addScriptBySrc('https://cdnjs.cloudflare.com/ajax/libs/Snowstorm/20131208/snowstorm-min.js'); head_addScriptByText('snowStorm.autoStart = true; snowStorm.flakesMax = 128; snowStorm.flakesMaxActive = 128;'); } // http://www.schillmania.com/projects/snowstorm/
 
+function loadScript___SnowFlakes(){ head_addScriptBySrc('https://s.siteapi.org/frontend/static/snowflakes.min.js'); setTimeout(function(){ body_addScriptByText('var sf = new Snowflakes();'); }, 3000);} // https://github.com/hcodes/snowflakes/releases
+loadScript___SnowFlakes(); // Точно работает на википедии
+
+function loadScript_Snowstorm(){ head_addScriptBySrc('https://cdnjs.cloudflare.com/ajax/libs/Snowstorm/20131208/snowstorm-min.js'); setTimeout(function(){ head_addScriptByText('snowStorm.autoStart = true; snowStorm.flakesMax = 128; snowStorm.flakesMaxActive = 128; snowStorm.start()'); }, 3000); } // http://www.schillmania.com/projects/snowstorm/
+loadScript_Snowstorm(); // Точно работает на википедии
 
 
 /* <+++> 123 <+++> */
