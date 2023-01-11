@@ -130,8 +130,6 @@ function str_trimRecursive( str )
 function str_contains(haystack,needle){ return ( haystack.indexOf(needle) > -1 ); }
 function str_replaceOnce(search,replace,subject){ return subject.replace(search, replace); }  // !!!! Только первое вождение
 function str_replaceALL(search,replace,subject){ while( subject.indexOf(search) >= 0 ) { subject = subject.replace(search, replace); } return subject; }
-
-// Тестить
 function str_explode(separator,string){ return string.split(separator.toString()); }
 function str_implode(haystack,glue){ return haystack.join(glue.toString()); }
 function str_toUpper(text){ return text.toUpperCase(); }
