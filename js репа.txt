@@ -48,28 +48,8 @@ document.querySelectorAll('.filter__field').forEach((input)=>{
 
 
 
-alert( someVariable && someVariable.nodeType === Node.ELEMENT_NODE );  
-e_isSpan( e ){ return (Boolean)(e.nodeType === Node.имя ); }
-e_isDiv( e )
-e_isInput( e )
-e_isForm( e )
-e_isP( e )
-e_isButton( e )
-e_isIframe( e )
-e_isUl( e )
-e_isTable( e )
-e_isLi( e )
-e_isImg( e )
-e_isPre( e )
-e_is( e )
-e_is( e )
 
-e_textAdd(e, text)   прибавить к тексту    что-то типа  e.text = e.text+text;
-e_textReplace(e, newText)   заменить на новый
-e_textGet(e)
-e_delete(e)
-e_htmlReplace(e, newHtml)
-e_htmlGet(e)
+
 
 
 

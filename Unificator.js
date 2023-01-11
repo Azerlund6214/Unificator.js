@@ -46,8 +46,8 @@ function isUndef( t ) { return (Boolean)( t === undefined ); }
 function isNull( t )  { return (Boolean)( t === null ); }
 function isBool( t )  { return (Boolean)( t.constructor == Boolean ); }
 function isNumber( t ){ return (Boolean)( t.constructor == Number  ); }
-function isNumberFloat( t ){ return (Boolean)(  ); }       // TODO
-function isNumberInt  ( t ){ return (Boolean)(  ); }       // TODO
+//function isNumberFloat( t ){ return (Boolean)(  ); }       // TODO
+//function isNumberInt  ( t ){ return (Boolean)(  ); }       // TODO
 function isFunc( t )  { return (Boolean)( t.constructor == Function ); }
 function isString( t ){ return (Boolean)( t.constructor == String ); }
 function isObject( t ){ return (Boolean)( t.constructor == Object ); }
@@ -56,66 +56,7 @@ function isArrayOfStrings( t ){ function check(elem,index,array){ return ( elem.
 function isArrayOfNumbers( t ){ function check(elem,index,array){ return ( elem.constructor == Number ); }  return t.every(check); }
 function isArrayOfArrays( t ) { function check(elem,index,array){ return ( elem.constructor == Array  ); }  return t.every(check); }
 function isJsonString( t ){ try { JSON.parse( t ); return true; } catch (e) { return false; } }
-
-// Тестить
 function isElement( t ){ return (Boolean)( t.nodeType ); }
-
-
-// ### ### ### ### ### ###
-// **/ Логи в консоль  \**
-function log( t ){ console.log(t); }
-function logEmpty(height=2){ console.log(''.padStart(height,'\n')) }
-
-function logLine(symb='#=', len=61, emptyOffsets=1){ var t='';  t+=''.padStart(emptyOffsets,'\n');  t+=''.padStart(len,symb);  t+=''.padStart(emptyOffsets,'\n');  t+='\n';  console.log( t ); }
-function logCustom(t, fontSize=16, color='black', bgColor='none'){ console.log( '%c'+t , 'color:'+color+'; font-size:'+fontSize+'px; background-color:'+bgColor+';'); }
-//logLine(); logLine('-'); logLine('=',60,3); logLine('#',60,5);
-//logCustom('123 test 123');
-// TODO:   function logText00000   цветастые и тд.  разные методы, много    сразу разные заготовки.
-
-
-// ### ### ### ### ### ### ###
-// **/  Работа с ошибками  \**
-function makeError( ){ try { undefVar } catch (err) { return err; } }
-function errorPrinter(e){ console.log(`${e.stack}\n\nMsg: ${e.message}\nName: ${e.name}\n\nFile: ${e.fileName}\nLine: ${e.lineNumber}\nCol:  ${e.columnNumber}\n\nCause: ${e.cause}`); }
-//errorPrinter( makeError() );
-
-
-// ### ### ### ### ### ### ###
-// **/   Получение тегов   \**
-function tag_getAllOrFalse  (target){ var res = document.querySelectorAll(target);  if( ! res.length  ) return false;  else  return res;     }
-function tag_getFirstOrFalse(target){ var res = document.querySelectorAll(target);  if( ! res.length  ) return false;  else  return res[0];  }
-function tag_getOneOrFalse  (target){ var res = document.querySelectorAll(target);  if(res.length!== 1) return false;  else  return res[0];  }
-
-document.getElementById("demo").innerHTML
-elem_GetSubElementBy...    брать из скипта вк
-
-
-
-
-// ### ### ### ### ### ### ###
-// **/   Работа с окном   \**
-function makeReload(waitMs=0){ console.log('# Reload #\n\nTimeMs: '+waitMs);  setTimeout(function(){ window.location.reload(); }, waitMs); }
-function makeTabUrl( url ){ history.pushState(null, null, '/'); history.pushState(null, null, url); }
-function makeRedirect(url, waitMs=0){ console.log('# Redirect #\n\nURL: '+url+'\nTimeMs: '+waitMs);  setTimeout(function(){ window.location.replace(url); }, waitMs); }
-// makeRedirect('/'); makeRedirect('/', 5000);
-
-
-
-
-// ### ### ### ### ### ### ###
-// **/  Работа с числами   \**
-function num_toInt( mixed_var ){ return Math.floor(mixed_var); }
-// TODO: function num_numberFormat( num, decimals=2, delimiter='.' ){ num = num.replace(/\s/ig, '');/*Уборка пробелов*/   } // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat
-// тестить
-
-
-// ### ### ### ### ### ### ###
-// **/ Работа с массивами  \**
-// тестить
-function array_keyExists( key , arr ){ return (arr[key] !== undefined); }
-function array_keys( arr ){ return Object.keys(arr); }
-function array_inArray( arr, search ){ return arr.includes(search); }
-
 
 
 // ### ### ### ### ### ### ###
@@ -139,13 +80,89 @@ function str_toLower(text){ return text.toLowerCase(); }
 function str_strPos(text, search){ var i = text.indexOf( search );  return i >= 0 ? i : false; }
 
 
+// ### ### ### ### ### ### ###
+// **/  Работа с числами   \**
+function num_toInt( mixed_var ){ return Math.floor(mixed_var); }
+// TODO: function num_numberFormat( num, decimals=2, delimiter='.' ){ num = num.replace(/\s/ig, '');/*Уборка пробелов*/   } // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat
+// тестить
+
+
+// ### ### ### ### ### ### ###
+// **/ Работа с массивами  \**
+// тестить
+function arr_keyExists( key , arr ){ return (arr[key] !== undefined); }
+function arr_keys( arr ){ return Object.keys(arr); }
+function arr_inArray( arr, search ){ return arr.includes(search); }
 
 
 // ### ### ### ### ### ### ###
 // **/ Генераторы и рандом \**
-function generateRandom_Int( min=0, max=10 ) { if( max ) { return Math.floor(Math.random() * (max - min + 1)) + min; } else { return Math.floor(Math.random() * (min + 1)); } }
-function generateRandom_String( len=6, alphabet='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789' ){ var res = ""; while (res.length < len) { res += alphabet[Math.floor(Math.random() * alphabet.length)];} return res;}
-function generateRandom_ColorHex(  ){ return '#'+generateRandom_String( 6, '0123456789ABCDEF' ); } // logCustom('123123123',16,'black',generateRandom_ColorHex());
+function genRandom_Int( min=0, max=10 ) { if( max ) { return Math.floor(Math.random() * (max - min + 1)) + min; } else { return Math.floor(Math.random() * (min + 1)); } }
+function genRandom_String( len=6, alphabet='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789' ){ var res = ""; while (res.length < len) { res += alphabet[Math.floor(Math.random() * alphabet.length)];} return res;}
+function genRandom_ColorHex(  ){ return '#'+generateRandom_String( 6, '0123456789ABCDEF' ); } // logCustom('123123123',16,'black',generateRandom_ColorHex());
+
+
+
+// ### ### ### ### ### ###
+// **/ Логи в консоль  \**
+function log( t ){ console.log(t); }
+function logEmpty(height=2){ console.log(''.padStart(height,'\n')) }
+
+function logLine(symb='#=', len=61, emptyOffsets=1){ var t='';  t+=''.padStart(emptyOffsets,'\n');  t+=''.padStart(len,symb);  t+=''.padStart(emptyOffsets,'\n');  t+='\n';  console.log( t ); }
+function logCustom(t, fontSize=16, color='black', bgColor='none'){ console.log( '%c'+t , 'color:'+color+'; font-size:'+fontSize+'px; background-color:'+bgColor+';'); }
+//logLine(); logLine('-'); logLine('=',60,3); logLine('#',60,5);
+//logCustom('123 test 123');
+// TODO:   function logText00000   цветастые и тд.  разные методы, много    сразу разные заготовки.
+
+
+
+// ### ### ### ### ### ### ###
+// **/  Работа с ошибками  \**
+function makeError( ){ try { undefVar } catch (err) { return err; } }
+function errorPrinter(e){ console.log(`${e.stack}\n\nMsg: ${e.message}\nName: ${e.name}\n\nFile: ${e.fileName}\nLine: ${e.lineNumber}\nCol:  ${e.columnNumber}\n\nCause: ${e.cause}`); }
+//errorPrinter( makeError() );
+
+
+
+
+// ### ### ### ### ### ### ###
+// **/   Получение тегов   \**
+function tag_getAllOrFalse  (target){ var res = document.querySelectorAll(target);  if( ! res.length  ) return false;  else  return res;     }
+function tag_getFirstOrFalse(target){ var res = document.querySelectorAll(target);  if( ! res.length  ) return false;  else  return res[0];  }
+function tag_getOneOrFalse  (target){ var res = document.querySelectorAll(target);  if(res.length!== 1) return false;  else  return res[0];  }
+
+//elem_GetSubElementBy...    брать из скипта вк
+
+// ### ### ### ### ### ### ###
+// **/ Проверка типа тего  \**
+function e_isDiv( e )  { return (Boolean)(e.nodeName === 'DIV'); }
+function e_isA( e )    { return (Boolean)(e.nodeName === 'A'); }
+function e_isForm( e ) { return (Boolean)(e.nodeName === 'FORM'); }
+function e_isInput( e ){ return (Boolean)(e.nodeName === 'INPUT'); }
+function e_isButton( e){ return (Boolean)(e.nodeName === 'BUTTON'); }
+function e_isSpan( e ) { return (Boolean)(e.nodeName === 'SPAN' ); }
+function e_isImg( e )  { return (Boolean)(e.nodeName === 'IMG'); }
+function e_isP( e )    { return (Boolean)(e.nodeName === 'P'); }
+function e_isIframe( e){ return (Boolean)(e.nodeName === ''); }
+function e_isUl( e )   { return (Boolean)(e.nodeName === 'UL'); }
+function e_isTable( e ){ return (Boolean)(e.nodeName === 'TABLE'); }
+function e_isLi( e )   { return (Boolean)(e.nodeName === 'LI'); }
+function e_isPre( e )  { return (Boolean)(e.nodeName === 'PRE'); }
+
+
+
+
+
+
+// ### ### ### ### ### ### ###
+// **/   Работа с окном   \**
+function makeReload(waitMs=0){ console.log('# Reload #\n\nTimeMs: '+waitMs);  setTimeout(function(){ window.location.reload(); }, waitMs); }
+function makeTabUrl( url ){ history.pushState(null, null, '/'); history.pushState(null, null, url); }
+function makeRedirect(url, waitMs=0){ console.log('# Redirect #\n\nURL: '+url+'\nTimeMs: '+waitMs);  setTimeout(function(){ window.location.replace(url); }, waitMs); }
+// makeRedirect('/'); makeRedirect('/', 5000);
+
+
+
 
 
 
