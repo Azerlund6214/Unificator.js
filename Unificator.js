@@ -95,8 +95,20 @@ function num_toInt( mixed_var ){ return Math.floor(mixed_var); }
 // **/ Работа с массивами  \**
 // тестить
 function arr_keyExists( key , arr ){ return (arr[key] !== undefined); }
-function arr_keys( arr ){ return Object.keys(arr); }
 function arr_inArray( arr, search ){ return arr.includes(search); }
+function arr_deleteByIndex( arr, index ){ arr.splice(index , 1); /* Возврат не нужен, тут по ссылке */ }
+function arr_deleteByIndexReal( arr, index ){ arr.splice(index+1 , 1); /* Возврат не нужен, тут по ссылке */ }
+function arr_deleteFirst( arr, index ){ arr.splice(0 , 1); /* Возврат не нужен, тут по ссылке */ }
+function arr_deleteLast( arr, index ){ arr.splice(arr.length-1 , 1); /* Возврат не нужен, тут по ссылке */ }
+
+
+// ### ### ### ### ### ### ###
+// **/ Работа с объектами  \**
+function obj_keys( obj ){ return Object.keys(obj); } // Только объекты{1:2}.  Для массива вернет 0123
+function obj_deleteByKey( obj, key ){ delete obj[ key ]; /* Возврат не нужен, тут по ссылке */ }
+
+
+
 
 
 // ### ### ### ### ### ### ###
@@ -202,6 +214,43 @@ function jqueryLoaded(){ return ( (typeof(jQuery) !== 'undefined') ); /* typeof(
 function jqueryVersion(){ console.log('JQuery = v'+jQuery.fn.jquery); } // "JQuery = v3.5.0"
 function checkFunctionExist( callableFunc ){ return (typeof callableFunc === "function"); } // !!! Оборачивать вызов в TryCatch
 // Все готовые
+
+
+
+function getAnyUrlDomain(url)
+{
+    // Визуализация --> [https://] [translate.yandex.ru] [/] [?target_lang=ru]
+    url = url.replace("https://", ''); // первее
+    url = url.replace("http://", '');
+
+    if( url.indexOf('/') > -1 )
+        return url.split('/')[0];
+    return url;
+}
+function getAnyUrlSubDomain(url)
+{
+    // Визуализация --> [bla] . [translate] . [yandex] . [ru]
+    var domainFull = getAnyUrlDomain(url); // 'www.test.real.com'
+
+    var zonesArr = domainFull.split('.');
+    var zonesArrLen = zonesArr.length;
+
+    var zonesArrPredPosl = zonesArr[ zonesArrLen-2 ]; // Предпосл элемент
+
+    zonesArr.splice(zonesArrLen-1, 1); // com
+    zonesArr.splice(zonesArrLen-2, 1); // real
+
+    if( ['com'].includes(zonesArrPredPosl) ) // Доп опработка для двойных доменов 0 real.com.xxx
+        zonesArr.splice(zonesArrLen-3, 1); // домен
+
+    var res = zonesArr.join('.');
+    return res;
+}
+//getAnyUrlDomain('https://www.test.123.com.ua/aaa/f&?ffd=123');   = 'www.test.fake.com.ua'
+getAnyUrlSubDomain('https://www.test.123.com.ua/aaa/f&?ffd=123');
+
+
+
 
 
 // ### ### ### ### ### ### ### ###
