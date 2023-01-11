@@ -87,20 +87,8 @@ var script = document.createElement('script');
   script.async = true;
 
 
-head_addElem( e )
-document.head.appendChild(delimiterTag1);
 
 
-function addInHead_Style(textContent)
-{
-	var TAG = document.createElement('style');
-	TAG.type = 'text/css';
-	TAG.innerHTML = textContent;
-	document.head.appendChild(TAG);
-	
-	console.log('addInHead_Style = Тег style добален в хед');
-}
-//addInHead_Style('123 123 123');
 
 
 
