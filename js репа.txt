@@ -143,8 +143,6 @@ function getAnyUrlSubDomain(url)
 
 
 
-дописать пхп аналоги
-
 
 
 
