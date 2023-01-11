@@ -26,12 +26,11 @@ formGetInfo(e)    вытащит все в асоц массив.   аналог
 
 
 
-page_getAllLinksHrefs()   сразу вытащит хрефы
-page_getAllImgSrc()   найдет и вернет массив с elem всех img
 
 
 
-page_getFaviconUrls()   (вернет массив ссылок)
+
+
 pageJoke_destroyCss()
 
 document.querySelectorAll('.filter__field').forEach((input)=>{
@@ -43,7 +42,7 @@ document.querySelectorAll('.filter__field').forEach((input)=>{
 
 
 
-
+Элемент-input.form.elements.page.value = 1;
 
 
 

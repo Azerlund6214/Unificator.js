@@ -149,15 +149,32 @@ function tag_getOneOrFalse  (target){ var res = document.querySelectorAll(target
 
 // ### ### ### ### ### ### ###
 // **/  Страничные методы  \**
-function page_titleGet(){ return document.querySelector('title'); }
+function page_titleGet( ){ return document.querySelector('title'); }
 function page_titleSet(t){ return document.querySelector('title').text = t; }
-function page_getFullPageText(){ return document.querySelector('html').innerText; }
-function page_getFullPageHtml(){ return document.querySelector('html').outerHTML; }
+function page_getFullPageText( ){ return document.querySelector('html').innerText; }
+function page_getFullPageHtml( ){ return document.querySelector('html').outerHTML; }
 function page_getAllFormsElems(){ return document.querySelectorAll('form'); }
 function page_getAllLinksElems(){ return document.querySelectorAll('a'); }
+function page_getAllLinksHrefs(){ var arrLinks = []; document.querySelectorAll('a').forEach( function(one,i) {  arrLinks.push(one.href);  } ); return arrLinks; }
 function page_getAllImageElems(){ return document.querySelectorAll('img'); }
-function page_getAllImgSrc(){  }
-function page_getAllLinksHrefs(){  }
+function page_getAllImgSrc()    { var arrLinks = []; document.querySelectorAll('img').forEach( function(one,i) {  arrLinks.push(one.src);  } ); return arrLinks; }
+function page_getFaviconUrls()
+{
+    var arrLinks = [];
+    document.querySelectorAll('head link').forEach( function(one,i) {
+        if( one.href && (one.href.indexOf('.ico') > -1 ) ){ arrLinks.push(one.href); console.log('href-ico',one); } else
+        if( one.href && (one.href.indexOf('.png') > -1 ) ){ arrLinks.push(one.href); console.log('href-png',one);} else
+        if( one.rel  && (one.rel.indexOf ('icon') > -1 ) ){ arrLinks.push(one.href); console.log('rel-icon',one);} // Робит
+        //else if( (Boolean)one.sizes ){ arrLinks.push(one.href); console.log('sizes',one);}
+    } );  return arrLinks;
+}
+function page_clearHtml(){ document.querySelector('html').innerHTML = ''; }
+function page_printImagesFromArrUrls(arr){  arr.forEach( function(one,i) { var TAG = document.createElement('img'); TAG.src = one; TAG.alt = one; TAG.style = 'border:solid;'; document.body.appendChild(TAG);  });  }
+
+/*
+var arrImg = page_getAllImgSrc(); var arrFav = page_getFaviconUrls();
+page_clearHtml() page_printImagesFromArrUrls( arrFav ); page_printImagesFromArrUrls( arrImg );
+// */
 
 
 
