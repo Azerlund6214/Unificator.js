@@ -29,8 +29,11 @@ formGetInfo(e)    вытащит все в асоц массив.   аналог
 page_getAllFormsElems()   найдет и вернет массив с elem всех форм
 page_getAllLinksElems()   найдет и вернет массив с elem всех a
 page_getAllLinksHrefs()   сразу вытащит хрефы
+page_getAllImgElems()   найдет и вернет массив с elem всех img
+page_getAllImgSrc()   найдет и вернет массив с elem всех img
 page_getFullPageHtml()
-page_setTitle(text)
+page_titleGet()
+page_titleSet(text)
 page_getFullPageText()
 page_getFaviconUrls()   (вернет массив ссылок)
 pageJoke_destroyCss()
@@ -77,7 +80,6 @@ elemForm_addOneInput(e, type, name, )
 elemForm_replaceUrlTarget(e, newTargetUrl)
 
 
-elem_GetSubElementBy...    брать из скипта вк
 
 
 
@@ -98,21 +100,6 @@ var script = document.createElement('script');
 
 
 
-
-// ### ### ### ### ### ### ###
-// **/ Генераторы и рандом \**
-generateRandom_Int( min=0, max=10 )
-function rand( min, max ) {
-	if( max ) {
-		return Math.floor(Math.random() * (max - min + 1)) + min;
-	} else {
-		return Math.floor(Math.random() * (min + 1));
-	}
-}
-
-generateRandom_String( len=0, alphabet=' тут будет англ' )
-generateRandom_ColorHex(  )  // #...
-ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=
 
 
 function getAnyUrlDomain(url)

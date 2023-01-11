@@ -80,12 +80,14 @@ function errorPrinter(e){ console.log(`${e.stack}\n\nMsg: ${e.message}\nName: ${
 //errorPrinter( makeError() );
 
 
-
-function tag_getAllOrFalse(target){   var res = document.querySelectorAll(target);   if( ! res.length  ) return false;  else   return res;   }
-tag_getFirstOrFalse
-tag_getOneOrFalse
+// ### ### ### ### ### ### ###
+// **/   Получение тегов   \**
+function tag_getAllOrFalse  (target){ var res = document.querySelectorAll(target);  if( ! res.length  ) return false;  else  return res;     }
+function tag_getFirstOrFalse(target){ var res = document.querySelectorAll(target);  if( ! res.length  ) return false;  else  return res[0];  }
+function tag_getOneOrFalse  (target){ var res = document.querySelectorAll(target);  if(res.length!== 1) return false;  else  return res[0];  }
 
 document.getElementById("demo").innerHTML
+elem_GetSubElementBy...    брать из скипта вк
 
 
 
