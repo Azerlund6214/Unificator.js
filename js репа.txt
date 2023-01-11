@@ -53,7 +53,11 @@ e_isForm( e )
 e_isP( e )
 e_isButton( e )
 e_isIframe( e )
-e_is( e )
+e_isUl( e )
+e_isTable( e )
+e_isLi( e )
+e_isImg( e )
+e_isPre( e )
 e_is( e )
 e_is( e )
 
@@ -100,7 +104,7 @@ var script = document.createElement('script');
 generateRandom_Int( min=0, max=10 )
 generateRandom_String( len=0, alphabet=' тут будет англ' )
 generateRandom_ColorHex(  )  // #...
-
+ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=
 
 
 function getAnyUrlDomain(url)
