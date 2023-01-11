@@ -100,39 +100,21 @@ function makeRedirect(url, waitMs=0){ console.log('# Redirect #\n\nURL: '+url+'\
 
 // ### ### ### ### ### ### ###
 // **/ Работа со строками  \**
-function str_extraTrim( str )
+function str_trimRecursive( str )
 {
-    for( ; str.indexOf('  ') > -1 ; )  str = str.replace('  ',' ');
-    for( ; str.indexOf('\n\n') > -1 ; ) str = str.replace('\n\n','\n');
-    for( ; str.indexOf('\n \n') > -1 ; ) str = str.replace('\n \n','\n');
+    var patterns = { '  ':' ' , '\n\n':'\n' , '\n \n':'\n' }; // Замены, которые нужны, когда используешь .Text() на большом теге.
+    for (const [key,val] of Object.entries( patterns )) // Для каждого паттерна.
+        for( ; str.indexOf(key) > -1 ; )  str = str.replace(key,val); // Прогоняю замену пока есть что менять.
+
     return str;
+    //str_trimRecursive('g  jo    dfn v md fol   vmd    ');  // --> 'g jo dfn v md fol vmd '
 }
+function str_contains(haystack,needle){ return ( haystack.indexOf(needle) > -1 ); }
+function str_replaceOnce(search,replace,subject){ return subject.replace(search, replace); }  // !!!! Только первое вождение
+function str_replaceALL(search,replace,subject){ while( subject.indexOf(search) >= 0 ) { subject = subject.replace(search, replace); } return subject; }
 
 
 
-
-// FINAL = Получить всю инфу о текущей ссылке. Особенно path.
-function getAllUriInfo()
-{
-    // <protocol>//<hostname>:<port>/<pathname><search><hash>  https://stackoverflow.com/a/20746566
-    return {
-        'URI' : window.location.href, // https://ru.wikipedia.org/wiki/123/?var=123123#test
-        'URI_alt' : document.baseURI, // https://ru.wikipedia.org/wiki/123/?var=123123#test
-
-        'PROTOCOL' : window.location.protocol, // https:
-
-        'HOSTNAME' : window.location.hostname, // ru.wikipedia.org  возможно для впс и тд
-        'HOST' : window.location.host,     // ru.wikipedia.org
-
-        'PATH' : window.location.pathname, //  /wiki/123.php    Без слеша в конце
-
-        'SEARCH' : window.location.search, // ?ggg=789   ?var=123123
-        'ORIGIN' : window.location.origin, // https://site.com
-
-        'HASH' : window.location.hash, //   #test
-        'PORT' : window.location.port, // Пусто, видимо надо сокет, тогда покажет = 123123.com:8956
-    };
-}
 
 
 
@@ -192,6 +174,35 @@ function loadScript___SnowFlakes(){ head_addScriptBySrc('https://s.siteapi.org/f
 function loadScript_Snowstorm(){ head_addScriptBySrc('https://cdnjs.cloudflare.com/ajax/libs/Snowstorm/20131208/snowstorm-min.js'); setTimeout(function(){ head_addScriptByText('snowStorm.autoStart = true; snowStorm.flakesMax = 128; snowStorm.flakesMaxActive = 128; snowStorm.start()'); }, 3000); } // http://www.schillmania.com/projects/snowstorm/
 //loadScript___SnowFlakes + loadScript_Snowstorm // Точно работает на википедии и cssscript.com/tag/snow/
 
+
+
+
+
+
+
+
+// FINAL = Получить всю инфу о текущей ссылке. Особенно path.
+function getAllUriInfo()
+{
+    // <protocol>//<hostname>:<port>/<pathname><search><hash>  https://stackoverflow.com/a/20746566
+    return {
+        'URI' : window.location.href, // https://ru.wikipedia.org/wiki/123/?var=123123#test
+        'URI_alt' : document.baseURI, // https://ru.wikipedia.org/wiki/123/?var=123123#test
+
+        'PROTOCOL' : window.location.protocol, // https:
+
+        'HOSTNAME' : window.location.hostname, // ru.wikipedia.org  возможно для впс и тд
+        'HOST' : window.location.host,     // ru.wikipedia.org
+
+        'PATH' : window.location.pathname, //  /wiki/123.php    Без слеша в конце
+
+        'SEARCH' : window.location.search, // ?ggg=789   ?var=123123
+        'ORIGIN' : window.location.origin, // https://site.com
+
+        'HASH' : window.location.hash, //   #test
+        'PORT' : window.location.port, // Пусто, видимо надо сокет, тогда покажет = 123123.com:8956
+    };
+}
 
 
 /* <+++> 123 <+++> */
