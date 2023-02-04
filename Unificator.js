@@ -149,6 +149,57 @@ function tag_getOneOrFalse  (target){ var res = document.querySelectorAll(target
 //elem_GetSubElements_OneOrFalse
 
 
+function cardsMassParser()
+{
+    var cardsTag = '.jr-layout-outer.jrCardLayout.jrCardHorizontal';
+
+    var cardsElemArr = tag_getAllOrFalse(cardsTag);
+    log('Нашлось карт = '+cardsElemArr.length);
+
+    cardsElemArr.forEach( function(eCard,i) {
+        if(i >= 5) return;
+        log('===================================');
+        log(i);
+
+        // text title href textContent
+        var textForNull = 'NULL';
+
+        var janr1, janr2=1, janr3=1;
+        try{ janr1 = eCard.querySelector('div.jrYear div.jrFieldValue ul.jrFieldValueList li:nth-child(1) span a').textContent; }catch(e){ janr1 = 'BAD'; }
+        //try{ janr1 = eCard.querySelector('div.jrYear div.jrFieldValue ul.jrFieldValueList li:nth-child(1) span a').textContent; }catch(e){ janr1 = 'BAD'; }
+        //try{ janr1 = eCard.querySelector('div.jrYear div.jrFieldValue ul.jrFieldValueList li:nth-child(1) span a').textContent; }catch(e){ janr1 = 'BAD'; }
+        log(janr1);
+
+        var fin = {
+            'img' : eCard.querySelector('div.jrCardImage a div noscript').textContent ?? textForNull,   // Робит
+            'title' : eCard.querySelector('div.jrCardTitle div a').text ?? textForNull,   // Робит
+            'pageUrl' : eCard.querySelector('div.jrCardTitle div a').href ?? textForNull,   // Робит
+            'rateCrit' : eCard.querySelector('div.jrOverallEditor span.jrRatingValue span span b').textContent ?? textForNull,   // Робит
+            'rateUser' : eCard.querySelector('div.jrOverallUser   span.jrRatingValue span b').textContent ?? textForNull,   // Робит
+            'desc' : eCard.querySelector('div.jrCardContent div div.jrCardAbstract').innerText ?? textForNull,   // Робит  с  '...>>>'
+            'pageUrl2' : eCard.querySelector('div.jrCardContent div div.jrCardAbstract a').href ?? textForNull,   // Робит
+            'year' : eCard.querySelector('div.jrCardContent div div.jrCardFields div div div.jrYear div.jrFieldValue a').textContent ?? textForNull,   // Робит
+            'janr1' : janr1,   // Нет
+            'janr2' : janr2,   // Нет
+            'janr3' : janr3,   // Нет
+            //' =' : eCard.querySelector('').text,   //
+            //' =' : eCard.querySelector('').text,   //
+            //' =' : eCard.querySelector('').text,   //
+            //' =' : eCard.querySelector('').text,   //
+            //' =' : eCard.querySelector('').text,   //
+        };
+
+        log(fin);
+    } );
+
+
+    log('Конец');
+}
+cardsMassParser();
+
+
+
+
 // ### ### ### ### ### ### ###
 // **/  Страничные методы  \**
 function page_titleGet( ){ return document.querySelector('title'); }
