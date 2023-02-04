@@ -160,7 +160,9 @@ function cardsMassParser()
     var finalJson = {};
 
     cardsElemArr.forEach( function(eCard,i) {
-        //if(i >= 30) return;
+        if(i != 1341 && i!=2116 && i!=2162  )
+        {
+
         //log('===================================');
         log('### '+i+' ###');
 
@@ -225,6 +227,7 @@ function cardsMassParser()
         finalJson['ID='+i] = fin;
 
         //log(fin);
+        }
     } );
 
 
