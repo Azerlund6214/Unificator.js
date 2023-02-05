@@ -177,8 +177,9 @@ function cardsMassParser()
         if( i <  idBeg ){ log('i = '+i+' -> Меньше стартового (<'+       idBeg+') -> Скипаю'); return; }
         if( idSkipArr.includes( i ) ){ log('i = '+i+' -> '+'В списке для пропуска -> Скипаю'); return; }
 
-        logLine();
-        log('### '+i+' ###');
+        logLine_10();
+        log_i(i);
+
         /*
         if(i != 1341 && i!=2116 && i!=2162  )
         {
