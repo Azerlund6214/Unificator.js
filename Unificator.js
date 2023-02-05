@@ -122,9 +122,14 @@ function genRandom_ColorHex(  ){ return '#'+generateRandom_String( 6, '012345678
 function log( t1 , t2='_DEF' ,t3='_DEF' ){ console.log(t1);  if(t2!=='_DEF')console.log(t2);  if(t3!=='_DEF')console.log(t3);  }
 function log_i( i ){ console.log('##### '+i+' #####'); }
 function logEmpty(height=2){ console.log(''.padStart(height,'\n')) }
-
-function logLine(symb='#=', len=61, emptyOffsets=1){ var t='';  t+=''.padStart(emptyOffsets,'\n');  t+=''.padStart(len,symb);  t+=''.padStart(emptyOffsets,'\n');  t+='\n';  console.log( t ); }
 function logCustom(t, fontSize=16, color='black', bgColor='none'){ console.log( '%c'+t , 'color:'+color+'; font-size:'+fontSize+'px; background-color:'+bgColor+';'); }
+
+
+function logLineUniv(symb='#=', len=61, emptyOffsetsTop=1, emptyOffsetsBott=1){ var t='';  t+=''.padStart(emptyOffsetsTop,'\n');  t+=''.padStart(len,symb);  t+=''.padStart(emptyOffsetsBott,'\n');  t+='\n';  console.log( t ); }
+function logLine_10(){ logLineUniv('#=',61,1,0); }
+function logLine_11(){ logLineUniv('#=',61,1,1); }
+function logLine_20(){ logLineUniv('#=',61,2,0); }
+function logLine_22(){ logLineUniv('#=',61,2,2); }
 //logLine(); logLine('-'); logLine('=',60,3); logLine('#',60,5);
 //logCustom('123 test 123');
 // TODO:   function logText00000   цветастые и тд.  разные методы, много    сразу разные заготовки.
@@ -158,17 +163,28 @@ function cardsMassParser()
     var cardsElemArr = tag_getAllOrFalse(cardsTag);
     log('Нашлось карт = '+cardsElemArr.length);
 
-    var finalJson = {};
+    var textForNull = 'NULL';
+    var finalJson = { };
 
-    cardsElemArr.forEach( function(eCard,i) {
+    var idSkipArr = [  ]; // Номера для пропуска
+    var idBeg = 5;   // Номер с которого начать
+    var idEnd = 10; // Номер на котором закончить
+
+    cardsElemArr.forEach( function( eCard , i )
+    {
+        // Проверки
+        if( i >= idEnd ){ log('i = '+i+' -> Больше макс заданного (>='+  idEnd+') -> Скипаю'); return; }
+        if( i <  idBeg ){ log('i = '+i+' -> Меньше стартового (<'+       idBeg+') -> Скипаю'); return; }
+        if( idSkipArr.includes( i ) ){ log('i = '+i+' -> '+'В списке для пропуска -> Скипаю'); return; }
+
+        logLine();
+        log('### '+i+' ###');
+        /*
         if(i != 1341 && i!=2116 && i!=2162  )
         {
 
-        //log('===================================');
-        log('### '+i+' ###');
 
         // text title href textContent
-        var textForNull = 'NULL';
 
         var janrIfOne;
         try{ janrIfOne = eCard.querySelector('div.jrGenre div.jrFieldValue span a').text; }catch(e){ janrIfOne = textForNull; }
@@ -224,11 +240,12 @@ function cardsMassParser()
             'rateAge' :  rateAge,   //Робит
             //' =' : eCard.querySelector('').text,   //
         };
+        //finalJson['ID='+i] = fin;
 
-        finalJson['ID='+i] = fin;
-
+        log(i);
         //log(fin);
         }
+        */
     } );
 
 
