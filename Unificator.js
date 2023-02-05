@@ -119,8 +119,8 @@ function genRandom_ColorHex(  ){ return '#'+generateRandom_String( 6, '012345678
 
 // ### ### ### ### ### ###
 // **/ Логи в консоль  \**
-// TODO: Добавить в простой логгер несколько аргументов. (хотя бы 3)
-function log( t ){ console.log(t); }
+function log( t1 , t2='_DEF' ,t3='_DEF' ){ console.log(t1);  if(t2!=='_DEF')console.log(t2);  if(t3!=='_DEF')console.log(t3);  }
+function log_i( i ){ console.log('##### '+i+' #####'); }
 function logEmpty(height=2){ console.log(''.padStart(height,'\n')) }
 
 function logLine(symb='#=', len=61, emptyOffsets=1){ var t='';  t+=''.padStart(emptyOffsets,'\n');  t+=''.padStart(len,symb);  t+=''.padStart(emptyOffsets,'\n');  t+='\n';  console.log( t ); }
@@ -238,6 +238,19 @@ function cardsMassParser()
 cardsMassParser();
 
 
+
+// На тест, но должно робить.
+function elementDataExtractor( e , textForNull='NULL' )
+{
+    var res = { };
+    try{ res['src']         = e.src;         }catch(err){ res['src']         = textForNull; }
+    try{ res['innerText']   = e.innerText;   }catch(err){ res['innerText']   = textForNull; }
+    try{ res['innerHTML']   = e.innerHTML;   }catch(err){ res['innerHTML']   = textForNull; }
+    try{ res['textContent'] = e.textContent; }catch(err){ res['textContent'] = textForNull; }
+    try{ res['href']        = e.href;        }catch(err){ res['href']        = textForNull; }
+    try{ res['text']        = e.text;        }catch(err){ res['text']        = textForNull; }
+    return res;
+}
 
 
 // ### ### ### ### ### ### ###
