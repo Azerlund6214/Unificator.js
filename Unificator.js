@@ -167,6 +167,84 @@ function tag_getOneOrFalse  (target){ var res = document.querySelectorAll(target
 //elem_GetSubElements_FirstOrFalse
 //elem_GetSubElements_OneOrFalse
 
+
+
+
+// ### ### ### ### ### ### ###
+// **/       Парсер       \**
+
+
+// TODO: Добавить сразу вытаскивание всех data - полей
+// Назначение: Вытащить из элемента все потенциально возможные данные, при этом чтоб 100% без вылетов + заменять пустые ключ-словом.
+function elementDataExtractor( e , textForNull='NULL' )
+{
+    var res = { }; // Правило: Лучше чтоб было чем не было - Вписывать все, что хоть раз было нужно.
+
+    // !!!! Переписать все на цикл, как с настройками.
+
+    try{ res['src']         = e.src;         }catch(err){ res['src']         = textForNull; } // Для IMG
+    try{ res['width']       = e.width;       }catch(err){ res['width']       = textForNull; } // W  Часто у IMG
+    try{ res['height']      = e.height;      }catch(err){ res['height']      = textForNull; } // H
+    try{ res['title']       = e.title;       }catch(err){ res['title']       = textForNull; } //
+
+    try{ res['innerText']   = e.innerText;   }catch(err){ res['innerText']   = textForNull; }
+    try{ res['innerHTML']   = e.innerHTML;   }catch(err){ res['innerHTML']   = textForNull; }
+    try{ res['textContent'] = e.textContent; }catch(err){ res['textContent'] = textForNull; }
+    try{ res['href']        = e.href;        }catch(err){ res['href']        = textForNull; }
+    try{ res['text']        = e.text;        }catch(err){ res['text']        = textForNull; }
+    try{ res['content']     = e.content;     }catch(err){ res['content']     = textForNull; } // Для meta
+    try{ res['title']       = e.title;       }catch(err){ res['title']       = textForNull; } // Спорно
+
+
+    res['ALL'] = res;
+    return res;
+}
+
+function cardsMassParser(siteCode, idBeg, idEnd, idSkipArr)
+{
+    var settings = cardsMassParserGetSetings(siteCode);
+    var SEL_Cards = settings['CARD'];
+    var SEL_Tags  = settings['TAGS'];
+
+    // ####
+
+    var cardsElemArr = tag_getAllOrFalse(SEL_Cards);
+    logOneRed('Нашлось карточек = '+cardsElemArr.length);
+    //dd(cardsElemArr)
+
+
+    var finalJson = { };
+
+    //var idSkipArr = [  ]; // Номера для пропуска
+    //var idBeg = 0; // Номер с которого начать     УСАРЕЛО
+    //var idEnd = 26; // Номер на котором закончить
+
+    cardsElemArr.forEach( function( eCard , i )
+    {
+        logLine_10(); log_i(i); // Консоль
+
+        if( i >= idEnd ){ logOneBlue('i = '+i+' -> Больше макс заданного (>='+  idEnd+') -> Скипаю'); return; }
+        if( i <  idBeg ){ logOneBlue('i = '+i+' -> Меньше стартового (<'+       idBeg+') -> Скипаю'); return; }
+        if( idSkipArr.includes( i ) ){ logOneRed('i = '+i+' -> '+'В списке для пропуска -> Скипаю'); return; }
+
+        finalJson['ID='+i] = []; // Обязательно надо создать ключ с ID.  Иначе пошлет.
+        for(const [key, arr] of Object.entries( SEL_Tags ))
+        {
+            finalJson['ID='+i][arr[0]] = elementDataExtractor( eCard.querySelector(arr[1]) )[arr[2]];
+        }
+
+        logOneGreen('Успех')
+        //log([finalJson['ID='+i]]);
+
+        //dd(finalJson['ID='+i]);
+
+
+
+    } ); // End forEach
+
+    log(finalJson); log('Конец');
+}
+
 function cardsMassParserGetSetings( what )
 {
     var OBJ = {
@@ -200,12 +278,46 @@ function cardsMassParserGetSetings( what )
         }, // End Site
 
         'VK-Group-WALL' : {
-            'CARD' : '',
+            'CARD' : '._post.post',  // Включая закреп
             'TAGS' : {
                 //'что' : ['ключ', 'селектор', 'поле'],
-                '01' : ['', '', ''],
-                '02' : ['', '', ''],
-                '03' : ['', '', ''],
+                'URL_POST' : ['URL_POST', '.post_link', 'href'],
+                'LIKE' : ['CNT_LIKE', 'span._like_button_count div', 'textContent'],
+                'COMM' : ['CNT_COMM', '.like_btns div[title="Комментарий"] ._like_button_count', 'textContent'],
+                'REPO' : ['CNT_REPO', '.like_btns div[title="Поделиться"]  ._like_button_count', 'textContent'],
+                'VIEW' : ['CNT_VIEW', '.like_views', 'title'], // // title="2093 просмотра"
+                'IS_REPOST' : ['IS_REPOST', 'div.copy_quote', 'innerText'], // Если не NULL, значит это репост
+                'IS_GIF_SOLO' : ['IS_GIF_SOLO', 'div.page_gif_large', 'innerText'], // Если не NULL, значит это гифка
+                'IS_VIDEO_SOLO' : ['IS_VIDEO_SOLO', 'div.post_video_desc', 'innerText'], // Если не NULL, значит это гифка
+                'TEXT_1' : ['POST_TEXT_ALL_ONESTR', 'div.wall_post_text', 'textContent'], // В 1 строку, нет переносов. Чистый текст без тегов
+                'TEXT_2' : ['POST_TEXT_ALL_HTML', 'div.wall_post_text', 'innerHTML'], // Текст с лишними тегами и <br>
+                'TEXT_3' : ['POST_TEXT_VISIBLE_GOOD', 'div.wall_post_text', 'innerText'], // Текст с переносами и с "Показать еще"
+                'TEXT_4' : ['POST_TEXT_HIDED_ONESTR', 'div.wall_post_text span[style="display: none"]', 'innerText'], //
+                'TEXT_5' : ['POST_TEXT_HIDED_HTML', 'div.wall_post_text span[style="display: none"]', 'innerHTML'], //
+                'TEXT_URL_1_HREF' : ['POST_TEXT_URL_1_HREF', 'div.wall_post_text a:nth-child(1)', 'href'], //
+                'TEXT_URL_1_TEXT' : ['POST_TEXT_URL_1_TEXT', 'div.wall_post_text a:nth-child(1)', 'innerText'], //
+                'TEXT_URL_2_HREF' : ['POST_TEXT_URL_2_HREF', 'div.wall_post_text a:nth-child(2)', 'href'], //
+                'TEXT_URL_2_TEXT' : ['POST_TEXT_URL_2_TEXT', 'div.wall_post_text a:nth-child(2)', 'innerText'], //
+                'TEXT_URL_3_HREF' : ['POST_TEXT_URL_3_HREF', 'div.wall_post_text a:nth-child(3)', 'href'], //
+                'TEXT_URL_3_TEXT' : ['POST_TEXT_URL_3_TEXT', 'div.wall_post_text a:nth-child(3)', 'innerText'], //
+                'IMG_SOLO_SRC' : ['IMG_SOLO_SRC', 'img.MediaGrid__imageOld:nth-child(1)', 'src'], //
+                'IMG_SOLO_H' : ['IMG_SOLO_H', 'img.MediaGrid__imageOld:nth-child(1)', 'height'], //  !!! TODO: Иногда может стать undefined
+                'IMG_SOLO_W' : ['IMG_SOLO_W', 'img.MediaGrid__imageOld:nth-child(1)', 'width'], // !!! TODO: Иногда может стать undefined
+
+
+                'IMG_1_SRC' : ['IMG_1_SRC', 'div.MediaGrid__thumb:nth-child(1) div img', 'src'], //
+                'IMG_1_HTML' : ['IMG_1_HTML', 'div.MediaGrid__thumb:nth-child(1)', 'innerHTML'], //
+
+                'IMG_2_SRC' : ['IMG_2_SRC', 'div.MediaGrid__thumb:nth-child(2) div img', 'src'], //
+                'IMG_2_HTML' : ['IMG_2_HTML', 'div.MediaGrid__thumb:nth-child(2)', 'innerHTML'], //
+
+                'IMG_3_SRC' : ['IMG_3_SRC', 'div.MediaGrid__thumb:nth-child(3) div img', 'src'], //
+                'IMG_3_HTML' : ['IMG_3_HTML', 'div.MediaGrid__thumb:nth-child(3)', 'innerHTML'], //
+
+
+                //'' : ['', '', 'ALL'],
+                //'02' : ['', '', ''],
+                //'03' : ['', '', ''],
             }, // End Tags
         }, // End Site
 
@@ -215,71 +327,11 @@ function cardsMassParserGetSetings( what )
     return OBJ[what];
 
 }
-
-
-
-function cardsMassParser(siteCode, idBeg, idEnd, idSkipArr)
-{
-    var settings = cardsMassParserGetSetings(siteCode);
-    var SEL_Cards = settings['CARD'];
-    var SEL_Tags  = settings['TAGS'];
-
-    // ####
-
-    var cardsElemArr = tag_getAllOrFalse(SEL_Cards);
-    logOneRed('Нашлось карточек = '+cardsElemArr.length);
-    //dd(cardsElemArr)
-
-    dd('Stopper'); // От случайного вызова. Комментить.
-
-    var finalJson = { };
-
-    //var idSkipArr = [  ]; // Номера для пропуска
-    //var idBeg = 0; // Номер с которого начать     УСАРЕЛО
-    //var idEnd = 26; // Номер на котором закончить
-
-    cardsElemArr.forEach( function( eCard , i )
-    {
-        logLine_10(); log_i(i); // Консоль
-
-        if( i >= idEnd ){ logOneBlue('i = '+i+' -> Больше макс заданного (>='+  idEnd+') -> Скипаю'); return; }
-        if( i <  idBeg ){ logOneBlue('i = '+i+' -> Меньше стартового (<'+       idBeg+') -> Скипаю'); return; }
-        if( idSkipArr.includes( i ) ){ logOneRed('i = '+i+' -> '+'В списке для пропуска -> Скипаю'); return; }
-
-        finalJson['ID='+i] = []; // Обязательно надо создать ключ с ID.  Иначе пошлет.
-        for(const [key, arr] of Object.entries( SEL_Tags ))
-        {
-            finalJson['ID='+i][arr[0]] = elementDataExtractor( eCard.querySelector(arr[1]) )[arr[2]];
-        }
-
-        logOneGreen('Успех')
-        //log([finalJson['ID='+i]]);
-
-        //dd(finalJson['ID='+i]);
-
-
-
-    } ); // End forEach
-
-    log(finalJson); log('Конец');
-}
 //cardsMassParser('megacritic.ru', 0, 5, []); //
+cardsMassParser('VK-Group-WALL', 0, 100, []); //
 
 
-// Назначение: Вытащить из элемента все потенциально возможные данные, при этом чтоб 100% без вылетов + заменять пустые ключ-словом.
-function elementDataExtractor( e , textForNull='NULL' )
-{
-    var res = { };
-    try{ res['src']         = e.src;         }catch(err){ res['src']         = textForNull; } // Для IMG
-    try{ res['innerText']   = e.innerText;   }catch(err){ res['innerText']   = textForNull; }
-    try{ res['innerHTML']   = e.innerHTML;   }catch(err){ res['innerHTML']   = textForNull; }
-    try{ res['textContent'] = e.textContent; }catch(err){ res['textContent'] = textForNull; }
-    try{ res['href']        = e.href;        }catch(err){ res['href']        = textForNull; }
-    try{ res['text']        = e.text;        }catch(err){ res['text']        = textForNull; }
-    try{ res['content']     = e.content;     }catch(err){ res['content']     = textForNull; } // Для meta
-    try{ res['title']       = e.title;       }catch(err){ res['title']       = textForNull; } // Спорно
-    return res;
-}
+
 
 
 // ### ### ### ### ### ### ###
