@@ -80,7 +80,8 @@ function str_contains(haystack,needle){ return ( haystack.indexOf(needle) > -1 )
 function str_replaceOnce(search,replace,subject){ return subject.replace(search, replace); }  // !!!! Только первое вождение
 function str_replaceALL(search,replace,subject){ while( subject.indexOf(search) >= 0 ) { subject = subject.replace(search, replace); } return subject; }
 function str_explode(separator,string){ return string.split(separator.toString()); }
-
+function str_explode_2steps(string, separatorLeft, separatorRight){ return string.split(separatorLeft.toString())[1].split(separatorRight.toString())[0]; }
+//log(str_explode_2steps('123123_LtargetR_123213','L','R'));
 function str_implode(haystack,glue){ return haystack.join(glue.toString()); }
 function str_toUpper(text){ return text.toUpperCase(); }
 function str_toLower(text){ return text.toLowerCase(); }
@@ -126,20 +127,25 @@ function logOneBlue ( t ){ console.log('%c'+t, 'color:blue' ); }
 function logOneGreen( t ){ console.log('%c'+t, 'color:green'); }
 
 function log_i( i ){ console.log('##### '+i+' #####'); }
-
 function logEmpty(height=2){ console.log(''.padStart(height,'\n')) }
 function logCustom(t, fontSize=16, color='black', bgColor='none'){ console.log( '%c'+t , 'color:'+color+'; font-size:'+fontSize+'px; background-color:'+bgColor+';'); }
-
 
 function logLineUniv(symb='#=', len=61, emptyOffsetsTop=1, emptyOffsetsBott=1){ var t='';  t+=''.padStart(emptyOffsetsTop,'\n');  t+=''.padStart(len,symb);  t+=''.padStart(emptyOffsetsBott,'\n');  t+='\n';  console.log( t ); }
 function logLine_10(){ logLineUniv('#=',61,1,0); }
 function logLine_11(){ logLineUniv('#=',61,1,1); }
 function logLine_20(){ logLineUniv('#=',61,2,0); }
 function logLine_22(){ logLineUniv('#=',61,2,2); }
-//logLine(); logLine('-'); logLine('=',60,3); logLine('#',60,5);
+//logLine(); logLine('-'); logLine('=',60,3,3); logLine('#',60,5,5);
 //logCustom('123 test 123');
 // TODO:   function logText00000   цветастые и тд.  разные методы, много    сразу разные заготовки.
 
+
+
+// ### ### ### ### ### ### ###
+// **/  Работа с ошибками  \**
+window.dump = function (...data) { data.forEach(function(element) { console.log(element); }); };
+window.dd = function (...data) { data.forEach(function(element) { console.log(element); }); throw { message: 'Stopped execution because dd(), use dump() if you want to proceed', toString: function () { return this.message; }, }; };
+/* https://github.com/appstract/dd.js */
 
 
 // ### ### ### ### ### ### ###
@@ -161,77 +167,93 @@ function tag_getOneOrFalse  (target){ var res = document.querySelectorAll(target
 //elem_GetSubElements_FirstOrFalse
 //elem_GetSubElements_OneOrFalse
 
-// TODO: Из пхп
-function str_explode_2steps(string,separatorLeft,separatorright)
+function cardsMassParserGetSetings( what )
 {
-    return string.split(separator.toString());
+
+    // Тут 1 массив с ключами.   выдача по ключу
+
 }
+
 
 
 function cardsMassParser()
 {
     var cardsTag = '.jr-layout-outer.jrCardLayout.jrCardHorizontal';
-
     var cardsElemArr = tag_getAllOrFalse(cardsTag);
-    log('Нашлось карт = '+cardsElemArr.length);
 
-    var textForNull = 'NULL';
+    log('Нашлось карточек = '+cardsElemArr.length);
+
     var finalJson = { };
 
-    var idSkipArr = [ 7,11 ]; // Номера для пропуска
-    var idBeg = 5;   // Номер с которого начать
-    var idEnd = 15; // Номер на котором закончить
+    var idSkipArr = [  ]; // Номера для пропуска
+    var idBeg = 0; // Номер с которого начать
+    var idEnd = 5; // Номер на котором закончить
+
+    //dd('Stopper'); // От случайного вызова. Комментить.
 
     cardsElemArr.forEach( function( eCard , i )
     {
-        // Консоль
-        logLine_10(); log_i(i);
+        logLine_10(); log_i(i); // Консоль
 
         // Проверки
         if( i >= idEnd ){ logOneBlue('i = '+i+' -> Больше макс заданного (>='+  idEnd+') -> Скипаю'); return; }
         if( i <  idBeg ){ logOneBlue('i = '+i+' -> Меньше стартового (<'+       idBeg+') -> Скипаю'); return; }
         if( idSkipArr.includes( i ) ){ logOneRed('i = '+i+' -> '+'В списке для пропуска -> Скипаю'); return; }
 
-
-        finalJson['ID='+i] = {
-            'imgPosterUrlSrc' : eCard.querySelector('div.jrCardImage a div img').src,   // Робит
-            'imgNoScr_RawHtml' : eCard.querySelector('div.jrCardImage a div noscript').innerHTML,   // Робит
-            'imgNoScr_RawText' : eCard.querySelector('div.jrCardImage a div noscript').textContent,
-
-            'title' : eCard.querySelector('div.jrCardTitle div a').text,   // Робит
-            'pageUrl' : eCard.querySelector('div.jrCardTitle div a').href,   // Робит
-            'rateCrit' : elementDataExtractor( eCard.querySelector('div.jrOverallEditor span.jrRatingValue span span b') )['textContent'],   // Робит
-            'rateUser' : elementDataExtractor( eCard.querySelector('div.jrOverallUser   span.jrRatingValue span b     ') )['textContent'],   // Робит
-            'desc' : eCard.querySelector('div.jrCardContent div div.jrCardAbstract').innerText,   // Робит  с  '...>>>'
-            'pageUrl2' : eCard.querySelector('div.jrCardContent div div.jrCardAbstract a').href,   // Робит
-            'year' : eCard.querySelector('div.jrCardContent div div.jrCardFields div div div.jrYear div.jrFieldValue a').textContent,   // Робит
-            'janrOne' : elementDataExtractor( eCard.querySelector('div.jrGenre div.jrFieldValue span a') )['text'],   // Робит
-            'janr1' : elementDataExtractor( eCard.querySelector('div.jrGenre div.jrFieldValue ul.jrFieldValueList li:nth-child(1) span a') )['text'],   // Робит
-            'janr2' : elementDataExtractor( eCard.querySelector('div.jrGenre div.jrFieldValue ul.jrFieldValueList li:nth-child(2) span a') )['text'],   // Робит
-            'janr3' : elementDataExtractor( eCard.querySelector('div.jrGenre div.jrFieldValue ul.jrFieldValueList li:nth-child(3) span a') )['text'],   // Робит
-            'countryOne' : elementDataExtractor( eCard.querySelector('.jrCountry div a') )['text'],   // Робит
-            'country1' : elementDataExtractor( eCard.querySelector('.jrCountry div ul.jrFieldValueList li:nth-child(1) a') )['text'],   // Робит
-            'country2' : elementDataExtractor( eCard.querySelector('.jrCountry div ul.jrFieldValueList li:nth-child(2) a') )['text'],   // Робит
-            'country3' : elementDataExtractor( eCard.querySelector('.jrCountry div ul.jrFieldValueList li:nth-child(3) a') )['text'],   // Робит
-            'dateRus_v1' : eCard.querySelector('div.jrRusdate div.jrFieldValue meta').content,   //Робит
-            'dateRus_v2' : eCard.querySelector('div.jrRusdate div.jrFieldValue').innerText,   //Робит
-            'director' : eCard.querySelector('div.jrDirector div.jrFieldValue span a').textContent,   //Робит
-            'rateAge' :  elementDataExtractor( eCard.querySelector('div.jrAge div a') )['textContent'],   //Робит
+        var settings = {
+            //'что' : ['ключ', 'селектор', 'поле'],
+            '01' : ['imgPosterUrlSrc', 'div.jrCardImage a div img', 'src'],
+            '02' : ['imgNoScr_RawHtml', 'div.jrCardImage a div noscript', 'innerHTML'],
+            '03' : ['imgNoScr_RawText', 'div.jrCardImage a div noscript', 'textContent'],
+            '04' : ['title', 'div.jrCardTitle div a', 'text'],
+            '05' : ['pageUrl', 'div.jrCardTitle div a', 'href'],
+            '06' : ['rateCrit', 'div.jrOverallEditor span.jrRatingValue span span b', 'textContent'],
+            '07' : ['rateUser', 'div.jrOverallUser   span.jrRatingValue span b', 'textContent'],
+            '08' : ['desc', 'div.jrCardContent div div.jrCardAbstract', 'innerText'], // Робит  с  '...>>>'
+            '09' : ['pageUrl2', 'div.jrCardContent div div.jrCardAbstract a', 'href'],
+            '10' : ['year', 'div.jrCardContent div div.jrCardFields div div div.jrYear div.jrFieldValue a', 'textContent'],
+            '11' : ['janrOne', 'div.jrGenre div.jrFieldValue span a', 'text'],
+            '12' : ['janr1', 'div.jrGenre div.jrFieldValue ul.jrFieldValueList li:nth-child(1) span a', 'text'],
+            '13' : ['janr2', 'div.jrGenre div.jrFieldValue ul.jrFieldValueList li:nth-child(2) span a', 'text'],
+            '14' : ['janr3', 'div.jrGenre div.jrFieldValue ul.jrFieldValueList li:nth-child(3) span a', 'text'],
+            '15' : ['countryOne', '.jrCountry div a', 'text'],
+            '16' : ['country1', '.jrCountry div ul.jrFieldValueList li:nth-child(1) a', 'text'],
+            '17' : ['country2', '.jrCountry div ul.jrFieldValueList li:nth-child(2) a', 'text'],
+            '18' : ['country3', '.jrCountry div ul.jrFieldValueList li:nth-child(3) a', 'text'],
+            '19' : ['dateRus_v1', 'div.jrRusdate div.jrFieldValue meta', 'content'],
+            '20' : ['dateRus_v2', 'div.jrRusdate div.jrFieldValue', 'innerText'],
+            '21' : ['director', 'div.jrDirector div.jrFieldValue span a', 'textContent'],
+            '22' : ['rateAge', 'div.jrAge div a', 'textContent']
         };
 
+        finalJson['ID='+i] = []; // Обязательно надо создать ключ с ID.  Иначе пошлет.
+
+        for(const [key, arr] of Object.entries( settings ))
+        {
+            //log(key,arr[0],arr[1],arr[2]);
+            //finalJson['ID='+i][ arr[0] ] = elementDataExtractor( eCard.querySelector(arr[1]) )[arr[2]];
+            //log(elementDataExtractor( eCard.querySelector(arr[1]) ));
+            //log(elementDataExtractor( eCard.querySelector(arr[1]) )[arr[2]]  );
+
+            finalJson['ID='+i][arr[0]] = elementDataExtractor( eCard.querySelector(arr[1]) )[arr[2]];
+
+        }
+
         logOneGreen('Успех')
-        log([finalJson['ID='+i]]);
+        //log([finalJson['ID='+i]]);
+
+        //dd(finalJson['ID='+i]);
+
+
 
     } ); // End forEach
 
-
-    log(finalJson);
-    log('Конец');
+    log(finalJson); log('Конец');
 }
 cardsMassParser();
 
 
-
+// Назначение: Вытащить из элемента все потенциально возможные данные, при этом чтоб 100% без вылетов + заменять пустые ключ-словом.
 function elementDataExtractor( e , textForNull='NULL' )
 {
     var res = { };
@@ -241,6 +263,7 @@ function elementDataExtractor( e , textForNull='NULL' )
     try{ res['textContent'] = e.textContent; }catch(err){ res['textContent'] = textForNull; }
     try{ res['href']        = e.href;        }catch(err){ res['href']        = textForNull; }
     try{ res['text']        = e.text;        }catch(err){ res['text']        = textForNull; }
+    try{ res['content']     = e.content;     }catch(err){ res['content']     = textForNull; } // Для meta
     try{ res['title']       = e.title;       }catch(err){ res['title']       = textForNull; } // Спорно
     return res;
 }
