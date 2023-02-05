@@ -144,7 +144,7 @@ function logLine_22(){ logLineUniv('#=',61,2,2); }
 // ### ### ### ### ### ### ###
 // **/  Работа с ошибками  \**
 window.dump = function (...data) { data.forEach(function(element) { console.log(element); }); };
-window.dd = function (...data) { data.forEach(function(element) { console.log(element); }); throw { message: 'Stopped execution because dd(), use dump() if you want to proceed', toString: function () { return this.message; }, }; };
+window.dd = function (...data) { console.log('\n\n\n#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#\n\n'); data.forEach(function(element) { console.log(element); }); throw { message: 'Stopped execution because dd()', toString: function () { return this.message; }, }; };
 /* https://github.com/appstract/dd.js */
 
 
@@ -173,6 +173,10 @@ function tag_getOneOrFalse  (target){ var res = document.querySelectorAll(target
 // ### ### ### ### ### ### ###
 // **/       Парсер       \**
 
+// TODO: Всему парсеру срочно нужен большой дебаг.
+// Перестал видеть многие поля.    лайки репосты коменты   плохо видит ссылки втексте   не видит тексты поста
+// 98% что дело в elementDataExtractor    где проверки на null|undef  попробовать их убрать и затестить.
+
 
 // TODO: Добавить сразу вытаскивание всех data - полей
 // Назначение: Вытащить из элемента все потенциально возможные данные, при этом чтоб 100% без вылетов + заменять пустые ключ-словом.
@@ -180,25 +184,59 @@ function elementDataExtractor( e , textForNull='NULL' )
 {
     var res = { }; // Правило: Лучше чтоб было чем не было - Вписывать все, что хоть раз было нужно.
 
-    // !!!! Переписать все на цикл, как с настройками.
+    var arr = [
+        'src', 'width', 'height', 'title', 'alt', // IMG
+        'innerText', 'innerHTML', // Общее
+        'textContent', 'text', // Общее
+        'id', 'class', 'style', // Общее
+        'onclick', // Редко нужное
+        'href', // Ссылки
+        'content', 'name', // Meta
+        //'', '', '', '', '', '', '', '', '',
+    ];
+    //dd(arr);
 
-    try{ res['src']         = e.src;         }catch(err){ res['src']         = textForNull; } // Для IMG
-    try{ res['width']       = e.width;       }catch(err){ res['width']       = textForNull; } // W  Часто у IMG
-    try{ res['height']      = e.height;      }catch(err){ res['height']      = textForNull; } // H
-    try{ res['title']       = e.title;       }catch(err){ res['title']       = textForNull; } //
+    arr.forEach( function( val , i )
+    {
+        try{
+            attrVal = e.getAttribute(val);
 
-    try{ res['innerText']   = e.innerText;   }catch(err){ res['innerText']   = textForNull; }
-    try{ res['innerHTML']   = e.innerHTML;   }catch(err){ res['innerHTML']   = textForNull; }
-    try{ res['textContent'] = e.textContent; }catch(err){ res['textContent'] = textForNull; }
-    try{ res['href']        = e.href;        }catch(err){ res['href']        = textForNull; }
-    try{ res['text']        = e.text;        }catch(err){ res['text']        = textForNull; }
-    try{ res['content']     = e.content;     }catch(err){ res['content']     = textForNull; } // Для meta
-    try{ res['title']       = e.title;       }catch(err){ res['title']       = textForNull; } // Спорно
+            if( (attrVal === null) || (typeof(attrVal) === "undefined") )
+                res[val] = textForNull;
+            else
+                res[val] = attrVal;
+        }catch(err){ res[val] = textForNull; }
+
+        //dump(val);
+        //dd(res);
+    } ); // End forEach
+
+
+    try{
+        datasetVal = e.dataset;
+
+        if( (datasetVal === null) || (typeof(datasetVal) === "undefined") )
+            res['DATASET'] = { };
+        else
+            res['DATASET'] = datasetVal;
+    }catch(err){ res['DATASET'] = { }; }
+
+    if( res['DATASET'].length !== 0 )
+        for (const [key, val] of Object.entries( res['DATASET'] ))
+            res['data-'+key] = val;
+            //if( (val !== null) && (typeof(val) !== "undefined") )
 
 
     res['ALL'] = res;
+
+    //dd(res);
     return res;
 }
+//elementDataExtractor(tag_getNthOrFalse('div.PostHeaderInfo a.author',1));
+//elementDataExtractor(tag_getNthOrFalse('a',6));
+
+
+
 
 function cardsMassParser(siteCode, idBeg, idEnd, idSkipArr)
 {
@@ -300,19 +338,27 @@ function cardsMassParserGetSetings( what )
                 'TEXT_URL_2_TEXT' : ['POST_TEXT_URL_2_TEXT', 'div.wall_post_text a:nth-child(2)', 'innerText'], //
                 'TEXT_URL_3_HREF' : ['POST_TEXT_URL_3_HREF', 'div.wall_post_text a:nth-child(3)', 'href'], //
                 'TEXT_URL_3_TEXT' : ['POST_TEXT_URL_3_TEXT', 'div.wall_post_text a:nth-child(3)', 'innerText'], //
+
+                // В целом работает, но иногда костылит. Нормально, не критично.
                 'IMG_SOLO_SRC' : ['IMG_SOLO_SRC', 'img.MediaGrid__imageOld:nth-child(1)', 'src'], //
                 'IMG_SOLO_H' : ['IMG_SOLO_H', 'img.MediaGrid__imageOld:nth-child(1)', 'height'], //  !!! TODO: Иногда может стать undefined
                 'IMG_SOLO_W' : ['IMG_SOLO_W', 'img.MediaGrid__imageOld:nth-child(1)', 'width'], // !!! TODO: Иногда может стать undefined
 
-
+                // Все 3шт сгребли пикчи из поста где их было 6шт.
                 'IMG_1_SRC' : ['IMG_1_SRC', 'div.MediaGrid__thumb:nth-child(1) div img', 'src'], //
                 'IMG_1_HTML' : ['IMG_1_HTML', 'div.MediaGrid__thumb:nth-child(1)', 'innerHTML'], //
+                'IMG_1_ID'  : ['IMG_1_ID', 'div.MediaGrid__thumb:nth-child(1) div', 'data--photo-id'], //
+                'IMG_1_OPTS' : ['IMG_1_OPTS', 'div.MediaGrid__thumb:nth-child(1) div', 'data--options'], //
 
                 'IMG_2_SRC' : ['IMG_2_SRC', 'div.MediaGrid__thumb:nth-child(2) div img', 'src'], //
                 'IMG_2_HTML' : ['IMG_2_HTML', 'div.MediaGrid__thumb:nth-child(2)', 'innerHTML'], //
+                'IMG_2_ID'  : ['IMG_2_ID', 'div.MediaGrid__thumb:nth-child(2) div', 'data-photo-id'], //
+                'IMG_2_OPTS' : ['IMG_2_OPTS', 'div.MediaGrid__thumb:nth-child(2) div', 'data-options'], //
 
                 'IMG_3_SRC' : ['IMG_3_SRC', 'div.MediaGrid__thumb:nth-child(3) div img', 'src'], //
                 'IMG_3_HTML' : ['IMG_3_HTML', 'div.MediaGrid__thumb:nth-child(3)', 'innerHTML'], //
+                'IMG_3_ID'  : ['IMG_3_ID', 'div.MediaGrid__thumb:nth-child(3) div', 'data-photo-id'], //
+                'IMG_3_OPTS' : ['IMG_3_OPTS', 'div.MediaGrid__thumb:nth-child(3) div', 'data-options'], //
 
 
                 //'' : ['', '', 'ALL'],
