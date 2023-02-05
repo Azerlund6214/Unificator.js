@@ -170,6 +170,10 @@ function tag_getOneOrFalse  (target){ var res = document.querySelectorAll(target
 
 
 
+
+
+
+
 // ### ### ### ### ### ### ###
 // **/       Парсер       \**
 
@@ -178,7 +182,6 @@ function tag_getOneOrFalse  (target){ var res = document.querySelectorAll(target
 // 98% что дело в elementDataExtractor    где проверки на null|undef  попробовать их убрать и затестить.
 
 
-// TODO: Добавить сразу вытаскивание всех data - полей
 // Назначение: Вытащить из элемента все потенциально возможные данные, при этом чтоб 100% без вылетов + заменять пустые ключ-словом.
 function elementDataExtractor( e , textForNull='NULL' )
 {
@@ -374,7 +377,10 @@ function cardsMassParserGetSetings( what )
 
 }
 //cardsMassParser('megacritic.ru', 0, 5, []); //
-cardsMassParser('VK-Group-WALL', 0, 100, []); //
+//cardsMassParser('VK-Group-WALL', 0, 100, []); //
+
+
+
 
 
 
