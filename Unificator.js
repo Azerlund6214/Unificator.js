@@ -169,74 +169,87 @@ function tag_getOneOrFalse  (target){ var res = document.querySelectorAll(target
 
 function cardsMassParserGetSetings( what )
 {
+    var OBJ = {
+        'megacritic.ru' : {
+            'CARD' : '.jr-layout-outer.jrCardLayout.jrCardHorizontal',
+            'TAGS' : {
+                //'что' : ['ключ', 'селектор', 'поле'],
+                '01' : ['imgPosterUrlSrc', 'div.jrCardImage a div img', 'src'],
+                '02' : ['imgNoScr_RawHtml', 'div.jrCardImage a div noscript', 'innerHTML'],
+                '03' : ['imgNoScr_RawText', 'div.jrCardImage a div noscript', 'textContent'],
+                '04' : ['title', 'div.jrCardTitle div a', 'text'],
+                '05' : ['pageUrl', 'div.jrCardTitle div a', 'href'],
+                '06' : ['rateCrit', 'div.jrOverallEditor span.jrRatingValue span span b', 'textContent'],
+                '07' : ['rateUser', 'div.jrOverallUser   span.jrRatingValue span b', 'textContent'],
+                '08' : ['desc', 'div.jrCardContent div div.jrCardAbstract', 'innerText'], // Робит  с  '...>>>'
+                '09' : ['pageUrl2', 'div.jrCardContent div div.jrCardAbstract a', 'href'],
+                '10' : ['year', 'div.jrCardContent div div.jrCardFields div div div.jrYear div.jrFieldValue a', 'textContent'],
+                '11' : ['janrOne', 'div.jrGenre div.jrFieldValue span a', 'text'],
+                '12' : ['janr1', 'div.jrGenre div.jrFieldValue ul.jrFieldValueList li:nth-child(1) span a', 'text'],
+                '13' : ['janr2', 'div.jrGenre div.jrFieldValue ul.jrFieldValueList li:nth-child(2) span a', 'text'],
+                '14' : ['janr3', 'div.jrGenre div.jrFieldValue ul.jrFieldValueList li:nth-child(3) span a', 'text'],
+                '15' : ['countryOne', '.jrCountry div a', 'text'],
+                '16' : ['country1', '.jrCountry div ul.jrFieldValueList li:nth-child(1) a', 'text'],
+                '17' : ['country2', '.jrCountry div ul.jrFieldValueList li:nth-child(2) a', 'text'],
+                '18' : ['country3', '.jrCountry div ul.jrFieldValueList li:nth-child(3) a', 'text'],
+                '19' : ['dateRus_v1', 'div.jrRusdate div.jrFieldValue meta', 'content'],
+                '20' : ['dateRus_v2', 'div.jrRusdate div.jrFieldValue', 'innerText'],
+                '21' : ['director', 'div.jrDirector div.jrFieldValue span a', 'textContent'],
+                '22' : ['rateAge', 'div.jrAge div a', 'textContent']
+            }, // End Tags
+        }, // End Site
 
+        'VK-Group-WALL' : {
+            'CARD' : '',
+            'TAGS' : {
+                //'что' : ['ключ', 'селектор', 'поле'],
+                '01' : ['', '', ''],
+                '02' : ['', '', ''],
+                '03' : ['', '', ''],
+            }, // End Tags
+        }, // End Site
+
+    };
     // Тут 1 массив с ключами.   выдача по ключу
+
+    return OBJ[what];
 
 }
 
 
 
-function cardsMassParser()
+function cardsMassParser(siteCode, idBeg, idEnd, idSkipArr)
 {
-    var cardsTag = '.jr-layout-outer.jrCardLayout.jrCardHorizontal';
-    var cardsElemArr = tag_getAllOrFalse(cardsTag);
+    var settings = cardsMassParserGetSetings(siteCode);
+    var SEL_Cards = settings['CARD'];
+    var SEL_Tags  = settings['TAGS'];
 
-    log('Нашлось карточек = '+cardsElemArr.length);
+    // ####
+
+    var cardsElemArr = tag_getAllOrFalse(SEL_Cards);
+    logOneRed('Нашлось карточек = '+cardsElemArr.length);
+    //dd(cardsElemArr)
+
+    dd('Stopper'); // От случайного вызова. Комментить.
 
     var finalJson = { };
 
-    var idSkipArr = [  ]; // Номера для пропуска
-    var idBeg = 0; // Номер с которого начать
-    var idEnd = 5; // Номер на котором закончить
-
-    //dd('Stopper'); // От случайного вызова. Комментить.
+    //var idSkipArr = [  ]; // Номера для пропуска
+    //var idBeg = 0; // Номер с которого начать     УСАРЕЛО
+    //var idEnd = 26; // Номер на котором закончить
 
     cardsElemArr.forEach( function( eCard , i )
     {
         logLine_10(); log_i(i); // Консоль
 
-        // Проверки
         if( i >= idEnd ){ logOneBlue('i = '+i+' -> Больше макс заданного (>='+  idEnd+') -> Скипаю'); return; }
         if( i <  idBeg ){ logOneBlue('i = '+i+' -> Меньше стартового (<'+       idBeg+') -> Скипаю'); return; }
         if( idSkipArr.includes( i ) ){ logOneRed('i = '+i+' -> '+'В списке для пропуска -> Скипаю'); return; }
 
-        var settings = {
-            //'что' : ['ключ', 'селектор', 'поле'],
-            '01' : ['imgPosterUrlSrc', 'div.jrCardImage a div img', 'src'],
-            '02' : ['imgNoScr_RawHtml', 'div.jrCardImage a div noscript', 'innerHTML'],
-            '03' : ['imgNoScr_RawText', 'div.jrCardImage a div noscript', 'textContent'],
-            '04' : ['title', 'div.jrCardTitle div a', 'text'],
-            '05' : ['pageUrl', 'div.jrCardTitle div a', 'href'],
-            '06' : ['rateCrit', 'div.jrOverallEditor span.jrRatingValue span span b', 'textContent'],
-            '07' : ['rateUser', 'div.jrOverallUser   span.jrRatingValue span b', 'textContent'],
-            '08' : ['desc', 'div.jrCardContent div div.jrCardAbstract', 'innerText'], // Робит  с  '...>>>'
-            '09' : ['pageUrl2', 'div.jrCardContent div div.jrCardAbstract a', 'href'],
-            '10' : ['year', 'div.jrCardContent div div.jrCardFields div div div.jrYear div.jrFieldValue a', 'textContent'],
-            '11' : ['janrOne', 'div.jrGenre div.jrFieldValue span a', 'text'],
-            '12' : ['janr1', 'div.jrGenre div.jrFieldValue ul.jrFieldValueList li:nth-child(1) span a', 'text'],
-            '13' : ['janr2', 'div.jrGenre div.jrFieldValue ul.jrFieldValueList li:nth-child(2) span a', 'text'],
-            '14' : ['janr3', 'div.jrGenre div.jrFieldValue ul.jrFieldValueList li:nth-child(3) span a', 'text'],
-            '15' : ['countryOne', '.jrCountry div a', 'text'],
-            '16' : ['country1', '.jrCountry div ul.jrFieldValueList li:nth-child(1) a', 'text'],
-            '17' : ['country2', '.jrCountry div ul.jrFieldValueList li:nth-child(2) a', 'text'],
-            '18' : ['country3', '.jrCountry div ul.jrFieldValueList li:nth-child(3) a', 'text'],
-            '19' : ['dateRus_v1', 'div.jrRusdate div.jrFieldValue meta', 'content'],
-            '20' : ['dateRus_v2', 'div.jrRusdate div.jrFieldValue', 'innerText'],
-            '21' : ['director', 'div.jrDirector div.jrFieldValue span a', 'textContent'],
-            '22' : ['rateAge', 'div.jrAge div a', 'textContent']
-        };
-
         finalJson['ID='+i] = []; // Обязательно надо создать ключ с ID.  Иначе пошлет.
-
-        for(const [key, arr] of Object.entries( settings ))
+        for(const [key, arr] of Object.entries( SEL_Tags ))
         {
-            //log(key,arr[0],arr[1],arr[2]);
-            //finalJson['ID='+i][ arr[0] ] = elementDataExtractor( eCard.querySelector(arr[1]) )[arr[2]];
-            //log(elementDataExtractor( eCard.querySelector(arr[1]) ));
-            //log(elementDataExtractor( eCard.querySelector(arr[1]) )[arr[2]]  );
-
             finalJson['ID='+i][arr[0]] = elementDataExtractor( eCard.querySelector(arr[1]) )[arr[2]];
-
         }
 
         logOneGreen('Успех')
@@ -250,7 +263,7 @@ function cardsMassParser()
 
     log(finalJson); log('Конец');
 }
-cardsMassParser();
+//cardsMassParser('megacritic.ru', 0, 5, []); //
 
 
 // Назначение: Вытащить из элемента все потенциально возможные данные, при этом чтоб 100% без вылетов + заменять пустые ключ-словом.
