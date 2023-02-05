@@ -80,6 +80,7 @@ function str_contains(haystack,needle){ return ( haystack.indexOf(needle) > -1 )
 function str_replaceOnce(search,replace,subject){ return subject.replace(search, replace); }  // !!!! Только первое вождение
 function str_replaceALL(search,replace,subject){ while( subject.indexOf(search) >= 0 ) { subject = subject.replace(search, replace); } return subject; }
 function str_explode(separator,string){ return string.split(separator.toString()); }
+
 function str_implode(haystack,glue){ return haystack.join(glue.toString()); }
 function str_toUpper(text){ return text.toUpperCase(); }
 function str_toLower(text){ return text.toLowerCase(); }
@@ -120,7 +121,12 @@ function genRandom_ColorHex(  ){ return '#'+generateRandom_String( 6, '012345678
 // ### ### ### ### ### ###
 // **/ Логи в консоль  \**
 function log( t1 , t2='_DEF' ,t3='_DEF' ){ console.log(t1);  if(t2!=='_DEF')console.log(t2);  if(t3!=='_DEF')console.log(t3);  }
+function logOneRed  ( t ){ console.log('%c'+t, 'color:red'  ); }
+function logOneBlue ( t ){ console.log('%c'+t, 'color:blue' ); }
+function logOneGreen( t ){ console.log('%c'+t, 'color:green'); }
+
 function log_i( i ){ console.log('##### '+i+' #####'); }
+
 function logEmpty(height=2){ console.log(''.padStart(height,'\n')) }
 function logCustom(t, fontSize=16, color='black', bgColor='none'){ console.log( '%c'+t , 'color:'+color+'; font-size:'+fontSize+'px; background-color:'+bgColor+';'); }
 
@@ -155,6 +161,12 @@ function tag_getOneOrFalse  (target){ var res = document.querySelectorAll(target
 //elem_GetSubElements_FirstOrFalse
 //elem_GetSubElements_OneOrFalse
 
+// TODO: Из пхп
+function str_explode_2steps(string,separatorLeft,separatorright)
+{
+    return string.split(separator.toString());
+}
+
 
 function cardsMassParser()
 {
@@ -166,88 +178,51 @@ function cardsMassParser()
     var textForNull = 'NULL';
     var finalJson = { };
 
-    var idSkipArr = [  ]; // Номера для пропуска
+    var idSkipArr = [ 7,11 ]; // Номера для пропуска
     var idBeg = 5;   // Номер с которого начать
-    var idEnd = 10; // Номер на котором закончить
+    var idEnd = 15; // Номер на котором закончить
 
     cardsElemArr.forEach( function( eCard , i )
     {
+        // Консоль
+        logLine_10(); log_i(i);
+
         // Проверки
-        if( i >= idEnd ){ log('i = '+i+' -> Больше макс заданного (>='+  idEnd+') -> Скипаю'); return; }
-        if( i <  idBeg ){ log('i = '+i+' -> Меньше стартового (<'+       idBeg+') -> Скипаю'); return; }
-        if( idSkipArr.includes( i ) ){ log('i = '+i+' -> '+'В списке для пропуска -> Скипаю'); return; }
-
-        logLine_10();
-        log_i(i);
-
-        /*
-        if(i != 1341 && i!=2116 && i!=2162  )
-        {
+        if( i >= idEnd ){ logOneBlue('i = '+i+' -> Больше макс заданного (>='+  idEnd+') -> Скипаю'); return; }
+        if( i <  idBeg ){ logOneBlue('i = '+i+' -> Меньше стартового (<'+       idBeg+') -> Скипаю'); return; }
+        if( idSkipArr.includes( i ) ){ logOneRed('i = '+i+' -> '+'В списке для пропуска -> Скипаю'); return; }
 
 
-        // text title href textContent
-
-        var janrIfOne;
-        try{ janrIfOne = eCard.querySelector('div.jrGenre div.jrFieldValue span a').text; }catch(e){ janrIfOne = textForNull; }
-
-        var janr1, janr2, janr3;
-        try{ janr1 = eCard.querySelector('div.jrGenre div.jrFieldValue ul.jrFieldValueList li:nth-child(1) span a').text; }catch(e){ janr1 = textForNull; }
-        try{ janr2 = eCard.querySelector('div.jrGenre div.jrFieldValue ul.jrFieldValueList li:nth-child(2) span a').text; }catch(e){ janr2 = textForNull; }
-        try{ janr3 = eCard.querySelector('div.jrGenre div.jrFieldValue ul.jrFieldValueList li:nth-child(3) span a').text; }catch(e){ janr3 = textForNull; }
-
-
-        var rCrit, rUser;
-        try{ rCrit = eCard.querySelector('div.jrOverallEditor span.jrRatingValue span span b').textContent; }catch(e){ rCrit = textForNull; }
-        try{ rUser = eCard.querySelector('div.jrOverallUser   span.jrRatingValue span b     ').textContent; }catch(e){ rUser = textForNull; }
-
-
-        var countryIfOne;
-        try{ countryIfOne = eCard.querySelector('.jrCountry div a').text; }catch(e){ countryIfOne = textForNull; }
-
-        var country1, country2, country3;
-        try{ country1 = eCard.querySelector('.jrCountry div ul.jrFieldValueList li:nth-child(1) a').text; }catch(e){ country1 = textForNull; }
-        try{ country2 = eCard.querySelector('.jrCountry div ul.jrFieldValueList li:nth-child(2) a').text; }catch(e){ country2 = textForNull; }
-        try{ country3 = eCard.querySelector('.jrCountry div ul.jrFieldValueList li:nth-child(3) a').text; }catch(e){ country3 = textForNull; }
-
-
-        var rateAge;
-        try{ rateAge = eCard.querySelector('div.jrAge div a').textContent; }catch(e){ rateAge = textForNull; }
-
-        var fin = {
+        finalJson['ID='+i] = {
             'imgPosterUrlSrc' : eCard.querySelector('div.jrCardImage a div img').src,   // Робит
             'imgNoScr_RawHtml' : eCard.querySelector('div.jrCardImage a div noscript').innerHTML,   // Робит
             'imgNoScr_RawText' : eCard.querySelector('div.jrCardImage a div noscript').textContent,
 
             'title' : eCard.querySelector('div.jrCardTitle div a').text,   // Робит
             'pageUrl' : eCard.querySelector('div.jrCardTitle div a').href,   // Робит
-            'rateCrit' : rCrit,   // Робит
-            'rateUser' : rUser,   // Робит
+            'rateCrit' : elementDataExtractor( eCard.querySelector('div.jrOverallEditor span.jrRatingValue span span b') )['textContent'],   // Робит
+            'rateUser' : elementDataExtractor( eCard.querySelector('div.jrOverallUser   span.jrRatingValue span b     ') )['textContent'],   // Робит
             'desc' : eCard.querySelector('div.jrCardContent div div.jrCardAbstract').innerText,   // Робит  с  '...>>>'
             'pageUrl2' : eCard.querySelector('div.jrCardContent div div.jrCardAbstract a').href,   // Робит
             'year' : eCard.querySelector('div.jrCardContent div div.jrCardFields div div div.jrYear div.jrFieldValue a').textContent,   // Робит
-            'janrOne' : janrIfOne,   // Робит
-            'janr1' : janr1,   // Робит
-            'janr2' : janr2,   // Робит
-            'janr3' : janr3,   // Робит
-            'countryOne' : countryIfOne,   // Робит
-            'country1' : country1,   // Робит
-            'country2' : country2,   // Робит
-            'country3' : country3,   // Робит
-            //' =' : eCard.querySelector('').text,   //
-            //' =' : eCard.querySelector('').text,   //
+            'janrOne' : elementDataExtractor( eCard.querySelector('div.jrGenre div.jrFieldValue span a') )['text'],   // Робит
+            'janr1' : elementDataExtractor( eCard.querySelector('div.jrGenre div.jrFieldValue ul.jrFieldValueList li:nth-child(1) span a') )['text'],   // Робит
+            'janr2' : elementDataExtractor( eCard.querySelector('div.jrGenre div.jrFieldValue ul.jrFieldValueList li:nth-child(2) span a') )['text'],   // Робит
+            'janr3' : elementDataExtractor( eCard.querySelector('div.jrGenre div.jrFieldValue ul.jrFieldValueList li:nth-child(3) span a') )['text'],   // Робит
+            'countryOne' : elementDataExtractor( eCard.querySelector('.jrCountry div a') )['text'],   // Робит
+            'country1' : elementDataExtractor( eCard.querySelector('.jrCountry div ul.jrFieldValueList li:nth-child(1) a') )['text'],   // Робит
+            'country2' : elementDataExtractor( eCard.querySelector('.jrCountry div ul.jrFieldValueList li:nth-child(2) a') )['text'],   // Робит
+            'country3' : elementDataExtractor( eCard.querySelector('.jrCountry div ul.jrFieldValueList li:nth-child(3) a') )['text'],   // Робит
             'dateRus_v1' : eCard.querySelector('div.jrRusdate div.jrFieldValue meta').content,   //Робит
             'dateRus_v2' : eCard.querySelector('div.jrRusdate div.jrFieldValue').innerText,   //Робит
             'director' : eCard.querySelector('div.jrDirector div.jrFieldValue span a').textContent,   //Робит
-            'rateAge' :  rateAge,   //Робит
-            //' =' : eCard.querySelector('').text,   //
+            'rateAge' :  elementDataExtractor( eCard.querySelector('div.jrAge div a') )['textContent'],   //Робит
         };
-        //finalJson['ID='+i] = fin;
 
-        log(i);
-        //log(fin);
-        }
-        */
-    } );
+        logOneGreen('Успех')
+        log([finalJson['ID='+i]]);
+
+    } ); // End forEach
 
 
     log(finalJson);
@@ -257,16 +232,16 @@ cardsMassParser();
 
 
 
-// На тест, но должно робить.
 function elementDataExtractor( e , textForNull='NULL' )
 {
     var res = { };
-    try{ res['src']         = e.src;         }catch(err){ res['src']         = textForNull; }
+    try{ res['src']         = e.src;         }catch(err){ res['src']         = textForNull; } // Для IMG
     try{ res['innerText']   = e.innerText;   }catch(err){ res['innerText']   = textForNull; }
     try{ res['innerHTML']   = e.innerHTML;   }catch(err){ res['innerHTML']   = textForNull; }
     try{ res['textContent'] = e.textContent; }catch(err){ res['textContent'] = textForNull; }
     try{ res['href']        = e.href;        }catch(err){ res['href']        = textForNull; }
     try{ res['text']        = e.text;        }catch(err){ res['text']        = textForNull; }
+    try{ res['title']       = e.title;       }catch(err){ res['title']       = textForNull; } // Спорно
     return res;
 }
 
