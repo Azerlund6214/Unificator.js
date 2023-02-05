@@ -119,6 +119,7 @@ function genRandom_ColorHex(  ){ return '#'+generateRandom_String( 6, '012345678
 
 // ### ### ### ### ### ###
 // **/ Логи в консоль  \**
+// TODO: Добавить в простой логгер несколько аргументов. (хотя бы 3)
 function log( t ){ console.log(t); }
 function logEmpty(height=2){ console.log(''.padStart(height,'\n')) }
 
