@@ -169,18 +169,10 @@ function tag_getOneOrFalse  (target){ var res = document.querySelectorAll(target
 
 
 
-
-
-
-
-
 // ### ### ### ### ### ### ###
 // **/       Парсер       \**
 
-// TODO: Всему парсеру срочно нужен большой дебаг.
-// Перестал видеть многие поля.    лайки репосты коменты   плохо видит ссылки втексте   не видит тексты поста
-// 98% что дело в elementDataExtractor    где проверки на null|undef  попробовать их убрать и затестить.
-
+// TODO: Допсать обработчик data-полей  там на 95% готово.
 
 // Назначение: Вытащить из элемента все потенциально возможные данные, при этом чтоб 100% без вылетов + заменять пустые ключ-словом.
 function elementDataExtractor( e , textForNull='NULL' )
@@ -399,10 +391,6 @@ function cardsMassParserGetSettings( what )
 }
 //cardsMassParser('megacritic.ru', 0, 5, []); //
 //cardsMassParser('VK-Group-WALL', 0, 10, []); //
-
-
-
-
 
 
 
