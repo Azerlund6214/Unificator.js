@@ -142,7 +142,7 @@ function logLine_22(){ logLineUniv('#=',61,2,2); }
 
 
 // ### ### ### ### ### ### ###
-// **/  Работа с ошибками  \**
+// **/  Дампы из лары  \**
 window.dump = function (...data) { data.forEach(function(element) { console.log(element); }); };
 window.dd = function (...data) { console.log('\n\n\n#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#\n\n'); data.forEach(function(element) { console.log(element); }); throw { message: 'Stopped execution because dd()', toString: function () { return this.message; }, }; };
 /* https://github.com/appstract/dd.js */
@@ -160,7 +160,7 @@ function errorPrinter(e){ console.log(`${e.stack}\n\nMsg: ${e.message}\nName: ${
 // **/   Получение тегов   \**
 function tag_getAllOrFalse  (target){ var res = document.querySelectorAll(target);  if( ! res.length  ) return false;  else  return res;     }
 function tag_getFirstOrFalse(target){ var res = document.querySelectorAll(target);  if( ! res.length  ) return false;  else  return res[0];  }
-function tag_getNthOrFalse  (target,n){ var res = document.querySelectorAll(target);if(res.length <= n) return false;  else  return res[n];  }
+function tag_getNthOrFalse  (target,n){var res= document.querySelectorAll(target);  if(res.length <= n) return false;  else  return res[n];  }
 function tag_getOneOrFalse  (target){ var res = document.querySelectorAll(target);  if(res.length!== 1) return false;  else  return res[0];  }
 
 //elem_GetSubElements_AllOrFalse...    брать из скипта вк
@@ -199,22 +199,36 @@ function elementDataExtractor( e , textForNull='NULL' )
     ];
     //dd(arr);
 
+    
+
+
+
     arr.forEach( function( val , i )
     {
         try{
-            attrVal = e.getAttribute(val);
+            var attrVal = e.getAttribute(val);
 
-            if( (attrVal === null) || (typeof(attrVal) === "undefined") )
-                res[val] = textForNull;
+            if( attrVal === null )
+                res[val] = e.val;
             else
                 res[val] = attrVal;
-        }catch(err){ res[val] = textForNull; }
+
+
+            //if( (attrVal === null) || (typeof(attrVal) === "undefined") )
+            //    res[val] = textForNull;
+            //else
+            //    res[val] = attrVal;
+        }catch(err){ res[val] = textForNull+' = '+(err.message); }
 
         //dump(val);
         //dd(res);
     } ); // End forEach
 
 
+    dump(e);
+    dump(res);
+
+    /*
     try{
         datasetVal = e.dataset;
 
@@ -228,7 +242,7 @@ function elementDataExtractor( e , textForNull='NULL' )
         for (const [key, val] of Object.entries( res['DATASET'] ))
             res['data-'+key] = val;
             //if( (val !== null) && (typeof(val) !== "undefined") )
-
+    // */
 
     res['ALL'] = res;
 
@@ -243,7 +257,7 @@ function elementDataExtractor( e , textForNull='NULL' )
 
 function cardsMassParser(siteCode, idBeg, idEnd, idSkipArr)
 {
-    var settings = cardsMassParserGetSetings(siteCode);
+    var settings = cardsMassParserGetSettings(siteCode);
     var SEL_Cards = settings['CARD'];
     var SEL_Tags  = settings['TAGS'];
 
@@ -286,7 +300,7 @@ function cardsMassParser(siteCode, idBeg, idEnd, idSkipArr)
     log(finalJson); log('Конец');
 }
 
-function cardsMassParserGetSetings( what )
+function cardsMassParserGetSettings( what )
 {
     var OBJ = {
         'megacritic.ru' : {
@@ -376,7 +390,7 @@ function cardsMassParserGetSetings( what )
     return OBJ[what];
 
 }
-//cardsMassParser('megacritic.ru', 0, 5, []); //
+cardsMassParser('megacritic.ru', 0, 5, []); //
 //cardsMassParser('VK-Group-WALL', 0, 100, []); //
 
 
