@@ -187,52 +187,56 @@ function elementDataExtractor( e , textForNull='NULL' )
 {
     var res = { }; // Правило: Лучше чтоб было чем не было - Вписывать все, что хоть раз было нужно.
 
-    var arr = [
-        'src', 'width', 'height', 'title', 'alt', // IMG
-        'innerText', 'innerHTML', // Общее
-        'textContent', 'text', // Общее
-        'id', 'class', 'style', // Общее
-        'onclick', // Редко нужное
-        'href', // Ссылки
-        'content', 'name', // Meta
-        //'', '', '', '', '', '', '', '', '',
-    ];
-    //dd(arr);
 
-    
+    // Проблема: Не могу динамически подставить нужный атрибут в   e.XXX    Тогда можно было бы сделать в цикле по массиву параметров.
+    // Ибо что-то можно получить через getAttribute,  а что-то надо вызывать только через точнку. (напр .innerHTML)
+
+    // ###  IMG  ###
+    try{ res['src']    = e.src;    }catch(err){ res['src']    = textForNull; }
+    try{ res['width']  = e.width;  }catch(err){ res['width']  = textForNull; }
+    try{ res['height'] = e.height; }catch(err){ res['height'] = textForNull; }
+    try{ res['title']  = e.title;  }catch(err){ res['title']  = textForNull; }
+    try{ res['alt']    = e.alt;    }catch(err){ res['alt']    = textForNull; }
+
+    // ###  Общее 1  ###
+    try{ res['innerText']   = e.innerText;   }catch(err){ res['innerText']   = textForNull; }
+    try{ res['innerHTML']   = e.innerHTML;   }catch(err){ res['innerHTML']   = textForNull; }
+    try{ res['textContent'] = e.textContent; }catch(err){ res['textContent'] = textForNull; }
+    try{ res['text']        = e.text;        }catch(err){ res['text']        = textForNull; }
+
+    // ###  Общее 2  ###
+    try{ res['id']    = e.id;    }catch(err){ res['id']    = textForNull; }
+    try{ res['class'] = e.class; }catch(err){ res['class'] = textForNull; }
+    try{ res['style'] = e.getAttribute('style'); }catch(err){ res['style'] = textForNull; }
+    try{ res['href']  = e.href;  }catch(err){ res['href']  = textForNull; }
+
+    // ###  Редко нужное  ###
+    try{ res['onclick'] = e.onclick; }catch(err){ res['onclick'] = textForNull; }
+
+    // ###  Meta  ###
+    try{ res['content'] = e.content; }catch(err){ res['content'] = textForNull; }
+    try{ res['name']    = e.name;    }catch(err){ res['name']    = textForNull; }
+
+    // ###  Input + Form  ###
+
+    // ###    ###
+    //try{ res[''] = e.; }catch(err){ res[''] = textForNull; }
 
 
-
-    arr.forEach( function( val , i )
+    // Проверка на нули и андеф
+    for (const [key, val] of Object.entries( res ))
     {
-        try{
-            var attrVal = e.getAttribute(val);
-
-            if( attrVal === null )
-                res[val] = e.val;
-            else
-                res[val] = attrVal;
+        if( val === '' )       res[key] = textForNull; // + '_empty';
+        if( val === null )     res[key] = textForNull; // + '_null';
+        if( val === undefined) res[key] = textForNull; // + '_undef';
+    }// End for
 
 
-            //if( (attrVal === null) || (typeof(attrVal) === "undefined") )
-            //    res[val] = textForNull;
-            //else
-            //    res[val] = attrVal;
-        }catch(err){ res[val] = textForNull+' = '+(err.message); }
-
-        //dump(val);
-        //dd(res);
-    } ); // End forEach
-
-
-    dump(e);
-    dump(res);
-
-    /*
+    /*  TODO: На доработку,  часть полей undef или null   
     try{
-        datasetVal = e.dataset;
+        var datasetVal = e.dataset;
 
-        if( (datasetVal === null) || (typeof(datasetVal) === "undefined") )
+        if( (datasetVal === null) || (datasetVal === undefined) )
             res['DATASET'] = { };
         else
             res['DATASET'] = datasetVal;
@@ -240,20 +244,24 @@ function elementDataExtractor( e , textForNull='NULL' )
 
     if( res['DATASET'].length !== 0 )
         for (const [key, val] of Object.entries( res['DATASET'] ))
-            res['data-'+key] = val;
-            //if( (val !== null) && (typeof(val) !== "undefined") )
+        {
+            if ((datasetVal === null) || (datasetVal === undefined))
+                res['data-' + key] = textForNull;
+            else
+                res['data-' + key] = val;
+        }
+
+    //if( (val !== null) && (typeof(val) !== "undefined") )
     // */
 
     res['ALL'] = res;
 
+    //dump(res);
     //dd(res);
     return res;
 }
 //elementDataExtractor(tag_getNthOrFalse('div.PostHeaderInfo a.author',1));
 //elementDataExtractor(tag_getNthOrFalse('a',6));
-
-
-
 
 function cardsMassParser(siteCode, idBeg, idEnd, idSkipArr)
 {
@@ -364,19 +372,18 @@ function cardsMassParserGetSettings( what )
                 // Все 3шт сгребли пикчи из поста где их было 6шт.
                 'IMG_1_SRC' : ['IMG_1_SRC', 'div.MediaGrid__thumb:nth-child(1) div img', 'src'], //
                 'IMG_1_HTML' : ['IMG_1_HTML', 'div.MediaGrid__thumb:nth-child(1)', 'innerHTML'], //
-                'IMG_1_ID'  : ['IMG_1_ID', 'div.MediaGrid__thumb:nth-child(1) div', 'data--photo-id'], //
-                'IMG_1_OPTS' : ['IMG_1_OPTS', 'div.MediaGrid__thumb:nth-child(1) div', 'data--options'], //
+                //'IMG_1_ID'  : ['IMG_1_ID', 'div.MediaGrid__thumb:nth-child(1) div', 'data--photo-id'], //
+                //'IMG_1_OPTS' : ['IMG_1_OPTS', 'div.MediaGrid__thumb:nth-child(1) div', 'data--options'], //
 
                 'IMG_2_SRC' : ['IMG_2_SRC', 'div.MediaGrid__thumb:nth-child(2) div img', 'src'], //
                 'IMG_2_HTML' : ['IMG_2_HTML', 'div.MediaGrid__thumb:nth-child(2)', 'innerHTML'], //
-                'IMG_2_ID'  : ['IMG_2_ID', 'div.MediaGrid__thumb:nth-child(2) div', 'data-photo-id'], //
-                'IMG_2_OPTS' : ['IMG_2_OPTS', 'div.MediaGrid__thumb:nth-child(2) div', 'data-options'], //
+                //'IMG_2_ID'  : ['IMG_2_ID', 'div.MediaGrid__thumb:nth-child(2) div', 'data-photo-id'], //
+                //'IMG_2_OPTS' : ['IMG_2_OPTS', 'div.MediaGrid__thumb:nth-child(2) div', 'data-options'], //
 
                 'IMG_3_SRC' : ['IMG_3_SRC', 'div.MediaGrid__thumb:nth-child(3) div img', 'src'], //
                 'IMG_3_HTML' : ['IMG_3_HTML', 'div.MediaGrid__thumb:nth-child(3)', 'innerHTML'], //
-                'IMG_3_ID'  : ['IMG_3_ID', 'div.MediaGrid__thumb:nth-child(3) div', 'data-photo-id'], //
-                'IMG_3_OPTS' : ['IMG_3_OPTS', 'div.MediaGrid__thumb:nth-child(3) div', 'data-options'], //
-
+                //'IMG_3_ID'  : ['IMG_3_ID', 'div.MediaGrid__thumb:nth-child(3) div', 'data-photo-id'], //
+                //'IMG_3_OPTS' : ['IMG_3_OPTS', 'div.MediaGrid__thumb:nth-child(3) div', 'data-options'], //
 
                 //'' : ['', '', 'ALL'],
                 //'02' : ['', '', ''],
@@ -390,8 +397,8 @@ function cardsMassParserGetSettings( what )
     return OBJ[what];
 
 }
-cardsMassParser('megacritic.ru', 0, 5, []); //
-//cardsMassParser('VK-Group-WALL', 0, 100, []); //
+//cardsMassParser('megacritic.ru', 0, 5, []); //
+//cardsMassParser('VK-Group-WALL', 0, 10, []); //
 
 
 
