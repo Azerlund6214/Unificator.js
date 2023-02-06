@@ -232,7 +232,7 @@ function elementDataExtractor( e , textForNull='NULL' )
     }// End for
 
 
-    /*  TODO: На доработку,  часть полей undef или null   
+    /*  TODO: На доработку,  часть полей undef или null     но в целом все работает как надо
     try{
         var datasetVal = e.dataset;
 
