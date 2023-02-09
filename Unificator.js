@@ -172,6 +172,24 @@ function tag_getOneOrFalse  (target){ var res = document.querySelectorAll(target
 // ### ### ### ### ### ### ###
 // **/       Парсер       \**
 
+
+function easyHrefParcer( selector )
+{
+	var finalJson = { };
+	var arrElems = document.querySelectorAll(selector);
+	console.log(arrElems.length);
+	
+	
+	arrElems.forEach( function( e , i )
+    {
+		finalJson[i] = e.href;
+	});
+	
+	console.log(finalJson);
+}
+easyHrefParcer('div.content div div a[style="color: inherit"]');
+
+
 // TODO: Допсать обработчик data-полей  там на 95% готово.
 
 // Назначение: Вытащить из элемента все потенциально возможные данные, при этом чтоб 100% без вылетов + заменять пустые ключ-словом.
