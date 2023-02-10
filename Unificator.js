@@ -187,7 +187,7 @@ function easyHrefParcer( selector )
 	
 	console.log(finalJson);
 }
-easyHrefParcer('div.content div div a[style="color: inherit"]');
+//easyHrefParcer('div.content div div a[style="color: inherit"]');
 
 
 // TODO: Допсать обработчик data-полей  там на 95% готово.
