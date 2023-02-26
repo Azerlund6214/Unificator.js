@@ -471,11 +471,15 @@ function makeReload(waitMs=0){ console.log('# Reload #\n\nTimeMs: '+waitMs);  se
 function makeTabUrl( url ){ history.pushState(null, null, '/'); history.pushState(null, null, url); }
 function makeRedirect(url, waitMs=0){ console.log('# Redirect #\n\nURL: '+url+'\nTimeMs: '+waitMs);  setTimeout(function(){ window.location.replace(url); }, waitMs); }
 // makeRedirect('/'); makeRedirect('/', 5000);
-// TODO: Открыть в новой вкладке + окне
 
-function makeNewWindow( url , windowName , windowOpst='width=800,height=600 , top=150,left=150')
-{ window.open( url , windowName , windowOpst ); }
+// ### ### ### ### ### ### ### ### ### ### ###
+// **/  Работа с новым окном и вкладками   \**
+
+function makeNewWindow( url , windowName , windowOpst='width=800,height=600 , top=150,left=150'){ window.open( url , windowName , windowOpst ); }
+/* https://itchief.ru/javascript/popup-browser-windows */
 // makeNewWindow('https://yandex.ru','123321')
+
+// TODO: Открыть в новой вкладке + окне
 
 
 
