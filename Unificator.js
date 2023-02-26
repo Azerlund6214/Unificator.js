@@ -471,7 +471,7 @@ function makeReload(waitMs=0){ console.log('# Reload #\n\nTimeMs: '+waitMs);  se
 function makeTabUrl( url ){ history.pushState(null, null, '/'); history.pushState(null, null, url); }
 function makeRedirect(url, waitMs=0){ console.log('# Redirect #\n\nURL: '+url+'\nTimeMs: '+waitMs);  setTimeout(function(){ window.location.replace(url); }, waitMs); }
 // makeRedirect('/'); makeRedirect('/', 5000);
-
+// TODO: 
 
 
 
@@ -508,6 +508,7 @@ function detectRunningInIframe_v2(){ try { isFramed = window != window.top || do
 function jqueryLoaded(){ return ( (typeof(jQuery) !== 'undefined') ); /* typeof($) ложно срабатывал  |  jQuery.isReady  */ }; // Костыльненько :)
 function jqueryVersion(){ console.log('JQuery = v'+jQuery.fn.jquery); } // "JQuery = v3.5.0"
 function checkFunctionExist( callableFunc ){ return (typeof callableFunc === "function"); } // !!! Оборачивать вызов в TryCatch
+
 // Все готовые
 
 
