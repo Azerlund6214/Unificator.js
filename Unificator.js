@@ -474,12 +474,11 @@ function makeRedirect(url, waitMs=0){ console.log('# Redirect #\n\nURL: '+url+'\
 
 // ### ### ### ### ### ### ### ### ### ### ###
 // **/  Работа с новым окном и вкладками   \**
-
-function makeNewWindow( url , windowName , windowOpst='width=800,height=600 , top=150,left=150'){ window.open( url , windowName , windowOpst ); }
+function makeWindowNew( url , windowName , windowOpst='width=800,height=600 , top=150,left=150'){ window.open( url , windowName , windowOpst ); }
+function makeTabNew( url ){ window.open( url , '_blank' ); }
+function makeTabCloseCurrent(  ){ window.close(  ); }
 /* https://itchief.ru/javascript/popup-browser-windows */
 // makeNewWindow('https://yandex.ru','123321')
-
-// TODO: Открыть в новой вкладке + окне
 
 
 
