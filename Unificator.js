@@ -471,9 +471,11 @@ function makeReload(waitMs=0){ console.log('# Reload #\n\nTimeMs: '+waitMs);  se
 function makeTabUrl( url ){ history.pushState(null, null, '/'); history.pushState(null, null, url); }
 function makeRedirect(url, waitMs=0){ console.log('# Redirect #\n\nURL: '+url+'\nTimeMs: '+waitMs);  setTimeout(function(){ window.location.replace(url); }, waitMs); }
 // makeRedirect('/'); makeRedirect('/', 5000);
-// TODO: 
+// TODO: Открыть в новой вкладке + окне
 
-
+function makeNewWindow( url , windowName , windowOpst='width=800,height=600 , top=150,left=150')
+{ window.open( url , windowName , windowOpst ); }
+// makeNewWindow('https://yandex.ru','123321')
 
 
 
@@ -632,6 +634,15 @@ function dev_makeBigUrl( ){ return 'https://www.test.123.com/aaa/f&?ffd=123'; }
 function dev_makeObj( ){ return {'a':234,'b':42,'c':[0,1,2],'d':25.837}; }
 function dev_makeJsonStr( ){ return '{"a":234,"b":42,"c":[0,1,2],"d":25.837}'; }
 
+
+
+
+
+
+
+logLine_11();
+logOneRed('#### Unificator - Объявлен ####')
+logLine_11();
 
 /* <+++> 123 <+++> */
 // #### #### #### ####
