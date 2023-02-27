@@ -156,6 +156,19 @@ function errorPrinter(e){ console.log(`${e.stack}\n\nMsg: ${e.message}\nName: ${
 // ### ### ### ### ### ### ### ###
 // **/   Работа с событиями    \**
 function addEvent_ExitDialog( ){  window.onbeforeunload = function() { return false; /* Либо текст */ };  }
+function addEvent_DisableFormSubmits( )
+{
+    let forms = document.querySelectorAll('form');
+    forms.forEach( function(one ,i , arr)
+    {
+        one.addEventListener('submit', function(event)
+        {
+            event.preventDefault();
+            alert('Заблочена отправка формы');
+        }); /* Работает */
+    });
+}
+
 
 
 
@@ -174,11 +187,9 @@ function tag_getOneOrFalse  (target){ var res = document.querySelectorAll(target
 
 // ### ### ### ### ### ### ### ###
 // **/  Действия на странице   \**
-function action_Click_BySel( selector )
-{
+function action_Click_BySelFirst ( selector ){ document.querySelectorAll(selector)[0].click(); }
+function action_Submit_BySelFirst( selector ){ document.querySelectorAll(selector)[0].submit(); }
 
-
-}
 
 
 // ### ### ### ### ### ### ###
@@ -252,7 +263,28 @@ function frames_SelectMain( frame )
 
 // ### ### ### ### ### ### ###
 // **/       Парсер       \**
+function easyFormsParcer(  )
+{
+    var finalJson = { };
+    var arrElems = document.querySelectorAll( 'form' );
+    console.log('Найдено: '+arrElems.length);
 
+    arrElems.forEach( function( e , i )
+    {
+        finalJson[i] = {
+            '_raw' : e,
+            '_action' : e.action,
+            '_id' : e.id,
+            '_method' : e.method,
+            'innerHTML' : e.innerHTML,
+            'innerText' : e.innerText,
+            'outerHTML' : e.outerHTML,
+        };
+        //console.log(e);
+    });
+
+    console.log(finalJson);
+}
 function easyHrefParcer( selector )
 {
 	var finalJson = { };
