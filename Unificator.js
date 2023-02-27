@@ -153,6 +153,9 @@ window.dd = function (...data) { console.log('\n\n\n#=#=#=#=#=#=#=#=#=#=#=#=#=#=
 function errorPrinter(e){ console.log(`${e.stack}\n\nMsg: ${e.message}\nName: ${e.name}\n\nFile: ${e.fileName}\nLine: ${e.lineNumber}\nCol:  ${e.columnNumber}\n\nCause: ${e.cause}`); }
 
 
+// ### ### ### ### ### ### ### ###
+// **/   Работа с событиями    \**
+function addEvent_ExitDialog( ){  window.onbeforeunload = function() { return false; /* Либо текст */ };  }
 
 
 
@@ -166,6 +169,18 @@ function tag_getOneOrFalse  (target){ var res = document.querySelectorAll(target
 //elem_GetSubElements_AllOrFalse...    брать из скипта вк
 //elem_GetSubElements_FirstOrFalse
 //elem_GetSubElements_OneOrFalse
+
+
+
+// ### ### ### ### ### ### ### ###
+// **/  Действия на странице   \**
+function action_Click_BySel( selector )
+{
+
+
+}
+
+
 
 
 
@@ -476,7 +491,6 @@ function makeRedirect(url, waitMs=0){ console.log('# Redirect #\n\nURL: '+url+'\
 // **/  Работа с новым окном и вкладками   \**
 function makeWindowNew( url , windowName , windowOpst='width=800,height=600 , top=150,left=150'){ window.open( url , windowName , windowOpst ); }
 function makeTabNew( url ){ window.open( url , '_blank' ); }
-function makeTabCloseCurrent(  ){ window.close(  ); }
 /* https://itchief.ru/javascript/popup-browser-windows */
 // makeNewWindow('https://yandex.ru','123321')
 
@@ -642,6 +656,10 @@ function dev_makeJsonStr( ){ return '{"a":234,"b":42,"c":[0,1,2],"d":25.837}'; }
 
 
 
+
+
+  window.addEventListener('load', function(){ logOneRed('#### Страница загружена ####'); });
+document.addEventListener('DOMContentLoaded', function(){ logOneRed('#### Зависимости загружены - DOMContentLoaded ####'); });
 
 logLine_11();
 logOneRed('#### Unificator - Объявлен ####')
