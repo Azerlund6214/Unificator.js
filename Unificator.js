@@ -616,8 +616,19 @@ function base64_decodeEngOnly( text ){ return atob(text); }
 // MD5
 
 
-// ### ### ### ### ### ### ###
-// **/ Пока пусть лежит тут \**
+// ### ### ### ### ###
+// **/   Toasts    \**
+function toastMake_Success( text , title='' ){ toastr.success(text,title); } //
+function toastMake_Info   ( text , title='' ){ toastr.info   (text,title); } //
+function toastMake_Error  ( text , title='' ){ toastr.error  (text,title); } //
+function toastMake_Warning( text , title='' ){ toastr.warning(text,title); } //
+function toastMake_Debug  ( ){ var t1='Text123'; var t2='Title_456'; toastMake_Success(t1,t2); toastMake_Info(t1,t2); toastMake_Error(t1,t2); toastMake_Warning(t1,t2); } //
+
+
+
+
+// ### ### ### ### ### ### ### ###
+// **/  Пока пусть лежит тут   \**
 function jqueryLoaded(){ return ( (typeof(jQuery) !== 'undefined') ); /* typeof($) ложно срабатывал  |  jQuery.isReady  */ }; // Костыльненько :)
 function jqueryVersion(){ console.log('JQuery = v'+jQuery.fn.jquery); } // "JQuery = v3.5.0"
 function checkFunctionExist( callableFunc ){ return (typeof callableFunc === "function"); } // !!! Оборачивать вызов в TryCatch
@@ -701,27 +712,25 @@ function loadScript___(){ head_addScriptBySrc(''); head_addScriptByText(''); } /
 function loadScript____(){ head_addScriptBySrc(''); setTimeout(function(){ body_addScriptByText(''); }, 3000);} //
 function loadScript_JQuery_My() { head_addScriptBySrc('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js' ); } // Payeer
 function loadScript_JQuery_New(){ head_addScriptBySrc('https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js'); } // Мой
-
 function loadScript_Toasts(){
+    head_addComment(' Toastr = Уведомления в углу = CDN ');
     head_addScriptBySrc('https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js');
     head_addStyleBySrc('https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css');
+    logOneBlue('toastr - Скрипты добавлены');
 
+    setTimeout( function(){
+        head_addScriptByText('toastr.options = { "closeButton": true,  "debug": false,  "newestOnTop": true,  "progressBar": true,  "positionClass": "toast-top-right",  "preventDuplicates": false,  "onclick": null,  "showDuration": "300",  "hideDuration": "1000",  "timeOut": "10000",  "extendedTimeOut": "1000",  "showEasing": "swing",  "hideEasing": "linear",  "showMethod": "fadeIn",  "hideMethod": "fadeOut"}; ');
+        head_addStyleByText('.toast-top-right { top: 50px; }');
+        logOneBlue('toastr - Опции добавлены');
+        //if( ! isUndef( toastr ) )
+    } , 600 );
 
 } //
-
-
-
-
 
 
 function loadScript___SnowFlakes(){ head_addScriptBySrc('https://s.siteapi.org/frontend/static/snowflakes.min.js'); setTimeout(function(){ body_addScriptByText('var sf = new Snowflakes();'); }, 3000);} // https://github.com/hcodes/snowflakes/releases
 function loadScript_Snowstorm(){ head_addScriptBySrc('https://cdnjs.cloudflare.com/ajax/libs/Snowstorm/20131208/snowstorm-min.js'); setTimeout(function(){ head_addScriptByText('snowStorm.autoStart = true; snowStorm.flakesMax = 128; snowStorm.flakesMaxActive = 128; snowStorm.start()'); }, 3000); } // http://www.schillmania.com/projects/snowstorm/
 //loadScript___SnowFlakes + loadScript_Snowstorm // Точно работает на википедии и cssscript.com/tag/snow/
-
-
-
-
-
 
 
 
