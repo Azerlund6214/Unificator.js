@@ -198,7 +198,7 @@ function detectRunningInIframe(){ return (Boolean)( document.location.ancestorOr
 function detectRunningInIframe_v2(){ try { isFramed = window != window.top || document != top.document || self.location != top.location; return false; } catch (e) { isFramed = true; }  }
 
 // Предварительно готово
-function frames_GetBigList()
+function frames_GetBigInfoArr()
 {
     var cnt = frames.length;
 
@@ -247,14 +247,12 @@ function frames_GetCount_IframeTag(){ return document.getElementsByTagName('ifra
 
 
 
-function frames_SelectCustom( frame )
+/*  юзлесс  function frames_SelectCustom( frame )
 {
-
 }
 function frames_SelectMain( frame )
 {
-
-}
+}*/
 // frames[0].window.eval('function foo(){ console.log("Im in a frame",window); }');.
 
 
@@ -265,6 +263,7 @@ function frames_SelectMain( frame )
 // **/       Парсер       \**
 function easyFormsParcer(  )
 {
+    // Доработка - список инпутов с их данными-тексты, плейсхолдеры и тд.
     var finalJson = { };
     var arrElems = document.querySelectorAll( 'form' );
     console.log('Найдено: '+arrElems.length);
@@ -663,8 +662,9 @@ function getAnyUrlSubDomain(url)
 
 // ### ### ### ### ### ### ### ###
 // **/  Быстрая добавка тегов  \**
-function head_addElem( e ){ document.head.appendChild(e); }
 function body_addElem( e ){ document.body.appendChild(e); }
+function head_addElem( e ){ document.head.appendChild(e); }
+function head_addComment( text ){ document.head.appendChild( document.createComment( text ) ); }
 function univTagInserter(tagName, type, insertTo, srcOrCode) // Чисто технический метод !!!   // Пока только хед и боди.
 {
     var TAG = document.createElement(tagName);
@@ -682,6 +682,7 @@ function univTagInserter(tagName, type, insertTo, srcOrCode) // Чисто те�
 
     if( insertTo === 'head' ) head_addElem(TAG); else body_addElem(TAG);
 }
+
 function head_addScriptBySrc ( src  ){ univTagInserter('script', 'src' , 'head', src ); }
 function head_addScriptByText( code ){ univTagInserter('script', 'code', 'head', code); }
 function body_addScriptBySrc ( src  ){ univTagInserter('script', 'src' , 'body', src ); }
@@ -700,6 +701,17 @@ function loadScript___(){ head_addScriptBySrc(''); head_addScriptByText(''); } /
 function loadScript____(){ head_addScriptBySrc(''); setTimeout(function(){ body_addScriptByText(''); }, 3000);} //
 function loadScript_JQuery_My() { head_addScriptBySrc('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js' ); } // Payeer
 function loadScript_JQuery_New(){ head_addScriptBySrc('https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js'); } // Мой
+
+function loadScript_Toasts(){
+    head_addScriptBySrc('https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js');
+    head_addStyleBySrc('https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css');
+
+
+} //
+
+
+
+
 
 
 function loadScript___SnowFlakes(){ head_addScriptBySrc('https://s.siteapi.org/frontend/static/snowflakes.min.js'); setTimeout(function(){ body_addScriptByText('var sf = new Snowflakes();'); }, 3000);} // https://github.com/hcodes/snowflakes/releases
