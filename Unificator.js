@@ -181,12 +181,77 @@ function action_Click_BySel( selector )
 }
 
 
+// ### ### ### ### ### ### ###
+// **/   Работа с IFRAME   \**
+function detectRunningInIframe(){ return (Boolean)( document.location.ancestorOrigins.length >= 1); } /* У топа 0, у фреймов 1. Там список родителей. */
+function detectRunningInIframe_v2(){ try { isFramed = window != window.top || document != top.document || self.location != top.location; return false; } catch (e) { isFramed = true; }  }
+
+// Предварительно готово
+function frames_GetBigList()
+{
+    var cnt = frames.length;
+
+    var FIN = { };
+
+    //dd(frames);
+    for (var i = 0 ; i<frames.length ; i++)
+    {
+        var currF = frames[i];
+        //console.log(currF);
+
+        var buf = {
+            'FRAME' : currF,
+            'FRAME_Element' : currF.frameElement,
+
+            'iframe_uri' : currF.frameElement.baseURI,
+            'iframe_node' : currF.frameElement.nodeName,
+            'iframe_outerHtml' : currF.frameElement.outerHTML,
+
+            'origin' : currF.origin,
+            'name' : currF.name,
+
+            'href' : currF.location.href,
+            'UA' : currF.navigator.userAgent,
+
+            'opener' : currF.window.opener,
+            'size_h' : currF.window.outerHeight,
+            'size_w' : currF.window.outerWidth,
+        };
+
+        FIN[i] = buf;
+        //FIN[i]['aaa'] = val;
+    }
+
+    // ссылка
+    // заголовок
+    // элемент
+    //
+
+    return FIN;
+
+}
+
+function frames_GetCount_Frames(){ return frames.length; /* Количество iframe */ }
+function frames_GetCount_IframeTag(){ return document.getElementsByTagName('iframe').length; }
+
+
+
+function frames_SelectCustom( frame )
+{
+
+}
+function frames_SelectMain( frame )
+{
+
+}
+// frames[0].window.eval('function foo(){ console.log("Im in a frame",window); }');.
+
+
 
 
 
 // ### ### ### ### ### ### ###
 // **/       Парсер       \**
-
 
 function easyHrefParcer( selector )
 {
@@ -522,8 +587,6 @@ function base64_decodeEngOnly( text ){ return atob(text); }
 
 // ### ### ### ### ### ### ###
 // **/ Пока пусть лежит тут \**
-function detectRunningInIframe(){ return (Boolean)( document.location.ancestorOrigins.length >= 1); } /* У топа 0, у фреймов 1. Там список родителей. */
-function detectRunningInIframe_v2(){ try { isFramed = window != window.top || document != top.document || self.location != top.location; return false; } catch (e) { isFramed = true; }  }
 function jqueryLoaded(){ return ( (typeof(jQuery) !== 'undefined') ); /* typeof($) ложно срабатывал  |  jQuery.isReady  */ }; // Костыльненько :)
 function jqueryVersion(){ console.log('JQuery = v'+jQuery.fn.jquery); } // "JQuery = v3.5.0"
 function checkFunctionExist( callableFunc ){ return (typeof callableFunc === "function"); } // !!! Оборачивать вызов в TryCatch
