@@ -627,6 +627,15 @@ function base64_decodeEngOnly( text ){ return atob(text); }
 // MD5
 
 
+// ### ### ### ### ### ### ###
+// **/   Работа с JSON   \**
+function JSON_ENCODE( all ){  return JSON.stringify( all , null, 4 ); /* Либо текст */  }
+function JSON_DECODE( all ){  return JSON.parse( all ); /* Может вылететь */  }
+
+
+
+
+
 // ### ### ### ### ###
 // **/   Toasts    \**
 function toastMake_Success( text , title='' ){ toastr.success(text,title); } //
