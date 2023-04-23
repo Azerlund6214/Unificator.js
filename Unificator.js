@@ -638,6 +638,60 @@ function JSON_DECODE( all ){  return JSON.parse( all ); /* Может вылет
 // ### ### ### ### ### ### ###
 // **/ Задержки и ожидание \**
 
+function sleep_dates(ms)
+{
+    var i = 0;
+    const date = Date.now();
+    do {
+        i++;
+
+        // Бесполезные вычисления чтоб снизить количество итераций и нагрузку на проц.
+        
+
+    } while ( (Date.now()-date) < ms);
+    log('i='+i , 'ms='+ms);
+}
+// Работает. Пока самый нормальный аналог. Будет сильно грузить проц.   Подскакивает до 50% стабильно.
+// Циклов за = 1 сек:(7917468,8032741,7804791,8015565,7910767) | 10 сек:(80913843,80242900,)
+// Проблема: Огромное количество итераций - 8млн/сек.    Надо снизить путем забивания тела нагрузкой.
+// Заметки: Ведение доп переменной для тек даты вообще не изменило итерации.
+
+
+
+function sleep_promise(ms)
+{
+    return new Promise(resolve => setTimeout(resolve, ms));
+    //sleep_promise(2000).then(() => { console.log("World!"); });
+}
+
+async function sleep_promise_await()
+{
+    console.log("Hello");
+    await sleep_promise(2000);
+    console.log("World!");
+}
+
+function sleep_TEST()
+{
+    //console.log("Hello");
+    //sleep_dates(2000);
+    //console.log("World!");
+
+    console.log("123123");
+    sleep_promise_await();
+    console.log("767878768");
+
+    return;
+    console.log("Hello");
+    sleep_promise(2000).then(() => { console.log("World!"); });
+    console.log("Hello234"); // выведется сразу
+
+    //
+
+
+}
+
+
 
 
 
