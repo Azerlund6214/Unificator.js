@@ -638,59 +638,33 @@ function JSON_DECODE( all ){  return JSON.parse( all ); /* Может вылет
 // ### ### ### ### ### ### ###
 // **/ Задержки и ожидание \**
 
-function sleep_dates(ms)
+function SLEEP( secFloat , needLog=true )
 {
+    var ms = secFloat*1000;
+
+    var text = 'SLEEP: ('+secFloat+'сек => '+ms+'мс)';
+    if(needLog) console.log( text+' Begin' );
+
     var i = 0;
     const date = Date.now();
     do {
         i++;
-
-        // Бесполезные вычисления чтоб снизить количество итераций и нагрузку на проц.
-        
-
+        // Бесполезные вычисления чтоб снизить количество итераций.
+        //atob(btoa('BlaBlaBlaBlaBlaBlaBlaBla'.repeat(1000)));  // Снижает до  12512,/сек   проц 50
     } while ( (Date.now()-date) < ms);
-    log('i='+i , 'ms='+ms);
+    if(needLog) console.log( text+' i='+i );
 }
 // Работает. Пока самый нормальный аналог. Будет сильно грузить проц.   Подскакивает до 50% стабильно.
-// Циклов за = 1 сек:(7917468,8032741,7804791,8015565,7910767) | 10 сек:(80913843,80242900,)
+// Циклов без нагрузки за = 1 сек:(7917468,8032741,7804791,8015565,7910767) | 10 сек:(80913843,80242900,)
 // Проблема: Огромное количество итераций - 8млн/сек.    Надо снизить путем забивания тела нагрузкой.
 // Заметки: Ведение доп переменной для тек даты вообще не изменило итерации.
-
-
+// Заметки: Забивает проц на 50% ли 100%.   Пусть так, главное функционал.
 
 function sleep_promise(ms)
 {
     return new Promise(resolve => setTimeout(resolve, ms));
     //sleep_promise(2000).then(() => { console.log("World!"); });
-}
-
-async function sleep_promise_await()
-{
-    console.log("Hello");
-    await sleep_promise(2000);
-    console.log("World!");
-}
-
-function sleep_TEST()
-{
-    //console.log("Hello");
-    //sleep_dates(2000);
-    //console.log("World!");
-
-    console.log("123123");
-    sleep_promise_await();
-    console.log("767878768");
-
-    return;
-    console.log("Hello");
-    sleep_promise(2000).then(() => { console.log("World!"); });
-    console.log("Hello234"); // выведется сразу
-
-    //
-
-
-}
-
+} // Плохой. Задерживает только себя и свою функцию.  + надо все изолировать в него.  Будет очень неудобным
 
 
 
@@ -918,13 +892,20 @@ function loadScript__(){ head_addScriptByText(''); } //
 function loadScript___(){ head_addScriptBySrc(''); head_addScriptByText(''); } //
 function loadScript____(){ head_addScriptBySrc(''); setTimeout(function(){ body_addScriptByText(''); }, 3000);} //
 
-function loadScript_JQuery_My() { head_addScriptBySrc('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js' ); } // Payeer
-function loadScript_JQuery_New(){ head_addScriptBySrc('https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js'); } // Мой
+function loadScript_JQuery_New() { head_addScriptBySrc('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js' ); } // Payeer
+function loadScript_JQuery_My () { head_addScriptBySrc('https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js'); } // Мой
 function loadScript_Toasts(){
     head_addComment(' Toastr = Уведомления в углу = CDN ');
     head_addScriptBySrc('https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js');
     head_addStyleBySrc('https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css');
+
     logOneBlue('toastr - Скрипты добавлены');
+
+    if( ! jqueryLoaded() )
+    {
+        loadScript_JQuery_My();
+        logOneBlue('JQuery My - Скрипт добавлен (Он нужен)');
+    }
 
     setTimeout( function(){
         head_addScriptByText('toastr.options = { "closeButton": true,  "debug": false,  "newestOnTop": true,  "progressBar": true,  "positionClass": "toast-top-right",  "preventDuplicates": false,  "onclick": null,  "showDuration": "300",  "hideDuration": "1000",  "timeOut": "10000",  "extendedTimeOut": "1000",  "showEasing": "swing",  "hideEasing": "linear",  "showMethod": "fadeIn",  "hideMethod": "fadeOut"}; ');
