@@ -897,7 +897,7 @@ function loadScript_JQuery_My () { head_addScriptBySrc('https://cdnjs.cloudflare
 function loadScript_Toasts(){
     head_addComment(' Toastr = Уведомления в углу = CDN ');
     head_addScriptBySrc('https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js');
-    head_addStyleBySrc('https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css');
+    head_addStyleBySrc ('https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css');
 
     logOneBlue('toastr - Скрипты добавлены');
 
