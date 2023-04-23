@@ -112,6 +112,17 @@ function obj_deleteByKey( obj, key ){ delete obj[ key ]; /* Возврат не 
 
 
 // ### ### ### ### ### ### ###
+// **/ Мои аналоги PHP методов. Без защиты от дурака. \**
+function PHP_explode(separator,string){ return string.split(separator); }
+function PHP_str_contains(haystack,needle){ return ( haystack.indexOf(needle) > -1 ); }
+function PHP_str_replace(search,replace,subject){ return subject.replace(search, replace); }
+function PHP_trim(string){ return string.trim(); } // Спорно
+function PHP_trimTextRecursive(string){ for( ; string.indexOf('  ') > -1 ; )  string = string.replace('  ',' ');  for( ; string.indexOf('\n\n') > -1 ; ) string = string.replace('\n\n','\n');  for( ; string.indexOf('\n \n') > -1 ; ) string = string.replace('\n \n','\n'); return string.trim();  }
+function PHP_random_int(min, max){ return Math.floor(Math.random() * (max - min + 1) + min); }
+// Не переразбирал
+
+
+// ### ### ### ### ### ### ###
 // **/ Генераторы и рандом \**
 function genRandom_Int( min=0, max=99 ) { if( max ) { return Math.floor(Math.random() * (max - min + 1)) + min; } else { return Math.floor(Math.random() * (min + 1)); } }
 function genRandom_String( len=6, alphabet='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789' ){ var res = ""; while (res.length < len) { res += alphabet[Math.floor(Math.random() * alphabet.length)];} return res;}
@@ -672,6 +683,133 @@ function getAnyUrlSubDomain(url)
 
 
 // ### ### ### ### ### ### ### ###
+// **/  Крупные парсеры инфы  \**
+
+// Главный метод, который вытаскивает все и сразу.
+function getAll_StaticInfo()
+{
+    // FINAL
+    // Получить всю инфу о экране.
+    function getArrInfo_Screen()
+    {
+        return {
+
+            // Вся инфа: https://habr.com/ru/post/509258/   https://learn.javascript.ru/size-and-scroll-window
+
+            // Палим полное, исходное разрешение экрана.
+            //'screenResWidht' : window.screen.width,
+            //'screenResHeight' : window.screen.height,
+            'screenResolution' : window.screen.width+'x'+window.screen.height,
+
+            // Размер всего окна браузера целиком. (Если фулл скрин, то вычитается панель системы внизу.)
+            //'browserFullSizeWidth'  : window.outerWidth,
+            //'browserFullSizeHeight' : window.outerHeight,
+            'browserFullSize' : window.outerWidth+'x'+window.outerHeight,
+
+            // Максимальный(полный) размер окна просмотра (вся видимая часть) (Без учета полоски)
+            //'viewportMaxWidth'  : document.documentElement.clientWidth,
+            //'viewportMaxHeight' : document.documentElement.clientHeight,
+            'viewportMax' : document.documentElement.clientWidth+'x'+document.documentElement.clientHeight,
+
+            // Реально доступный размер окна просмотра (вся видимая часть) (с вычетом полоски)
+            //'viewportAvalWidth'  : window.innerWidth,   // Ширина полного окна, с учетом полоски
+            //'viewportAvalHeight' : window.innerHeight, // Высота полного окна, с учетом полоски
+            'viewportAvalaible'  : window.innerWidth+'x'+window.innerHeight,
+
+            // ####
+
+            'scrollWidth'  : document.documentElement.scrollWidth,  // хз
+            'scrollHeight' : document.documentElement.scrollHeight, // хз
+
+            //'fullScrollHeight' : Math.max(   // Полная высота документа с прокручиваемой частью
+            //						document.body.scrollHeight, document.documentElement.scrollHeight,
+            //						document.body.offsetHeight, document.documentElement.offsetHeight,
+            //						document.body.clientHeight, document.documentElement.clientHeight),
+        };
+    }
+
+    // FINAL
+    // Получить всю инфу о Времени/дате/поясе.
+    function getArrInfo_DateTime()
+    {
+        var now = new Date();
+
+        var gmtRe = /GMT([\-\+]?\d{4})/; // Look for GMT, + or - (optionally), and 4 characters of digits (\d)
+        var dtFull = now.toString();
+        var tzNums = gmtRe.exec(dtFull)[1]; // timezone, i.e. -0700
+
+        var tzText = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+        return {
+            'timeZoneText' : tzText, // Europe/Moscow
+            'timeZoneNums' : tzNums, // +0300
+
+            'dateTimeFull' : dtFull, // Sat Jan 08 2022 01:10:02 GMT+0300 (Москва, стандартное время)
+            //'dateOnly' : now.toLocaleDateString(), // 08.01.2022
+            //'timeOnly' : now.toLocaleTimeString(), // 01:14:59
+            //'dateAndTime' : now.toLocaleString(), // 08.01.2022, 01:15:50
+        };
+    }
+
+    // FINAL
+    // Получить всю инфу о браузере. Особенно UA.
+    function getArrInfo_Navigator()
+    {
+        return {
+            'UA' : navigator.userAgent, // Mozilla/5.0 (Windows NT 6.3) ...
+            'lang' : navigator.language, // ru-RU
+            'langs' : JSON.stringify(navigator.languages), // ["ru-RU","ru","en-US","en"]
+            'platform' : navigator.platform, // Win32
+
+            'browserAppName' : navigator.appName, // Netscape
+            'browserProduct'   : navigator.product,   // Gecko
+            'browserProductSub'  : navigator.productSub, // 20030107
+            'browserVendor'     : navigator.vendor,     // Google Inc.
+            'browserVendorSub' : navigator.vendorSub, // '' пусто
+
+            //'6' : navigator.mediaDevices, // [object MediaDevices]
+            //'4' : navigator.clipboard, // [object Clipboard]
+            //'5' : navigator.plugins, // [object PluginArray]
+        };
+    }
+
+
+    // ### Все методы объявлены ###
+
+    return {
+        'SCREEN'    : getArrInfo_Screen(),
+        'DATETIME'  : getArrInfo_DateTime(),
+        'NAVIGATOR' : getArrInfo_Navigator(),
+    };
+
+}
+
+// FINAL = Получить всю инфу о текущей ссылке. Особенно path.
+function getAll_UriInfo()
+{
+    // <protocol>//<hostname>:<port>/<pathname><search><hash>  https://stackoverflow.com/a/20746566
+    return {
+        'URI' : window.location.href, // https://ru.wikipedia.org/wiki/123/?var=123123#test
+        'URI_alt' : document.baseURI, // https://ru.wikipedia.org/wiki/123/?var=123123#test
+
+        'PROTOCOL' : window.location.protocol, // https:
+
+        'HOSTNAME' : window.location.hostname, // ru.wikipedia.org  возможно для впс и тд
+        'HOST' : window.location.host,     // ru.wikipedia.org
+
+        'PATH' : window.location.pathname, //  /wiki/123.php    Без слеша в конце
+
+        'SEARCH' : window.location.search, // ?ggg=789   ?var=123123
+        'ORIGIN' : window.location.origin, // https://site.com
+
+        'HASH' : window.location.hash, //   #test
+        'PORT' : window.location.port, // Пусто, видимо надо сокет, тогда покажет = 123123.com:8956
+    };
+}
+
+
+
+// ### ### ### ### ### ### ### ###
 // **/  Быстрая добавка тегов  \**
 function body_addElem( e ){ document.body.appendChild(e); }
 function head_addElem( e ){ document.head.appendChild(e); }
@@ -710,6 +848,7 @@ function loadScript_(){ head_addScriptBySrc(''); } //
 function loadScript__(){ head_addScriptByText(''); } //
 function loadScript___(){ head_addScriptBySrc(''); head_addScriptByText(''); } //
 function loadScript____(){ head_addScriptBySrc(''); setTimeout(function(){ body_addScriptByText(''); }, 3000);} //
+
 function loadScript_JQuery_My() { head_addScriptBySrc('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js' ); } // Payeer
 function loadScript_JQuery_New(){ head_addScriptBySrc('https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js'); } // Мой
 function loadScript_Toasts(){
@@ -734,28 +873,7 @@ function loadScript_Snowstorm(){ head_addScriptBySrc('https://cdnjs.cloudflare.c
 
 
 
-// FINAL = Получить всю инфу о текущей ссылке. Особенно path.
-function getAllUriInfo()
-{
-    // <protocol>//<hostname>:<port>/<pathname><search><hash>  https://stackoverflow.com/a/20746566
-    return {
-        'URI' : window.location.href, // https://ru.wikipedia.org/wiki/123/?var=123123#test
-        'URI_alt' : document.baseURI, // https://ru.wikipedia.org/wiki/123/?var=123123#test
-
-        'PROTOCOL' : window.location.protocol, // https:
-
-        'HOSTNAME' : window.location.hostname, // ru.wikipedia.org  возможно для впс и тд
-        'HOST' : window.location.host,     // ru.wikipedia.org
-
-        'PATH' : window.location.pathname, //  /wiki/123.php    Без слеша в конце
-
-        'SEARCH' : window.location.search, // ?ggg=789   ?var=123123
-        'ORIGIN' : window.location.origin, // https://site.com
-
-        'HASH' : window.location.hash, //   #test
-        'PORT' : window.location.port, // Пусто, видимо надо сокет, тогда покажет = 123123.com:8956
-    };
-}
+// TODO: Такой же метод, но про инфу юзера.  Найти.
 
 
 
