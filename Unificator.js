@@ -307,7 +307,17 @@ function easyHrefParcer( selector )
 		finalJson[i] = e.href;
 	});
 	
-	console.log(finalJson);
+	return finalJson;
+}
+function easyHrefParcer_VkAlbum(  )
+{
+    var resJson = easyHrefParcer( '.photos_row a' );
+    var resArr = [];
+    
+    for (var key in resJson)
+        resArr[key] = str_explode('?',resJson[key])[0];
+
+    return resArr;
 }
 //easyHrefParcer('div.content div div a[style="color: inherit"]');
 
