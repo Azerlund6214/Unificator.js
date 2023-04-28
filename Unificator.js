@@ -272,7 +272,7 @@ function frames_SelectMain( frame )
 
 // ### ### ### ### ### ### ###
 // **/       Парсер       \**
-function easyFormsParcer(  )
+function easyParcer_Forms_AUTO(  )
 {
     // Доработка - список инпутов с их данными-тексты, плейсхолдеры и тд.
     var finalJson = { };
@@ -295,7 +295,7 @@ function easyFormsParcer(  )
 
     console.log(finalJson);
 }
-function easyHrefParcer( selector )
+function easyParcer_Href( selector )
 {
 	var finalJson = { };
 	var arrElems = document.querySelectorAll(selector);
@@ -309,9 +309,9 @@ function easyHrefParcer( selector )
 	
 	return finalJson;
 }
-function easyHrefParcer_VkAlbum(  )
+function easyParcer_Href_VkAlbum(  )
 {
-    var resJson = easyHrefParcer( '.photos_row a' );
+    var resJson = easyParcer_Href( '.photos_row a' );
     var resArr = [];
     
     for (var key in resJson)
@@ -319,6 +319,52 @@ function easyHrefParcer_VkAlbum(  )
 
     return resArr;
 }
+
+
+// Будут элементы с   null
+function convertJson1lvl_ToArray( json )
+{
+    var resArr = [];
+    
+    for (var key in json)
+        resArr[key] = json[key];
+    
+    return resArr;
+}
+
+// Для https://www.fakepersongenerator.com/imei-generator
+function easyParcer_imei_FPG( maxLen=25  )
+{
+    var finalJson = { };
+    var arrElems = document.querySelectorAll('ul.list-unstyled.imei li');
+    console.log(arrElems.length);
+    
+    arrElems.forEach( function( e , i )
+    {
+        var text = e.textContent;
+        
+        var buf = {
+            'IMEI' : PHP_trim( str_explode('Mobile Brand:',text)[0] ),
+            'BRAND': PHP_trim( str_explode('Mobile Model:', str_explode('Mobile Brand:', text)[1])[0] ),
+            'MODEL': PHP_trim( str_explode('Mobile Model:', text)[1] ),
+        };
+        
+        buf['MODEL_LEN'] = buf['MODEL'].length;
+        
+        if( buf['MODEL_LEN'] >= maxLen )
+        {
+            log(buf['MODEL'],buf['MODEL_LEN']);
+        }
+        else
+        {
+            finalJson[i] = buf;
+        }
+        
+    });
+    
+    return finalJson;
+}
+log( convertJson1lvl_ToArray( easyParcer_imei_FPG() ) );
 //easyHrefParcer('div.content div div a[style="color: inherit"]');
 
 
