@@ -110,6 +110,20 @@ function arr_deleteLast( arr, index ){ arr.splice(arr.length-1 , 1); /* Возв
 function obj_keys( obj ){ return Object.keys(obj); } // Только объекты{1:2}.  Для массива вернет 0123
 function obj_deleteByKey( obj, key ){ delete obj[ key ]; /* Возврат не нужен, тут по ссылке */ }
 
+// ### ### ### ### ### ### ###
+// **/ Конвертеры  \**
+
+// Будут элементы с   null
+function convert_Json1lvl_To_Array( json )
+{
+    var resArr = [];
+    
+    for (var key in json)
+        resArr[key] = json[key];
+    
+    return resArr;
+}
+
 
 // ### ### ### ### ### ### ###
 // **/ Мои аналоги PHP методов. Без защиты от дурака. \**
@@ -309,6 +323,8 @@ function easyParcer_Href( selector )
 	
 	return finalJson;
 }
+//easyHrefParcer('div.content div div a[style="color: inherit"]');
+
 function easyParcer_Href_VkAlbum(  )
 {
     var resJson = easyParcer_Href( '.photos_row a' );
@@ -321,19 +337,9 @@ function easyParcer_Href_VkAlbum(  )
 }
 
 
-// Будут элементы с   null
-function convertJson1lvl_ToArray( json )
-{
-    var resArr = [];
-    
-    for (var key in json)
-        resArr[key] = json[key];
-    
-    return resArr;
-}
 
-// Для https://www.fakepersongenerator.com/imei-generator
-function easyParcer_imei_FPG( maxLen=25  )
+// Для https://www.fakepersongenerator.com/imei-generator => работает отлично.
+function easyParcer_imei_FPG( maxLen=30  )
 {
     var finalJson = { };
     var arrElems = document.querySelectorAll('ul.list-unstyled.imei li');
@@ -364,8 +370,7 @@ function easyParcer_imei_FPG( maxLen=25  )
     
     return finalJson;
 }
-log( convertJson1lvl_ToArray( easyParcer_imei_FPG() ) );
-//easyHrefParcer('div.content div div a[style="color: inherit"]');
+//log( convert_Json1lvl_To_Array( easyParcer_imei_FPG(40) ) );
 
 
 // TODO: Допсать обработчик data-полей  там на 95% готово.
