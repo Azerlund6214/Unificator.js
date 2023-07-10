@@ -655,18 +655,30 @@ function makeTabUrl( url ){ history.pushState(null, null, '/'); history.pushStat
 function makeRedirect(url, waitMs=0){ console.log('# Redirect #\n\nURL: '+url+'\nTimeMs: '+waitMs);  setTimeout(function(){ window.location.replace(url); }, waitMs); }
 // makeRedirect('/'); makeRedirect('/', 5000);
 
+
+
+
+
+
 // ### ### ### ### ### ### ### ### ### ### ###
 // **/  Работа с новым окном и вкладками   \**
 function makeWindowNew( url , windowName , windowOpst='width=800,height=600 , top=150,left=150'){ window.open( url , windowName , windowOpst ); }
-function makeTabNew( url ){ window.open( url , '_blank' ); }
+
+
+
+function TAB_MakeNew( url ){ window.open( url , '_blank' ); }
 /* https://itchief.ru/javascript/popup-browser-windows */
-// makeNewWindow('https://yandex.ru','123321')
+// TAB_MakeNew('https://yandex.ru','123321')
+
+
+
+
 
 
 
 // ### ### ### ### ### ### ###
 // **/  Кодировщики и тп   \**
-function base64_decodeEngRus( data ) {
+function base64_decodeEngRus ( data ) {
     function utf8_for_base64 (utftext)
     {
         var string = ""; var i = 0; var c = c1 = c2 = 0; while ( i < utftext.length ) { c = utftext.charCodeAt(i);
