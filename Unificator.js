@@ -665,11 +665,11 @@ function makeRedirect(url, waitMs=0){ console.log('# Redirect #\n\nURL: '+url+'\
 function makeWindowNew( url , windowName , windowOpst='width=800,height=600 , top=150,left=150'){ window.open( url , windowName , windowOpst ); }
 
 
-
-function TAB_MakeNew( url ){ window.open( url , '_blank' ); }
+function TAB_MakeTest( ){ return TAB_Make('https://stackoverflow.com/') }
+function TAB_Make( url ){ return window.open( url , '_blank' ,''); }
+// !!! Тут работает CORS.  Даст EVAL только для вкладок с тем же доменом.
 /* https://itchief.ru/javascript/popup-browser-windows */
-// TAB_MakeNew('https://yandex.ru','123321')
-
+/* https://doka.guide/js/window-open/ */
 
 
 
