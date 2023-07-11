@@ -607,8 +607,7 @@ function page_getAllLinksElems(){ return document.querySelectorAll('a'); }
 function page_getAllLinksHrefs(){ var arrLinks = []; document.querySelectorAll('a').forEach( function(one,i) {  arrLinks.push(one.href);  } ); return arrLinks; }
 function page_getAllImageElems(){ return document.querySelectorAll('img'); }
 function page_getAllImgSrc()    { var arrLinks = []; document.querySelectorAll('img').forEach( function(one,i) {  arrLinks.push(one.src);  } ); return arrLinks; }
-function page_getFaviconUrls()
-{
+function page_getFaviconUrls()  {
     var arrLinks = [];
     document.querySelectorAll('head link').forEach( function(one,i) {
         if( one.href && (one.href.indexOf('.ico') > -1 ) ){ arrLinks.push(one.href); console.log('href-ico',one); } else
@@ -683,7 +682,6 @@ function TAB_Make( url ){ return window.open( url , '_blank' ,''); }
 /* https://itchief.ru/javascript/popup-browser-windows */
 /* https://doka.guide/js/window-open/ */
 // 'width=800,height=600 , top=150,left=150'
-
 
 
 
