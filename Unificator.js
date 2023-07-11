@@ -627,14 +627,11 @@ page_clearHtml() page_printImagesFromArrUrls( arrFav ); page_printImagesFromArrU
 
 // ### ### ### ### ### ### ###
 // **/      Прокрутки      \**
-
-function scroll_UP_Px( countPx ){ window.scrollBy({ top: -countPx, left: 0, behavior: 'smooth' }); }
-function scroll_DW_Px( countPx ){ window.scrollBy({ top:  countPx, left: 0, behavior: 'smooth' }); }
-
+function scroll_GetPageHeight(){ return Math.max( document.body.scrollHeight, document.documentElement.scrollHeight, document.body.offsetHeight, document.documentElement.offsetHeight, document.body.clientHeight, document.documentElement.clientHeight ); }
+function scroll_UP_Px  ( countPx   ){ window.scrollBy({ top: -countPx, left: 0, behavior: 'smooth' }); }
+function scroll_DW_Px  ( countPx   ){ window.scrollBy({ top:  countPx, left: 0, behavior: 'smooth' }); }
 function scroll_UP_Perc( countPerc ){ window.scrollBy({ top: document.documentElement.scrollHeight*(-countPerc/100), left: 0, behavior: 'smooth' }); }
 function scroll_DW_Perc( countPerc ){ window.scrollBy({ top: document.documentElement.scrollHeight*( countPerc/100), left: 0, behavior: 'smooth' }); }
-
-function scroll_GetPageHeight(){ return Math.max( document.body.scrollHeight, document.documentElement.scrollHeight, document.body.offsetHeight, document.documentElement.offsetHeight, document.body.clientHeight, document.documentElement.clientHeight ); }
 //scroll_ToElem_ByElem
 //scroll_ToElem_BySelector
 
@@ -643,7 +640,6 @@ function scroll_GetPageHeight(){ return Math.max( document.body.scrollHeight, do
 // **/  DOM Загрузка страницы  \**
 function DOM_LoadStateCheck_Full(){ return (document.readyState === 'complete'); }
 function DOM_StopPageLoad_AfterSec( secDotted ){ setTimeout(()=>{ if( DOM_LoadStateCheck_Full() ){console.log('DOM_StopPageLoad_AfterSec-уже'); return;}  window.stop(); console.log('DOM_StopPageLoad_AfterSec-остановлен'); }, (secDotted*1000)); }
-
 
 
 // ### ### ### ### ### ### ###
