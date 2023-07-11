@@ -1062,6 +1062,7 @@ function dev_makeJsonStr( ){ return '{"a":234,"b":42,"c":[0,1,2],"d":25.837}'; }
 
   window.addEventListener( 'load'           , function(){ logOneRed('#### Страница загружена ####'); });
 document.addEventListener('DOMContentLoaded', function(){ logOneRed('#### Зависимости загружены - DOMContentLoaded ####'); });
+const DEF_UNIF_LOADED = true;
 
 logLine_11();
 logOneRed('#### Unificator - Объявлен ####')
