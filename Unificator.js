@@ -662,14 +662,12 @@ function makeRedirect(url, waitMs=0){ console.log('# Redirect #\n\nURL: '+url+'\
 
 // ### ### ### ### ### ### ### ### ### ### ###
 // **/  Работа с новым окном и вкладками   \**
-function makeWindowNew( url , windowName , windowOpst='width=800,height=600 , top=150,left=150'){ window.open( url , windowName , windowOpst ); }
-
-
 function TAB_MakeTest( ){ return TAB_Make('https://stackoverflow.com/') }
 function TAB_Make( url ){ return window.open( url , '_blank' ,''); }
 // !!! Тут работает CORS.  Даст EVAL только для вкладок с тем же доменом.
 /* https://itchief.ru/javascript/popup-browser-windows */
 /* https://doka.guide/js/window-open/ */
+// 'width=800,height=600 , top=150,left=150'
 
 
 
