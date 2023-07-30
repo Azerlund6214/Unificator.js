@@ -1,0 +1,144 @@
+
+
+
+
+=====
+
+=====
+
+
+починить унификатор тосты.
+На оснве тостов лары ибо там робят.
+
+=====
+
+=====
+
+идея про 2 файл и дефайн что загрузился.
+вроде в вк было расписано
+
+
+
+
+!!! имитация нажатия мышки     именно мышкой
+
+
+
+
+чекер есть ли гугл анагитика
+
+
+======
+Пробивщик:
+
+робит
+console.log(getVideoCardInfo());
+function getVideoCardInfo() {
+  const gl = document.createElement('canvas').getContext('webgl');
+  
+  if (!gl) return { error: "no webgl" };
+  
+  const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+  
+  return debugInfo ? {
+    vendor: gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL),
+    renderer: gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL),
+  } : {
+    error: "no WEBGL_debug_renderer_info",
+  };
+}
+
+v2
+var canvas = document.getElementById('canvas');
+var gl = canvas.getContext('webgl');
+
+var debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+var vendor = gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL);
+var renderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
+
+console.log(vendor);
+console.log(renderer);
+
+===
+console.log(navigator);   дочекать там руками
+https://developer.mozilla.org/en-US/docs/Web/API/Navigator
+
+https://developer.mozilla.org/en-US/docs/Web/API/Navigator/clipboard
+https://spec-zone.ru/dom-clipboard/
+===
+navigator.deviceMemory
+римерный размер ОЗУ в ГБ, возвращая одно из этих чисел: 0.25, 0.5, 1, 2, 4, 8 (всё, что больше 8 - будет 8).
+===
+console.log(localStorage);
+
+window.history.length
+===========
+
+
+
+Добавить 2 файл рядом.
+
+в нем добавка унификатора в хед и беск цикл чекающий переменную.
+а дальше код для работы
+
+
+=====
+[29.03.23 2:12]
+унификатор:
+
+метод дя программного нажатия клавиш.
+чтоб не ввод в элемент, а тупо нажали и страница сама определит что делать, вставит в место курсора.
+keyboardEmul_pressKeyOne("K")
+keyboardEmul_pressKeyString("Keys123", Interval ms, interval random)
+
+еще сделать статик массив соответствия колов клавиш и номеров.
+можно програть в цикле алфавит и сохранить.
+=======
+[30.03.23 4:52]
+унификатор - добавить в скрипты того вылезающего кота в углу.
+все пикчи перегнать в инлацн base64. чтоб только код.
+
+еще там перепутаны версии в жкури методах
+=====
+
+
+
+
+
+
+
+унификатор:
+setStyleBySel(sel,style)
+addClassIfNeed
+предварителные.
+
+
+
+
+унификатор   геттер инфы
+добавить юезрагент(врод есть) и раазные канвасы
+короче ывсе из антика
+
+
+
+
+
+
+жс унив:
+клик по кнопке - по селектору    action_ClickByXXX()
+	по ид
+	по елементу в переменной
+то же для отправки формы
+action_FormSendByXXX()   + через клик по инпуту кнопки.
+
+
+
+
+
+унификатор   унив метод гет сет клир для инпута по селектору
+	причем менять именно текстовое свойство.  чтоб любой тег работал.
+	свойство чекать в граббере из парсера.
+
+
+
+123
