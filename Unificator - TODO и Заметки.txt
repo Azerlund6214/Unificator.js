@@ -145,5 +145,61 @@ action_FormSendByXXX()   + через клик по инпуту кнопки.
 	свойство чекать в граббере из парсера.
 
 
+===================================
+Старое из 2 файла
+
+
+писать методы:
+elementor_...
+
+все про работу с элементами.  без жкури
+
+
+
+e_getFullInfo( e )
+вернет асоц массив со всей инфой.   тег классы ид, хтмл , иннер, текст и тд.     и поле SUCCESS - все ли норм.
+    можно обернуть тупо в трайкатч    в начале проверка на undefined
+
+
+
+formSend_byId()
+formSend_byElement(e)
+formGetInfo(e)    вытащит все в асоц массив.   аналог метода из елементора.
+
+
+
+
+pageJoke_destroyCss()
+
+document.querySelectorAll('.filter__field').forEach((input)=>{
+  input.addEventListener('input',(e)=>{
+    input.form.elements.page.value = 1;
+  })
+})
+
+
+
+Элемент-input.form.elements.page.value = 1;
+
+
+
+// Работа с конкретной формой
+elemForm_fillOneInput(e,    inputName или id, думать    , text)
+elemForm_addOneInput(e, type, name, )
+elemForm_replaceUrlTarget(e, newTargetUrl)
+
+
+
+elem_CREATE()
+elem_CREATE_Comment()
+elem_CREATE_Meta()
+elem_CREATE_Script()
+var delimiterTag1 = document.createElement('meta');   delimiterTag1.content = '#### #### ####';
+var script = document.createElement('script');
+  script.src = src;
+  script.async = true;
+
+
+
 
 123

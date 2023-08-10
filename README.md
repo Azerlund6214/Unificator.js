@@ -20,5 +20,5 @@
 - TODO много  203 метода
 
 # Причина существования этого файла, кратко:
-<img src="JS.jpg">
-<img src="JS-1.png">
+<img src="JS-Why-1.jpg">
+<img src="JS-Why-2.png">
