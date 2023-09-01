@@ -1,0 +1,50 @@
+
+добавить в гитзаб и потом запушить.
+
+
+https://learn.javascript.ru/array-iteration
+
+
+$.each( { что } , function(key, val) {
+    console.log(key + " " + val); 
+});
+
+
+
+изи перебор жсона, работает
+for (var key in cssColors) {
+    ...
+}
+
+
+мои сортировки и уборка дублей из ЦХП
+
+способы добавки новых элементов  []=  но другой.
+
+
+
+JSON.parse( '{"Gray":"11","Black":"18"}' )
+стрингифай
+
+
+
+var urls = ( Array.from(document.getElementsByTagName("a") )).map(i => {return i.href});
+
+let imagesArr = document.querySelectorAll('img');
+
+
+rawLinks.sort();
+rawLinks = [...new Set(rawLinks)]; // Уборка дублей
+
+
+for (var i = 0 ; i<arr.length ; i++)
+
+
+if( href.indexOf('.jpg') > -1 ){ flag='IMG'; } // #
+
+
+ARR.push( 'abc' );
+
+
+
+123
