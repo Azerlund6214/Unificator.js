@@ -492,6 +492,8 @@ function makeRedirect(url, waitMs=0){ console.log('# Redirect #\n\nURL: '+url+'\
 
 // ### ### ### ### ### ### ### ### ### ### ###
 // **/  Работа с новым окном и вкладками   \**
+function TAB_Close( ){ window.close(); }
+function TAB_CloseAfterSec( secFloat ){  setTimeout(function(){window.close();} ,secFloat*1000 ); }
 function TAB_MakeTest( ){ return TAB_Make('https://stackoverflow.com/') }
 function TAB_Make( url ){ return window.open( url , '_blank' ,''); }
 // !!! Тут работает CORS.  Даст EVAL только для вкладок с тем же доменом.
