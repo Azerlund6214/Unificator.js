@@ -793,7 +793,7 @@ function loadScript_Snowstorm(){ head_addScriptBySrc('https://cdnjs.cloudflare.c
 
 
 
-// TODO: Такой же метод, но про инфу юзера.  Найти.
+
 
 
 
