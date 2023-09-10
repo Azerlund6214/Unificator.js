@@ -572,12 +572,25 @@ function sleep_promise(ms)
 // ### ### ### ### ### ### ### ###
 // **/  Отложенное исполнение  \**
 // На тесте
-function timerExecAfter( callable , secFloat )
+function timerExecAfter( secFloat , callable ){   SLEEP(secFloat);   callable();   }
+function timerExecAfter_Chain( ARR )
 {
-    SLEEP(secFloat);
-    callable();
+    for (var i = 0 ; i<ARR.length ; i++)
+        timerExecAfter(ARR[i][0] , ARR[i][1]);
+        //console.log( ARR[i][0] , ARR[i][1] );
 }
-// TODO: timerExecAfter_Chain  [ ['время',func] , ]
+function userImitator_ActionsChain_Get()
+{
+    var ARR = [
+        [ 1 , function(){ logOneRed('123'); } ],
+        [ 1 , function(){ logOneBlue('123'); } ],
+        [ 1 , function(){ logOneGreen('123'); } ],
+    ];
+    return ARR;
+}
+//timerExecAfter_Chain( userImitator_ActionsChain_Get() );
+
+
 
 
 
