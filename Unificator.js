@@ -569,6 +569,15 @@ function sleep_promise(ms)
 
 
 
+// ### ### ### ### ### ### ### ###
+// **/  Отложенное исполнение  \**
+function timerExecAfterSec( callable , secFloat )
+{
+    SLEEP(secFloat);
+    callable();
+}
+
+
 
 
 // ### ### ### ### ### ### ### ###
