@@ -181,8 +181,7 @@ function errorPrinter(e){ console.log(`${e.stack}\n\nMsg: ${e.message}\nName: ${
 // ### ### ### ### ### ### ### ###
 // **/   Работа с событиями    \**
 function addEvent_ExitDialog( ){  window.onbeforeunload = function() { return false; /* Либо текст */ };  }
-function addEvent_DisableFormSubmits( )
-{
+function addEvent_DisableFormSubmits( ) {
     let forms = document.querySelectorAll('form');
     forms.forEach( function(one ,i , arr)
     {
@@ -270,10 +269,6 @@ function frames_GetCount_Frames(){ return frames.length; /* Количество
 function frames_GetCount_IframeTag(){ return document.getElementsByTagName('iframe').length; }
 
 
-
-/*  юзлесс  function frames_SelectCustom( frame ){ }
-function frames_SelectMain( frame ){ }*/
-// frames[0].window.eval('function foo(){ console.log("Im in a frame",window); }');.
 
 
 
@@ -576,20 +571,6 @@ function sleep_promise(ms)
 
 
 
-// ### ### ### ### ###
-// **/   Toasts    \**
-function toastIsDefined(  ){   try{ toastr; return true;  }catch(e){ return false; }  } //
-function toastMake_Success( text , title='' ){ toastr.success(text,title); } //
-function toastMake_Info   ( text , title='' ){ toastr.info   (text,title); } //
-function toastMake_Error  ( text , title='' ){ toastr.error  (text,title); } //
-function toastMake_Warning( text , title='' ){ toastr.warning(text,title); } //
-function toastMake_Debug  ( ){ var t1='Text123'; var t2='Title_456'; toastMake_Success(t1,t2); toastMake_Info(t1,t2); toastMake_Error(t1,t2); toastMake_Warning(t1,t2); } //
-
-// function toast_FastTest(  ){   loadScript_Toasts();  log(toastIsDefined()); SLEEP(3);  log(toastIsDefined());  toastMake_Debug();  } //
-
-
-
-
 // ### ### ### ### ### ### ### ###
 // **/  Пока пусть лежит тут   \**
 function jqueryLoaded(){ return ( (typeof(jQuery) !== 'undefined') ); /* typeof($) ложно срабатывал  |  jQuery.isReady  */ }; // Костыльненько :)
@@ -804,56 +785,6 @@ function loadScript____(){ head_addScriptBySrc(''); setTimeout(function(){ body_
 function loadScript_JQuery_New() { head_addScriptBySrc('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js' ); } // Payeer
 function loadScript_JQuery_My () { head_addScriptBySrc('https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js'); } // Мой
 
-//  !!!! Может быть сломаным.    99%
-function loadScript_Toasts(){
-    head_addComment(' Toastr = Уведомления в углу = CDN ');
-    //head_addScriptBySrc('https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.3/js/toastr.min.js');
-    //head_addStyleBySrc ('https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.3/css/toastr.min.css');
-    head_addScriptBySrc('https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js');
-    head_addStyleBySrc ('https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css');
-    // https://cdnjs.com/libraries/toastr.js/2.0.3  Точно рабочая.   Нет, не убираются блоки
-    // https://cdnjs.com/libraries/toastr.js/latest
-    logOneBlue('toastr - Скрипты добавлены');
-
-    if( ! jqueryLoaded() )
-    {
-        loadScript_JQuery_My();
-        logOneBlue('JQuery My - Скрипт добавлен (Он точно нужен)');
-    }
-
-    function addOpts()
-    {
-        head_addScriptByText('toastr.options = { "closeButton": true,  "debug": false,  "newestOnTop": true,  "progressBar": true,  "positionClass": "toast-top-right",  "preventDuplicates": false,  "onclick": null,  "showDuration": "300",  "hideDuration": "1000",  "timeOut": "10000",  "extendedTimeOut": "1000",  "showEasing": "swing",  "hideEasing": "linear",  "showMethod": "fadeIn",  "hideMethod": "fadeOut"}; ');
-        head_addStyleByText('.toast-top-right { top: 50px; }');
-        logOneBlue('toastr - Опции добавлены');
-    }
-
-    setTimeout( function(){
-
-        if( ! toastIsDefined(  ) )
-        {
-            logOneRed('toastr - Опции НЕ добавлены. 1 раз ждали интервал, объекта нет. Жду еще.');
-
-            setTimeout( function(){
-
-                if( ! toastIsDefined(  ) )
-                    logOneRed('toastr - Опции НЕ добавлены. 2 раза ждали интервал, объекта так и нет');
-                else
-                    addOpts();
-            } , 600 );
-
-        }
-        else
-        {
-            addOpts();
-        }
-
-    } , 600 ); // Было 600 и норм
-
-    // Точно работает: iparchitect.ru(только показ)
-    // Точно НЕ работает: habr.com
-
-} //
 
 
 function loadScript___SnowFlakes(){ head_addScriptBySrc('https://s.siteapi.org/frontend/static/snowflakes.min.js'); setTimeout(function(){ body_addScriptByText('var sf = new Snowflakes();'); }, 3000);} // https://github.com/hcodes/snowflakes/releases

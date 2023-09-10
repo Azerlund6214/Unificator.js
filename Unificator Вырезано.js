@@ -1,4 +1,6 @@
-// ### ### ### ### ### ### ###
+// #########################################
+// ####   Рабочие, но не нужные методы   ###
+// #########################################
 // **/    \**
 
 
@@ -140,7 +142,7 @@ function cardsMassParserGetSettings( what )
 //cardsMassParser('VK-Group-WALL', 0, 10, []); //
 
 
-
+// ### ### ### ### ### ### ###
 
 // Для https://www.fakepersongenerator.com/imei-generator => работает отлично.
 function easyParcer_imei_FPG( maxLen=30  )
@@ -176,7 +178,89 @@ function easyParcer_imei_FPG( maxLen=30  )
 }
 //log( convert_Json1lvl_To_Array( easyParcer_imei_FPG(40) ) );
 
+// ### ### ### ### ### ### ###
 
+
+/*  юзлесс  function frames_SelectCustom( frame ){ }
+function frames_SelectMain( frame ){ }*/
+// frames[0].window.eval('function foo(){ console.log("Im in a frame",window); }');.
+
+// ### ### ### ### ### ### ###
+
+
+
+// ### ### ### ### ###
+// **/   Toasts    \**
+function toastIsDefined(  ){   try{ toastr; return true;  }catch(e){ return false; }  } //
+function toastMake_Success( text , title='' ){ toastr.success(text,title); } //
+function toastMake_Info   ( text , title='' ){ toastr.info   (text,title); } //
+function toastMake_Error  ( text , title='' ){ toastr.error  (text,title); } //
+function toastMake_Warning( text , title='' ){ toastr.warning(text,title); } //
+function toastMake_Debug  ( ){ var t1='Text123'; var t2='Title_456'; toastMake_Success(t1,t2); toastMake_Info(t1,t2); toastMake_Error(t1,t2); toastMake_Warning(t1,t2); } //
+
+// function toast_FastTest(  ){   loadScript_Toasts();  log(toastIsDefined()); SLEEP(3);  log(toastIsDefined());  toastMake_Debug();  } //
+
+//  !!!! Может быть сломаным.    99%
+function loadScript_Toasts(){
+    head_addComment(' Toastr = Уведомления в углу = CDN ');
+    //head_addScriptBySrc('https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.3/js/toastr.min.js');
+    //head_addStyleBySrc ('https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.3/css/toastr.min.css');
+    head_addScriptBySrc('https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js');
+    head_addStyleBySrc ('https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css');
+    // https://cdnjs.com/libraries/toastr.js/2.0.3  Точно рабочая.   Нет, не убираются блоки
+    // https://cdnjs.com/libraries/toastr.js/latest
+    logOneBlue('toastr - Скрипты добавлены');
+    
+    if( ! jqueryLoaded() )
+    {
+        loadScript_JQuery_My();
+        logOneBlue('JQuery My - Скрипт добавлен (Он точно нужен)');
+    }
+    
+    function addOpts()
+    {
+        head_addScriptByText('toastr.options = { "closeButton": true,  "debug": false,  "newestOnTop": true,  "progressBar": true,  "positionClass": "toast-top-right",  "preventDuplicates": false,  "onclick": null,  "showDuration": "300",  "hideDuration": "1000",  "timeOut": "10000",  "extendedTimeOut": "1000",  "showEasing": "swing",  "hideEasing": "linear",  "showMethod": "fadeIn",  "hideMethod": "fadeOut"}; ');
+        head_addStyleByText('.toast-top-right { top: 50px; }');
+        logOneBlue('toastr - Опции добавлены');
+    }
+    
+    setTimeout( function(){
+        
+        if( ! toastIsDefined(  ) )
+        {
+            logOneRed('toastr - Опции НЕ добавлены. 1 раз ждали интервал, объекта нет. Жду еще.');
+            
+            setTimeout( function(){
+                
+                if( ! toastIsDefined(  ) )
+                    logOneRed('toastr - Опции НЕ добавлены. 2 раза ждали интервал, объекта так и нет');
+                else
+                    addOpts();
+            } , 600 );
+            
+        }
+        else
+        {
+            addOpts();
+        }
+        
+    } , 600 ); // Было 600 и норм
+    
+    // Точно работает: iparchitect.ru(только показ)
+    // Точно НЕ работает: habr.com
+    
+} //
+
+
+
+
+// ### ### ### ### ### ### ###
+
+
+// ### ### ### ### ### ### ###
+
+
+// ### ### ### ### ### ### ###
 
 
 // ### ### ### ### ### ### ###
