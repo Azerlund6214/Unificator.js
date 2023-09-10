@@ -571,12 +571,13 @@ function sleep_promise(ms)
 
 // ### ### ### ### ### ### ### ###
 // **/  Отложенное исполнение  \**
-function timerExecAfterSec( callable , secFloat )
+// На тесте
+function timerExecAfter( callable , secFloat )
 {
     SLEEP(secFloat);
     callable();
 }
-
+// TODO: timerExecAfter_Chain  [ ['время',func] , ]
 
 
 
