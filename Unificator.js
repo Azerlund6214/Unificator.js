@@ -493,7 +493,7 @@ function makeRedirect(url, waitMs=0){ console.log('# Redirect #\n\nURL: '+url+'\
 // ### ### ### ### ### ### ### ### ### ### ###
 // **/  Работа с новым окном и вкладками   \**
 function TAB_Close( ){ window.close(); }
-function TAB_CloseAfterSec( secFloat ){  setTimeout(function(){window.close();} ,secFloat*1000 ); }
+function TAB_CloseAfterSec( secFloat ){ console.log('TAB_CloseAfterSec - '+secFloat); setTimeout(function(){window.close();} ,secFloat*1000 ); }
 function TAB_MakeTest( ){ return TAB_Make('https://stackoverflow.com/') }
 function TAB_Make( url ){ return window.open( url , '_blank' ,''); }
 // !!! Тут работает CORS.  Даст EVAL только для вкладок с тем же доменом.
@@ -542,6 +542,12 @@ function JSON_DECODE( all ){  return JSON.parse( all ); /* Может вылет
 
 function SLEEP( secFloat , needLog=true )
 {
+    if( secFloat === 0 )
+    {
+        if(needLog) console.log( 'SLEEP: Begin - sec=0 - Return' );
+        return;
+    }
+    
     var ms = secFloat*1000;
 
     var text = 'SLEEP: ('+secFloat+'сек => '+ms+'мс)';
@@ -573,16 +579,14 @@ function sleep_promise(ms)
 
 // ### ### ### ### ### ### ### ###
 // **/  Отложенное исполнение  \**
-// На тесте
 function timerExecAfter( secFloat , callable ){   SLEEP(secFloat);   callable();   }
-function timerExecAfter_Chain( ARR )
+
+// ### ### ### ### ### ### ### ### ### ###
+// **/ Имитация поведенческих факторов \**
+function userImitator__ExecChain( ARR ){   for (var i = 0 ; i<ARR.length ; i++) timerExecAfter(ARR[i][0] , ARR[i][1]);   }
+function userImitator_ActionsChain_Get(deadlineSec=10)
 {
-    for (var i = 0 ; i<ARR.length ; i++)
-        timerExecAfter(ARR[i][0] , ARR[i][1]);
-        //console.log( ARR[i][0] , ARR[i][1] );
-}
-function userImitator_ActionsChain_Get()
-{
+    //TODO: Включить потом  TAB_CloseAfterSec(deadlineSec);
     var ARR = [
         [ 1 , function(){ logOneRed('123'); } ],
         [ 1 , function(){ logOneBlue('123'); } ],
@@ -590,7 +594,7 @@ function userImitator_ActionsChain_Get()
     ];
     return ARR;
 }
-//timerExecAfter_Chain( userImitator_ActionsChain_Get() );
+//userImitator__ExecChain( userImitator_ActionsChain_Get() );
 
 
 
