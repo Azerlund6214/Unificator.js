@@ -91,8 +91,7 @@ function str_strPos(text, search){ var i = text.indexOf( search );  return i >= 
 // ### ### ### ### ### ### ###
 // **/  Работа с числами   \**
 function num_toInt( mixed_var ){ return Math.floor(mixed_var); }
-// TODO: function num_numberFormat( num, decimals=2, delimiter='.' ){ num = num.replace(/\s/ig, '');/*Уборка пробелов*/   } // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat
-// тестить
+function num_numberFormat( num, decimals=2 ){  return parseFloat(num).toFixed(decimals);  }
 
 
 // ### ### ### ### ### ### ###
@@ -588,9 +587,12 @@ function userImitator_ActionsChain_Get(deadlineSec=10)
 {
     //TODO: Включить потом  TAB_CloseAfterSec(deadlineSec);
     var ARR = [
-        [ 1 , function(){ logOneRed('123'); } ],
-        [ 1 , function(){ logOneBlue('123'); } ],
-        [ 1 , function(){ logOneGreen('123'); } ],
+            [ 1 , function(){ logOneRed('123'); } ],
+            [ 1 , function(){ logOneBlue('123'); } ],
+            [ 1 , function(){ logOneGreen('123'); } ],
+            [ 1 , function(){ scroll_DW_Perc(40); } ],
+            [ 1 , function(){ scroll_UP_Perc(20); } ],
+            //[ 1 , function(){ TAB_Close( ); } ],
     ];
     return ARR;
 }
