@@ -313,8 +313,6 @@ function easyParcer_Href( selector ) {
 	
 	return finalJson;
 }
-//easyHrefParcer('div.content div div a[style="color: inherit"]');
-
 function easyParcer_Href_VkAlbum(  ) {
     var resJson = easyParcer_Href( '.photos_row a' );
     var resArr = [];
@@ -581,36 +579,30 @@ function timerExecAfter( secFloat , callable ){ logLine_10();   SLEEP(secFloat);
 
 // ### ### ### ### ### ### ### ### ### ###
 // **/ Имитация поведенческих факторов \**
-function userImitator__ExecChain( ARR, fullChainTime=10 )
+function userImitator__ExecChain( ARR, fullChainTime )
 {
-    var FCT = fullChainTime;
-    
-    
     var secWaitSum = 0;
     for (var i = 0 ; i<ARR.length ; i++)
     {
-        let timeWithPower = num_numberFormat((ARR[i][0]/100*FCT),2);
-        log(timeWithPower);
+        let timeWithPower = num_numberFormat( (ARR[i][0]/100*fullChainTime) ,2);
         // num_numberFormat((10/100*30),2); = 3.00
         
         var timeAfter = num_toIntDown( (secWaitSum + timeWithPower) * 1000 );  // инт чтоб без 3389.9999999999995
-        setTimeout( ARR[i][1] , timeAfter );
-        log('Таймер через '+timeAfter);
+        setTimeout( ARR[i][1] , timeAfter ); // Скобки () не нужны
+        
+        log('Установлен таймер: Через '+timeAfter +' | Интервал '+timeWithPower +'\n'+ARR[i][1]);
         secWaitSum += timeWithPower;
     }
 }
 function userImitator_ActionsChain_Get()
 {
-    
-    //TODO: Включить потом  TAB_CloseAfterSec(deadlineSec);
-    var ARR = [
-            [ 10 , function(){ logOneRed('123'); } ],
-            [ 10 , function(){ logOneBlue('123'); } ],
-            [ 10 , function(){ logOneGreen('123'); } ],
-            [ 20 , function(){ scroll_DW_Perc(10); log(1); } ],
-            [ 30 , function(){ scroll_UP_Perc(10); log(2); } ],
-            [ 20 , function(){ scroll_DW_Perc(10); log(3); } ],
-            //[ 1 , function(){ scroll_DW_Perc(30); } ],
+    var ARR = [ // Мощность(100 в сумме) , функция
+            [ 10 , function(){ logOneRed('111'); } ],
+            [ 10 , function(){ logOneBlue('222'); } ],
+            [ 10 , function(){ logOneGreen('333'); } ],
+            [ 20 , function(){ scroll_DW_Perc(10); log('scroll_DW_Perc'); } ],
+            [ 30 , function(){ scroll_UP_Perc(10); log('scroll_UP_Perc'); } ],
+            [ 20 , function(){ scroll_DW_Perc(10); log('scroll_DW_Perc'); } ],
             //[ 1 , function(){ alert(123); } ],
             //[ 1 , function(){ TAB_Close( ); } ],
     ];
