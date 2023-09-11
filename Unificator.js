@@ -609,7 +609,11 @@ function userImitator_ActionsChain_Get()
     return ARR;
 }
 //   userImitator__ExecChain( userImitator_ActionsChain_Get() , 10 );
-//  setTimeout( function(){ log(1); scroll_DW_Perc(10); } , 2*1000 );  setTimeout( function(){ log(2); scroll_DW_Perc(10); } , 4*1000 );
+
+// ### ### ### ### ### ### ### ###
+// **/  Google   \**
+function SERP_GOOGLE_GetTagsA(){ return tag_getAllOrFalse('a[jscontroller][jsaction][jsname][ping][data-ved]'); }
+
 
 
 
