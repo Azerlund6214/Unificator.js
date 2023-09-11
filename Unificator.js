@@ -539,8 +539,7 @@ function JSON_DECODE( all ){  return JSON.parse( all ); /* Может вылет
 // ### ### ### ### ### ### ###
 // **/ Задержки и ожидание \**
 
-function SLEEP( secFloat , needLog=true )
-{
+function SLEEP( secFloat , needLog=true ){
     if( secFloat === 0 )
     {
         if(needLog) console.log( 'SLEEP: Begin - sec=0 - Return' );
@@ -561,28 +560,25 @@ function SLEEP( secFloat , needLog=true )
     } while ( (Date.now()-date) < ms);
     if(needLog) console.log( text+' i='+i );
 }
-//SLEEP(10);
 // Работает. Пока самый нормальный аналог. Будет сильно грузить проц.   Подскакивает до 50% стабильно.
-// Циклов без нагрузки за = 1 сек:(7917468,8032741,7804791,8015565,7910767) | 10 сек:(80913843,80242900,)
+// Заметки: Забивает проц на 50% bли 100%.   Пусть так, главное функционал.
 // Проблема: Огромное количество итераций - 8млн/сек.    Надо снизить путем забивания тела нагрузкой.
+// Циклов без нагрузки за = 1 сек:(7917468,8032741,7804791,8015565,7910767) | 10 сек:(80913843,80242900,)
 // Заметки: Ведение доп переменной для тек даты вообще не изменило итерации.
-// Заметки: Забивает проц на 50% ли 100%.   Пусть так, главное функционал.
 
-function sleep_promise(ms)
-{
-    return new Promise(resolve => setTimeout(resolve, ms));
-    //sleep_promise(2000).then(() => { console.log("World!"); });
-} // Плохой. Задерживает только себя и свою функцию.  + надо все изолировать в него.  Будет очень неудобным
-
+// Плохой. Задерживает только себя и свою функцию.  + надо все изолировать в него.  Будет очень неудобным
+function sleep_promise(ms){  return new Promise(resolve => setTimeout(resolve, ms));  }
+//sleep_promise(2000).then(() => { console.log("World!"); });
 
 
 // ### ### ### ### ### ### ### ###
 // **/  Отложенное исполнение  \**
 function timerExecAfter( secFloat , callable ){   SLEEP(secFloat);   callable();   }
 
+
 // ### ### ### ### ### ### ### ### ### ###
 // **/ Имитация поведенческих факторов \**
-function userImitator__ExecChain( ARR ){   for (var i = 0 ; i<ARR.length ; i++) timerExecAfter(ARR[i][0] , ARR[i][1]);   }
+function userImitator__ExecChain( ARR ){  for (var i = 0 ; i<ARR.length ; i++) timerExecAfter(ARR[i][0] , ARR[i][1]);  }
 function userImitator_ActionsChain_Get(deadlineSec=10)
 {
     //TODO: Включить потом  TAB_CloseAfterSec(deadlineSec);
