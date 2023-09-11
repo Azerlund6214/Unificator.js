@@ -614,9 +614,19 @@ function userImitator_ActionsChain_Get()
 }
 //   userImitator__ExecChain( userImitator_ActionsChain_Get() , 10 );
 
+
 // ### ### ### ### ### ### ### ###
 // **/  Google   \**
-function SERP_GOOGLE_GetTagsA(){ return tag_getAllOrFalse('a[jscontroller][jsaction][jsname][ping][data-ved]'); }
+function SERP_GOOGLE_TagsA_GetArr(){ return tag_getAllOrFalse('a[jscontroller][jsaction][jsname][ping][data-ved]'); }
+function SERP_GOOGLE_TagsA_Prepare()
+{
+    for (const [key, e] of Object.entries(SERP_GOOGLE_TagsA_GetArr()) )
+    {
+        elem_attrAddBlankIfNeed(e);
+        elem_attrSetStyleColorRed(e)
+        console.log(`${key}: ${e}`);
+    }
+}
 
 
 
