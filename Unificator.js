@@ -205,9 +205,13 @@ function tag_getFirstOrFalse(target){ var res = document.querySelectorAll(target
 function tag_getNthOrFalse  (target,n){var res= document.querySelectorAll(target);  if(res.length <= n) return false;  else  return res[n];  }
 function tag_getOneOrFalse  (target){ var res = document.querySelectorAll(target);  if(res.length!== 1) return false;  else  return res[0];  }
 
+// ### ### ### ### ### ### ###
+// **/   Работа с 1 тегом   \**
 //elem_GetSubElements_AllOrFalse...    брать из скипта вк
 //elem_GetSubElements_FirstOrFalse
 //elem_GetSubElements_OneOrFalse
+function elem_attrAddBlankIfNeed( e ){  if( ! e.getAttribute('target') ){ e.setAttribute('target','_blank'); return true; }  }
+function elem_attrSetStyleColorRed( e ){  e.style = 'color: red';  }
 
 
 

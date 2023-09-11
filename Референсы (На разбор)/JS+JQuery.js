@@ -104,7 +104,7 @@ console.log('%cТекст123123123', 'color:black; background-color:red; font-si
 $(document).on('keydown', function(event)
 {
 	//console.log( "keypress = " + event.keyCode+' = '+event.key+' = '+event.code );
-	if (event.altKey && event.keyCode==76) // alt+l (Маленькая L)
+	if (event.altKey && event.keyCode===76) // alt+l (Маленькая L)
 	{
 	}
 });
