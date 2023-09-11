@@ -90,8 +90,9 @@ function str_strPos(text, search){ var i = text.indexOf( search );  return i >= 
 
 // ### ### ### ### ### ### ###
 // **/  Работа с числами   \**
-function num_toInt( mixed_var ){ return Math.floor(mixed_var); }
-function num_numberFormat( num, decimals=2 ){  return parseFloat(num).toFixed(decimals);  }
+function num_toIntUp  (mixed_var){ return Math.ceil (mixed_var); } // 9.9999999999995 -> 10
+function num_toIntDown(mixed_var){ return Math.floor(mixed_var); } // 9.9999999999995 -> 9
+function num_numberFormat( num, decimals=2 ){  return parseFloat( parseFloat(num).toFixed(decimals) );  } // Тестить
 
 
 // ### ### ### ### ### ### ###
@@ -580,16 +581,35 @@ function timerExecAfter( secFloat , callable ){ logLine_10();   SLEEP(secFloat);
 
 // ### ### ### ### ### ### ### ### ### ###
 // **/ Имитация поведенческих факторов \**
-function userImitator__ExecChain( ARR ){  for (var i = 0 ; i<ARR.length ; i++) timerExecAfter(ARR[i][0] , ARR[i][1]);  }
-function userImitator_ActionsChain_Get(deadlineSec=10)
+function userImitator__ExecChain( ARR, fullChainTime=10 )
 {
+    var FCT = fullChainTime;
+    
+    
+    var secWaitSum = 0;
+    for (var i = 0 ; i<ARR.length ; i++)
+    {
+        let timeWithPower = num_numberFormat((ARR[i][0]/100*FCT),2);
+        log(timeWithPower);
+        // num_numberFormat((10/100*30),2); = 3.00
+        
+        var timeAfter = num_toIntDown( (secWaitSum + timeWithPower) * 1000 );  // инт чтоб без 3389.9999999999995
+        //setTimeout( ARR[i][1] , timeAfter );
+        log('Таймер через '+timeAfter);
+        secWaitSum += timeWithPower;
+    }
+}
+function userImitator_ActionsChain_Get()
+{
+    
     //TODO: Включить потом  TAB_CloseAfterSec(deadlineSec);
     var ARR = [
-            //[ 1 , function(){ logOneRed('123'); } ],
-            //[ 1 , function(){ logOneBlue('123'); } ],
-            //[ 1 , function(){ logOneGreen('123'); } ],
-            [ 1 , function(){ scroll_DW_Perc(90); } ],
-            [ 1 , function(){ scroll_UP_Perc(20); } ],
+            [ 10 , function(){ logOneRed('123'); } ],
+            [ 10 , function(){ logOneBlue('123'); } ],
+            [ 10 , function(){ logOneGreen('123'); } ],
+            [ 20 , function(){ scroll_DW_Perc(10); log(1); } ],
+            [ 30 , function(){ scroll_UP_Perc(10); log(2); } ],
+            [ 20 , function(){ scroll_DW_Perc(10); log(3); } ],
             //[ 1 , function(){ scroll_DW_Perc(30); } ],
             //[ 1 , function(){ alert(123); } ],
             //[ 1 , function(){ TAB_Close( ); } ],
