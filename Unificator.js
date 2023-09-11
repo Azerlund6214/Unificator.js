@@ -194,7 +194,17 @@ function addEvent_DisableFormSubmits( ) {
         }); /* Работает */
     });
 }
-
+function addEvent_DisableClicksTagA( ) {
+    let tags = document.querySelectorAll('a');
+    tags.forEach( function(one ,i , arr)
+    {
+        one.addEventListener('click', function(event)
+        {
+            event.preventDefault();
+            alert('Заблочена отправка формы');
+        }); /* Работает */
+    });
+}
 
 
 
