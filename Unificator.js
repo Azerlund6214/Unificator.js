@@ -594,7 +594,7 @@ function userImitator__ExecChain( ARR, fullChainTime=10 )
         // num_numberFormat((10/100*30),2); = 3.00
         
         var timeAfter = num_toIntDown( (secWaitSum + timeWithPower) * 1000 );  // инт чтоб без 3389.9999999999995
-        //setTimeout( ARR[i][1] , timeAfter );
+        setTimeout( ARR[i][1] , timeAfter );
         log('Таймер через '+timeAfter);
         secWaitSum += timeWithPower;
     }
@@ -616,7 +616,7 @@ function userImitator_ActionsChain_Get()
     ];
     return ARR;
 }
-//   userImitator__ExecChain( userImitator_ActionsChain_Get() );
+//   userImitator__ExecChain( userImitator_ActionsChain_Get() , 10 );
 //  setTimeout( function(){ log(1); scroll_DW_Perc(10); } , 2*1000 );  setTimeout( function(){ log(2); scroll_DW_Perc(10); } , 4*1000 );
 
 
