@@ -142,7 +142,8 @@ $('input[type="submit"], button')   широкая выборка
 $('input[name="name"][placeholder="Ваше имя"]')   .val();  // Точно робит
 $('input[name="name"]')  // Точно робит
 $('a[href="mailto:info@123.ru"]')  // Точно робит
-
+'div a[style="color: inherit"]'
+'a[jscontroller][jsaction][jsname][ping][data-ved]'  наличие кастом параметров
 $("span:contains('123')")
 
 $('') // 
