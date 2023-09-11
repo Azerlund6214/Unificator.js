@@ -573,7 +573,7 @@ function sleep_promise(ms){  return new Promise(resolve => setTimeout(resolve, m
 
 // ### ### ### ### ### ### ### ###
 // **/  Отложенное исполнение  \**
-function timerExecAfter( secFloat , callable ){   SLEEP(secFloat);   callable();   }
+function timerExecAfter( secFloat , callable ){ logLine_10();   SLEEP(secFloat);  log(callable);  callable(); log('выполнил');  }
 
 
 // ### ### ### ### ### ### ### ### ### ###
@@ -583,16 +583,18 @@ function userImitator_ActionsChain_Get(deadlineSec=10)
 {
     //TODO: Включить потом  TAB_CloseAfterSec(deadlineSec);
     var ARR = [
-            [ 1 , function(){ logOneRed('123'); } ],
-            [ 1 , function(){ logOneBlue('123'); } ],
-            [ 1 , function(){ logOneGreen('123'); } ],
-            [ 1 , function(){ scroll_DW_Perc(40); } ],
+            //[ 1 , function(){ logOneRed('123'); } ],
+            //[ 1 , function(){ logOneBlue('123'); } ],
+            //[ 1 , function(){ logOneGreen('123'); } ],
+            [ 1 , function(){ scroll_DW_Perc(90); } ],
             [ 1 , function(){ scroll_UP_Perc(20); } ],
+            //[ 1 , function(){ scroll_DW_Perc(30); } ],
+            //[ 1 , function(){ alert(123); } ],
             //[ 1 , function(){ TAB_Close( ); } ],
     ];
     return ARR;
 }
-//userImitator__ExecChain( userImitator_ActionsChain_Get() );
+//   userImitator__ExecChain( userImitator_ActionsChain_Get() );
 
 
 
