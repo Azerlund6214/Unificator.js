@@ -188,10 +188,7 @@ function addEvent_DisableFormSubmits( ) {
     forms.forEach( function(one ,i , arr)
     {
         one.addEventListener('submit', function(event)
-        {
-            event.preventDefault();
-            alert('Заблочена отправка формы');
-        }); /* Работает */
+            { event.preventDefault();   alert('Заблочена отправка формы'); }); /* Работает */
     });
 }
 function addEvent_DisableClicksTagA( ) {
@@ -199,10 +196,7 @@ function addEvent_DisableClicksTagA( ) {
     tags.forEach( function(one ,i , arr)
     {
         one.addEventListener('click', function(event)
-        {
-            event.preventDefault();
-            alert('Заблочена отправка формы');
-        }); /* Работает */
+            { event.preventDefault();   alert('Заблочен клик ссылки'); }); /* Работает */
     });
 }
 
