@@ -159,6 +159,8 @@ function logLine_10(){ logLineUniv('#=',61,1,0); }
 function logLine_11(){ logLineUniv('#=',61,1,1); }
 function logLine_20(){ logLineUniv('#=',61,2,0); }
 function logLine_22(){ logLineUniv('#=',61,2,2); }
+function logLine_01(){ logLineUniv('#=',61,0,1); }
+function logLine_02(){ logLineUniv('#=',61,0,2); }
 //logLine(); logLine('-'); logLine('=',60,3,3); logLine('#',60,5,5);
 //logCustom('123 test 123');
 // TODO:   function logText00000   цветастые и тд.  разные методы, много    сразу разные заготовки.
@@ -573,7 +575,7 @@ function sleep_promise(ms){  return new Promise(resolve => setTimeout(resolve, m
 
 // ### ### ### ### ### ### ### ###
 // **/  Отложенное исполнение  \**
-function timerExecAfter( secFloat , callable ){ logLine_10();   SLEEP(secFloat);  log(callable);  callable(); log('выполнил');  }
+function timerExecAfter( secFloat , callable ){ logLine_10();   SLEEP(secFloat);  log(callable);  callable(); logLine_01();  }
 
 
 // ### ### ### ### ### ### ### ### ### ###
@@ -595,7 +597,7 @@ function userImitator_ActionsChain_Get(deadlineSec=10)
     return ARR;
 }
 //   userImitator__ExecChain( userImitator_ActionsChain_Get() );
-
+//  setTimeout( function(){ log(1); scroll_DW_Perc(10); } , 2*1000 );  setTimeout( function(){ log(2); scroll_DW_Perc(10); } , 4*1000 );
 
 
 
