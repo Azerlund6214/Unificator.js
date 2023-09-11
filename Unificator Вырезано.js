@@ -187,6 +187,11 @@ function frames_SelectMain( frame ){ }*/
 
 // ### ### ### ### ### ### ###
 
+// TODO:  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat
+// тестить    num = num.replace(/\s/ig, '');/*Уборка пробелов*/
+
+
+
 
 
 // ### ### ### ### ###
