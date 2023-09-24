@@ -631,7 +631,7 @@ function SERP_GOOGLE_TagsA_Prepare()
         console.log(`${key}: ${e}`);
     }
 }
-
+//SERP_GOOGLE_MakeFakeClick(url,num)  получаю   чек что есть   клик    труИлиФолс
 
 
 
