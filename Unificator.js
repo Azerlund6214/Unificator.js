@@ -831,6 +831,7 @@ function getUserInfo_GPU(){
         'GL_VENDOR': 'UNDEF',
         'GL_RENDERER': 'UNDEF',
         'GL_RENDERER_2_XZ': 'UNDEF',
+        'GL_IS_MOBILE': false,
     };
     
     var GL = document.createElement('canvas').getContext('webgl'); // Без записи на страницу.
@@ -848,6 +849,8 @@ function getUserInfo_GPU(){
         FIN['GL_VENDOR'] = GL.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL);
         FIN['GL_RENDERER'] = GL.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
         FIN['GL_RENDERER_2_XZ'] = GL.getParameter(GL.RENDERER); // "WebKit WebGL"
+        
+        FIN['GL_IS_MOBILE'] = ( FIN['GL_RENDERER'].toLowerCase().indexOf('mobile') >- 1 );
         
     }catch(e){ FIN['ERROR'] = 'TryCatch: ' + e.message; }
     
