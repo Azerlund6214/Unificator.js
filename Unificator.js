@@ -208,6 +208,7 @@ function tag_getAllOrFalse  (target){ var res = document.querySelectorAll(target
 function tag_getFirstOrFalse(target){ var res = document.querySelectorAll(target);  if( ! res.length  ) return false;  else  return res[0];  }
 function tag_getNthOrFalse  (target,n){var res= document.querySelectorAll(target);  if(res.length <= n) return false;  else  return res[n];  }
 function tag_getOneOrFalse  (target){ var res = document.querySelectorAll(target);  if(res.length!== 1) return false;  else  return res[0];  }
+function tag_getCount       (target){ return document.querySelectorAll(target).length;  }
 
 // ### ### ### ### ### ### ###
 // **/   Работа с 1 тегом   \**
