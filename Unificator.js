@@ -811,43 +811,32 @@ function getAll_GpuInfo()
 {
     var FIN = {
         'ERROR': false,
-        'VENDOR': 'UNDEF',
-        'RENDERER': 'UNDEF',
+        'GL_VENDOR': 'UNDEF',
+        'GL_RENDERER': 'UNDEF',
+        'GL_RENDERER_2_XZ': 'UNDEF',
     };
     
-    var canvas = document.createElement('canvas'); // Без записи на страницу.
-    var gl = canvas.getContext('webgl');
+    var GL = document.createElement('canvas').getContext('webgl'); // Без записи на страницу.
     
-    if( ! canvas  || ! gl )
+    if ( ! GL )
     {
-        if ( ! gl     ) FIN['ERROR'] =  'No WEBGL' ; // Порядок важен
-        if ( ! canvas ) FIN['ERROR'] = 'CANVAS Err';
-        
+        FIN['ERROR'] = 'No WEBGL';
         return FIN;
     }
     
-    const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
-    if (debugInfo)
-    {
-        FIN['VENDOR']   = debugInfo.UNMASKED_VENDOR_WEBGL;
-        FIN['RENDERER'] = debugInfo.UNMASKED_RENDERER_WEBGL;
-        // no WEBGL_debug_renderer_info
-    }
+    try{
+        
+        const debugInfo = GL.getExtension('WEBGL_debug_renderer_info');
+        
+        FIN['GL_VENDOR'] = GL.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL);
+        FIN['GL_RENDERER'] = GL.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
+        FIN['GL_RENDERER_2_XZ'] = GL.getParameter(GL.RENDERER); // "WebKit WebGL"
+        
+    }catch(e){ FIN['ERROR'] = 'TryCatch: ' + e.message; }
     
-    
-    //v2
-    //var canvas = document.getElementById('canvas');
-    //var gl = canvas.getContext('webgl');
-    //
-    //var debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
-    //var vendor = gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL);
-    //var renderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
-    //
-    //console.log(vendor);
-    //console.log(renderer);
     return FIN;
 }
-
+//getAll_GpuInfo();
 
 
 // ### ### ### ### ### ### ### ###
