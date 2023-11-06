@@ -682,110 +682,102 @@ function getAnyUrlSubDomain(url)
 
 
 // ### ### ### ### ### ### ### ###
-// **/  Крупные парсеры инфы  \**
+// **/  Получение инфы о юзере \**
 
 // Главный метод, который вытаскивает все и сразу.
-function getAllUserInfo_Static()
-{
-    // FINAL
-    // Получить всю инфу о экране.
-    function getArrInfo_Screen()
-    {
-        return {
-
-            // Вся инфа: https://habr.com/ru/post/509258/   https://learn.javascript.ru/size-and-scroll-window
-
-            // Палим полное, исходное разрешение экрана.
-            //'screenResWidht' : window.screen.width,
-            //'screenResHeight' : window.screen.height,
-            'screenResolution' : window.screen.width+'x'+window.screen.height,
-
-            // Размер всего окна браузера целиком. (Если фулл скрин, то вычитается панель системы внизу.)
-            //'browserFullSizeWidth'  : window.outerWidth,
-            //'browserFullSizeHeight' : window.outerHeight,
-            'browserFullSize' : window.outerWidth+'x'+window.outerHeight,
-
-            // Максимальный(полный) размер окна просмотра (вся видимая часть) (Без учета полоски)
-            //'viewportMaxWidth'  : document.documentElement.clientWidth,
-            //'viewportMaxHeight' : document.documentElement.clientHeight,
-            'viewportMax' : document.documentElement.clientWidth+'x'+document.documentElement.clientHeight,
-
-            // Реально доступный размер окна просмотра (вся видимая часть) (с вычетом полоски)
-            //'viewportAvalWidth'  : window.innerWidth,   // Ширина полного окна, с учетом полоски
-            //'viewportAvalHeight' : window.innerHeight, // Высота полного окна, с учетом полоски
-            'viewportAvalaible'  : window.innerWidth+'x'+window.innerHeight,
-
-            // ####
-
-            'scrollWidth'  : document.documentElement.scrollWidth,  // хз
-            'scrollHeight' : document.documentElement.scrollHeight, // хз
-
-            //'fullScrollHeight' : Math.max(   // Полная высота документа с прокручиваемой частью
-            //						document.body.scrollHeight, document.documentElement.scrollHeight,
-            //						document.body.offsetHeight, document.documentElement.offsetHeight,
-            //						document.body.clientHeight, document.documentElement.clientHeight),
-        };
-    }
-
-    // FINAL
-    // Получить всю инфу о Времени/дате/поясе.
-    function getArrInfo_DateTime()
-    {
-        var now = new Date();
-
-        var gmtRe = /GMT([\-\+]?\d{4})/; // Look for GMT, + or - (optionally), and 4 characters of digits (\d)
-        var dtFull = now.toString();
-        var tzNums = gmtRe.exec(dtFull)[1]; // timezone, i.e. -0700
-
-        var tzText = Intl.DateTimeFormat().resolvedOptions().timeZone;
-
-        return {
-            'timeZoneText' : tzText, // Europe/Moscow
-            'timeZoneNums' : tzNums, // +0300
-
-            'dateTimeFull' : dtFull, // Sat Jan 08 2022 01:10:02 GMT+0300 (Москва, стандартное время)
-            //'dateOnly' : now.toLocaleDateString(), // 08.01.2022
-            //'timeOnly' : now.toLocaleTimeString(), // 01:14:59
-            //'dateAndTime' : now.toLocaleString(), // 08.01.2022, 01:15:50
-        };
-    }
-
-    // FINAL
-    // Получить всю инфу о браузере. Особенно UA.
-    function getArrInfo_Navigator()
-    {
-        return {
-            'UA' : navigator.userAgent, // Mozilla/5.0 (Windows NT 6.3) ...
-            'lang' : navigator.language, // ru-RU
-            'langs' : JSON.stringify(navigator.languages), // ["ru-RU","ru","en-US","en"]
-            'platform' : navigator.platform, // Win32
-
-            'browserAppName' : navigator.appName, // Netscape
-            'browserProduct'   : navigator.product,   // Gecko
-            'browserProductSub'  : navigator.productSub, // 20030107
-            'browserVendor'     : navigator.vendor,     // Google Inc.
-            'browserVendorSub' : navigator.vendorSub, // '' пусто
-
-            //'6' : navigator.mediaDevices, // [object MediaDevices]
-            //'4' : navigator.clipboard, // [object Clipboard]
-            //'5' : navigator.plugins, // [object PluginArray]
-        };
-    }
-
-
-    // ### Все методы объявлены ###
-
+function getAllUserInfo_FULL(){
     return {
-        'SCREEN'    : getArrInfo_Screen(),
-        'DATETIME'  : getArrInfo_DateTime(),
-        'NAVIGATOR' : getArrInfo_Navigator(),
+        'NAVIGATOR' : getUserInfo_Navigator(),
+        'DATETIME' : getUserInfo_DateTime(),
+        'SCREEN'  : getUserInfo_Screen(),
+        'URI'    : getUserInfo_URI(),
+        'GPU'   : getUserInfo_GPU(),
+        'RAM'  : getUserInfo_RAM(),
+        'CPU' : getUserInfo_CPU(),
     };
-
 }
 
-// FINAL = Получить всю инфу о текущей ссылке. Особенно path.
-function getAllUserInfo_URI()
-{
+// Получить всю инфу о экране. # FINAL #
+function getUserInfo_Screen(){
+    return {
+        
+        // Вся инфа: https://habr.com/ru/post/509258/   https://learn.javascript.ru/size-and-scroll-window
+        
+        // Палим полное, исходное разрешение экрана.
+        //'screenResWidht' : window.screen.width,
+        //'screenResHeight' : window.screen.height,
+        'screenResolution' : window.screen.width+'x'+window.screen.height,
+        
+        // Размер всего окна браузера целиком. (Если фулл скрин, то вычитается панель системы внизу.)
+        //'browserFullSizeWidth'  : window.outerWidth,
+        //'browserFullSizeHeight' : window.outerHeight,
+        'browserFullSize' : window.outerWidth+'x'+window.outerHeight,
+        
+        // Максимальный(полный) размер окна просмотра (вся видимая часть) (Без учета полоски)
+        //'viewportMaxWidth'  : document.documentElement.clientWidth,
+        //'viewportMaxHeight' : document.documentElement.clientHeight,
+        'viewportMax' : document.documentElement.clientWidth+'x'+document.documentElement.clientHeight,
+        
+        // Реально доступный размер окна просмотра (вся видимая часть) (с вычетом полоски)
+        //'viewportAvalWidth'  : window.innerWidth,   // Ширина полного окна, с учетом полоски
+        //'viewportAvalHeight' : window.innerHeight, // Высота полного окна, с учетом полоски
+        'viewportAvalaible'  : window.innerWidth+'x'+window.innerHeight,
+        
+        // ####
+        
+        'scrollWidth'  : document.documentElement.scrollWidth,  // хз
+        'scrollHeight' : document.documentElement.scrollHeight, // хз
+        
+        //'fullScrollHeight' : Math.max(   // Полная высота документа с прокручиваемой частью
+        //						document.body.scrollHeight, document.documentElement.scrollHeight,
+        //						document.body.offsetHeight, document.documentElement.offsetHeight,
+        //						document.body.clientHeight, document.documentElement.clientHeight),
+    };
+}
+
+// Получить всю инфу о Времени/дате/поясе. # FINAL #
+function getUserInfo_DateTime(){
+    var now = new Date();
+    
+    var gmtRe = /GMT([\-\+]?\d{4})/; // Look for GMT, + or - (optionally), and 4 characters of digits (\d)
+    var dtFull = now.toString();
+    var tzNums = gmtRe.exec(dtFull)[1]; // timezone, i.e. -0700
+    
+    var tzText = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    
+    return {
+        'timeZoneText' : tzText, // Europe/Moscow
+        'timeZoneNums' : tzNums, // +0300
+        
+        'dateTimeFull' : dtFull, // Sat Jan 08 2022 01:10:02 GMT+0300 (Москва, стандартное время)
+        //'dateOnly' : now.toLocaleDateString(), // 08.01.2022
+        //'timeOnly' : now.toLocaleTimeString(), // 01:14:59
+        //'dateAndTime' : now.toLocaleString(), // 08.01.2022, 01:15:50
+    };
+}
+
+// Получить всю инфу о браузере. Особенно UA. # FINAL #
+function getUserInfo_Navigator(){
+    return {
+        'UA' : navigator.userAgent, // Mozilla/5.0 (Windows NT 6.3) ...
+        'lang' : navigator.language, // ru-RU
+        'langs' : JSON.stringify(navigator.languages), // ["ru-RU","ru","en-US","en"]
+        'platform' : navigator.platform, // Win32
+        
+        'browserAppName' : navigator.appName, // Netscape
+        'browserProduct'   : navigator.product,   // Gecko
+        'browserProductSub'  : navigator.productSub, // 20030107
+        'browserVendor'     : navigator.vendor,     // Google Inc.
+        'browserVendorSub' : navigator.vendorSub, // '' пусто
+        
+        //'6' : navigator.mediaDevices, // [object MediaDevices]
+        //'4' : navigator.clipboard, // [object Clipboard]
+        //'5' : navigator.plugins, // [object PluginArray]
+    };
+}
+
+// Получить всю инфу о текущей ссылке. Особенно path. # FINAL #
+function getUserInfo_URI(){
     // <protocol>//<hostname>:<port>/<pathname><search><hash>  https://stackoverflow.com/a/20746566
     return {
         'URI' : window.location.href, // https://ru.wikipedia.org/wiki/123/?var=123123#test
@@ -807,8 +799,7 @@ function getAllUserInfo_URI()
 }
 
 // Информация о видеокарте, через канвас.
-function getAllUserInfo_GPU()
-{
+function getUserInfo_GPU(){
     var FIN = {
         'ERROR': false,
         'GL_VENDOR': 'UNDEF',
@@ -836,11 +827,25 @@ function getAllUserInfo_GPU()
     
     return FIN;
 }
-//getAllUserInfo_GPU();
+
+function getUserInfo_RAM(){
+    var FIN = {
+        'ERROR': false,
+        'RAM_GB': -1,
+    };
+
+    try{
+        FIN['RAM_GB'] = navigator.deviceMemory;
+    }catch(e){ FIN['ERROR'] = 'TryCatch: ' + e.message; }
+    
+    return FIN;
+}
 
 // Микро-бенчмарк скорости CPU. Не точный и надо учитывать ядра.
-function getAllUserInfo_CpuEstimatedSpeed( runsMln=150 , cyclesPerRun=2 )
-{
+function getUserInfo_CpuEstimatedSpeed( runsMln=150 , cyclesPerRun=2 ){
+    if( runsMln === false ) // Если выключено
+        return { 'INPUT':{runsMln , cyclesPerRun}, 'TIME_S':-1, 'SPEED_RAW':-1, 'GHZ_RAW':-1, 'GHZ_FIN':-1 };
+    
     // https://stackoverflow.com/a/42143572  061123
     // Надо подобрать такое число, что бы и проц успел нагрузиться, и не слишком долго.
     var runs = runsMln*1000000;
@@ -864,12 +869,9 @@ function getAllUserInfo_CpuEstimatedSpeed( runsMln=150 , cyclesPerRun=2 )
     return info;
 }
 
-function getAllUserInfo_CPU( needBechmark=false )
-{
+function getUserInfo_CPU( bechmarkLoadOfFalse=false ){
     var FIN = {
         'ERROR': false,
-        'GL_VENDOR': 'UNDEF',
-        
         'CPU_CORES': -1,
         'CPU_SPEED_GHZ_ESTIM': -1,
         'CPU_SPEED_GHZ_ESTIM_INFO': -1,
@@ -878,22 +880,22 @@ function getAllUserInfo_CPU( needBechmark=false )
     try{
         FIN['CPU_CORES'] = navigator.hardwareConcurrency; // 2
         
-        if( needBechmark )
-        {
-            // Если удалось получить ядра, то подставляю.
-            var cores = (FIN['CPU_CORES'] !== -1) ? FIN['CPU_CORES'] : 2;
-            
-            var info = getAllUserInfo_CpuEstimatedSpeed(500,cores);
-            
-            FIN['CPU_SPEED_GHZ_ESTIM'] = info['GHZ_FIN'];
-            FIN['CPU_SPEED_GHZ_ESTIM_INFO'] = info;
-        }
+        //if( bechmarkHighLoad ){ var benchLoad = 100; } else { var benchLoad = 600; }
+        
+        var cores = (FIN['CPU_CORES'] !== -1) ? FIN['CPU_CORES'] : 2; // Если удалось получить ядра, то подставляю.
+        var info = getUserInfo_CpuEstimatedSpeed(bechmarkLoadOfFalse,cores);
+        
+        FIN['CPU_SPEED_GHZ_ESTIM'] = info['GHZ_FIN'];
+        FIN['CPU_SPEED_GHZ_ESTIM_INFO'] = info;
         
     }catch(e){ FIN['ERROR'] = 'TryCatch: ' + e.message; }
     
     return FIN;
 }
-//getAllUserInfo_CPU(true);
+
+
+
+
 
 
 // ### ### ### ### ### ### ### ###
