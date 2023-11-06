@@ -557,7 +557,10 @@ function AJAX_Sync_ForDebug( TARG_URL , DATA_OBJ )
     AX.open("GET", TARG_URL_2, false);
     AX.send(  );
     
-    return { 'STATUS':AX.status , 'RESP_TEXT_RAW':AX.responseText , 'OBJ':AX , 'URL_2':TARG_URL_2 , 'DATA_JSON':DATA_JSON };
+    return { 'STATUS':AX.status , 'RESP_TEXT_RAW':AX.responseText ,
+        'OBJ':AX , 'URL_2':TARG_URL_2 ,
+        'DATA': DATA_OBJ ,
+        'DATA_JSON':DATA_JSON };
 }
 
 
