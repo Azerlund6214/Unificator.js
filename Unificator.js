@@ -809,7 +809,47 @@ function getAll_UriInfo()
 // Информация о видеокарте, через канвас.
 function getAll_GpuInfo()
 {
-
+    var FIN = {
+        'ERROR': false,
+        'VENDOR': 'UNDEF',
+        'RENDERER': 'UNDEF',
+    };
+    
+    // Возм предварительно делать поиск, вдруг уже есть другие канвасы.
+    // Возм убрать внутрь боди
+    var canvas = document.createElement('canvas')
+    var gl = canvas.getContext('webgl');
+    //var canvas = document.getElementById('canvas');
+    
+    
+    if( ! canvas  || ! gl )
+    {
+        if ( ! canvas ) FIN['ERROR'] = 'CANVAS Err';
+        if ( ! gl     ) FIN['ERROR'] = 'No WEBGL';
+        
+        return FIN;
+    }
+    
+    const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+    if (debugInfo)
+    {
+        FIN['VENDOR']=debugInfo.UNMASKED_VENDOR_WEBGL
+        FIN['RENDERER']=debugInfo.UNMASKED_RENDERER_WEBGL
+        // no WEBGL_debug_renderer_info
+    }
+    
+    
+    //v2
+    //var canvas = document.getElementById('canvas');
+    //var gl = canvas.getContext('webgl');
+    //
+    //var debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+    //var vendor = gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL);
+    //var renderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
+    //
+    //console.log(vendor);
+    //console.log(renderer);
+    return FIN;
 }
 
 
