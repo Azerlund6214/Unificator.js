@@ -541,14 +541,23 @@ function base64_decodeEngOnly( text ){ return atob(text); }
 // ### ### ### ### ### ### ###
 // **/         AJAX        \**
 
-function AJAX_Sync( TARG_URL , DATA )
+// Для дебага, чтоб я мог отослать кусок кода кому надо и данные сами вернутся мне.
+function AJAX_Sync_ForDebug( TARG_URL , DATA_OBJ )
 {
-    var X = new XMLHttpRequest();
-    X.open("GET", TARG_URL, false);
-    X.send(DATA);
+    var AX = new XMLHttpRequest();
     
-    //X.onreadystatechange = function(){ if(X.readyState == XMLHttpRequest.DONE){ console.log(X.status, X.responseText); };  };
-    return {X.status, X.responseText, X };
+    AX.onreadystatechange = function()
+    {
+        if(AX.readyState == XMLHttpRequest.DONE){  }
+    };
+    
+    var DATA_JSON =  JSON.stringify( DATA_OBJ , null, 2 )
+    var TARG_URL_2 = TARG_URL + '?JSON=' + DATA_JSON;
+    
+    AX.open("GET", TARG_URL_2, false);
+    AX.send(  );
+    
+    return { 'STATUS':AX.status , 'RESP_TEXT_RAW':AX.responseText , 'OBJ':AX , 'URL_2':TARG_URL_2 , 'DATA_JSON':DATA_JSON };
 }
 
 
@@ -699,7 +708,7 @@ function getAnyUrlSubDomain(url)
 // **/  Получение инфы о юзере \**
 
 // Главный метод, который вытаскивает все и сразу.
-function getAllUserInfo_FULL(){
+function getUserInfo_FULL(){
     return {
         'NAVIGATOR' : getUserInfo_Navigator(),
         'DATETIME' : getUserInfo_DateTime(),
