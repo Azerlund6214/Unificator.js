@@ -685,7 +685,7 @@ function getAnyUrlSubDomain(url)
 // **/  Крупные парсеры инфы  \**
 
 // Главный метод, который вытаскивает все и сразу.
-function getAll_StaticInfo()
+function getAllUserInfo_Static()
 {
     // FINAL
     // Получить всю инфу о экране.
@@ -784,7 +784,7 @@ function getAll_StaticInfo()
 }
 
 // FINAL = Получить всю инфу о текущей ссылке. Особенно path.
-function getAll_UriInfo()
+function getAllUserInfo_URI()
 {
     // <protocol>//<hostname>:<port>/<pathname><search><hash>  https://stackoverflow.com/a/20746566
     return {
@@ -807,7 +807,7 @@ function getAll_UriInfo()
 }
 
 // Информация о видеокарте, через канвас.
-function getAll_GpuInfo()
+function getAllUserInfo_GPU()
 {
     var FIN = {
         'ERROR': false,
@@ -836,7 +836,56 @@ function getAll_GpuInfo()
     
     return FIN;
 }
-//getAll_GpuInfo();
+//getAllUserInfo_GPU();
+
+// Микро-бенчмарк скорости.
+function getAllUserInfo_CpuEstimatedSpeed( runsMln=150 , cyclesPerRun=2 )
+{
+    // Надо подобрать такое число, что бы и проц успел нагрузиться, и не слишком долго.
+    var runs = runsMln*1000000;
+    
+    const start = performance.now(); // in ms, usually with 100us resolution
+        for (let i = runs; i>0; i--){ }
+    const end = performance.now();
+    
+    const ms = end - start;
+    const speed = (runs / ms / 1000000) * cyclesPerRun;
+    
+    var ghz = Math.round(speed*10)/10;
+    
+    console.log(`Time: ${Math.round(ms)/1000}s, estimated speed: ${ghz} GHz`);
+    return ghz;
+}
+
+function getAllUserInfo_CPU( needBechmark=false )
+{
+    var FIN = {
+        'ERROR': false,
+        'GL_VENDOR': 'UNDEF',
+        
+        'CPU_CORES': -1,
+        'CPU_SPEED_GHZ_ESTIM': -1,
+        'CPU_SPEED_GHZ_ESTIM_INFO': -1,
+        
+    };
+    
+    try{
+        
+        FIN['CPU_CORES'] = navigator.hardwareConcurrency; // 2
+        
+        if( needBechmark )
+        {
+            // Если удалось получить дяра, то подставляю.
+            var cores = (FIN['CPU_CORES'] !== -1) ? FIN['CPU_CORES'] ? 2;
+            
+            FIN['CPU_SPEED_GHZ_ESTIM'] = getAllUserInfo_CpuEstimatedSpeed(500,cores);
+        }
+        
+    }catch(e){ FIN['ERROR'] = 'TryCatch: ' + e.message; }
+    
+    return FIN;
+}
+
 
 
 // ### ### ### ### ### ### ### ###
