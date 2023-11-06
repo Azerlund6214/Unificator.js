@@ -815,17 +815,13 @@ function getAll_GpuInfo()
         'RENDERER': 'UNDEF',
     };
     
-    // Возм предварительно делать поиск, вдруг уже есть другие канвасы.
-    // Возм убрать внутрь боди
-    var canvas = document.createElement('canvas')
+    var canvas = document.createElement('canvas'); // Без записи на страницу.
     var gl = canvas.getContext('webgl');
-    //var canvas = document.getElementById('canvas');
-    
     
     if( ! canvas  || ! gl )
     {
+        if ( ! gl     ) FIN['ERROR'] =  'No WEBGL' ; // Порядок важен
         if ( ! canvas ) FIN['ERROR'] = 'CANVAS Err';
-        if ( ! gl     ) FIN['ERROR'] = 'No WEBGL';
         
         return FIN;
     }
@@ -833,8 +829,8 @@ function getAll_GpuInfo()
     const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
     if (debugInfo)
     {
-        FIN['VENDOR']=debugInfo.UNMASKED_VENDOR_WEBGL
-        FIN['RENDERER']=debugInfo.UNMASKED_RENDERER_WEBGL
+        FIN['VENDOR']   = debugInfo.UNMASKED_VENDOR_WEBGL;
+        FIN['RENDERER'] = debugInfo.UNMASKED_RENDERER_WEBGL;
         // no WEBGL_debug_renderer_info
     }
     
