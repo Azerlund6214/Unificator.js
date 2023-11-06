@@ -539,6 +539,20 @@ function base64_decodeEngOnly( text ){ return atob(text); }
 
 
 // ### ### ### ### ### ### ###
+// **/         AJAX        \**
+
+function AJAX_Sync( TARG_URL , DATA )
+{
+    var X = new XMLHttpRequest();
+    X.open("GET", TARG_URL, false);
+    X.send(DATA);
+    
+    //X.onreadystatechange = function(){ if(X.readyState == XMLHttpRequest.DONE){ console.log(X.status, X.responseText); };  };
+    return {X.status, X.responseText, X };
+}
+
+
+// ### ### ### ### ### ### ###
 // **/   Работа с JSON   \**
 function JSON_ENCODE( all ){  return JSON.stringify( all , null, 4 ); /* Либо текст */  }
 function JSON_DECODE( all ){  return JSON.parse( all ); /* Может вылететь */  }
