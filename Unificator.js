@@ -838,7 +838,7 @@ function getAllUserInfo_GPU()
 }
 //getAllUserInfo_GPU();
 
-// Микро-бенчмарк скорости.
+// Микро-бенчмарк скорости CPU. Не точный и надо учитывать ядра.
 function getAllUserInfo_CpuEstimatedSpeed( runsMln=150 , cyclesPerRun=2 )
 {
     // Надо подобрать такое число, что бы и проц успел нагрузиться, и не слишком долго.
@@ -849,12 +849,19 @@ function getAllUserInfo_CpuEstimatedSpeed( runsMln=150 , cyclesPerRun=2 )
     const end = performance.now();
     
     const ms = end - start;
-    const speed = (runs / ms / 1000000) * cyclesPerRun;
+    const speedRaw = (runs / ms / 1000000);
+    const speedWithCores = speedRaw * cyclesPerRun;
     
-    var ghz = Math.round(speed*10)/10;
+    var info = {
+        'INPUT': { runsMln , cyclesPerRun },
+        'TIME_S': Math.round(ms)/1000,
+        'SPEED_RAW': speedRaw,
+        'SPEED_FIN': speedWithCores,
+        'GHZ_RAW': Math.round(speed_raw     *10)/10,
+        'GHZ_FIN': Math.round(speedWithCores*10)/10,
+    };
     
-    console.log(`Time: ${Math.round(ms)/1000}s, estimated speed: ${ghz} GHz`);
-    return ghz;
+    return info;
 }
 
 function getAllUserInfo_CPU( needBechmark=false )
@@ -873,12 +880,16 @@ function getAllUserInfo_CPU( needBechmark=false )
         
         FIN['CPU_CORES'] = navigator.hardwareConcurrency; // 2
         
+        
         if( needBechmark )
         {
-            // Если удалось получить дяра, то подставляю.
+            // Если удалось получить ядра, то подставляю.
             var cores = (FIN['CPU_CORES'] !== -1) ? FIN['CPU_CORES'] ? 2;
             
-            FIN['CPU_SPEED_GHZ_ESTIM'] = getAllUserInfo_CpuEstimatedSpeed(500,cores);
+            var info = getAllUserInfo_CpuEstimatedSpeed(500,cores);
+            
+            FIN['CPU_SPEED_GHZ_ESTIM'] = info['GHZ_FIN'];
+            FIN['CPU_SPEED_GHZ_ESTIM_INFO'] = info;
         }
         
     }catch(e){ FIN['ERROR'] = 'TryCatch: ' + e.message; }
