@@ -805,6 +805,12 @@ function getAll_UriInfo()
     };
 }
 
+// Информация о видеокарте, через канвас.
+function getAll_GpuInfo()
+{
+
+}
+
 
 
 // ### ### ### ### ### ### ### ###
