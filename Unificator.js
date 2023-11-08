@@ -286,7 +286,7 @@ function frames_GetCount_IframeTag(){ return document.getElementsByTagName('ifra
 
 
 // ### ### ### ### ### ### ###
-// **/       Парсер       \**
+// **/       Парсеры       \**
 function easyParcer_Forms_AUTO(  ) {
     // Доработка - список инпутов с их данными-тексты, плейсхолдеры и тд.
     var finalJson = { };
@@ -322,16 +322,78 @@ function easyParcer_Href( selector ) {
 	
 	return finalJson;
 }
-function easyParcer_Href_VkAlbum(  ) {
+
+// ### ### ### ### ### ### ###
+// **/    Скрипты для VK   \**
+function VK_AlbumsHrefParcer(  ){
     var resJson = easyParcer_Href( '.photos_row a' );
     var resArr = [];
     
     for (var key in resJson)
         resArr[key] = str_explode('?',resJson[key])[0];
-
+    
     return resArr;
 }
-//easyParcer_Href_VkAlbum();
+//VK_AlbumsHrefParcer();
+
+function VK_GroupStatPerform()
+{
+    var DEBUG = true;
+    
+    var ROWS = tag_getAllOrFalse(".paginated_table_row");
+    
+    for (let r of ROWS)
+    {
+        //var r = ROWS[1];
+        var rText = r.innerText; // ' \n1 фотография\n13 дек 2022 в 16:22\n\t\n142 / 117\nчеловек\n\t41\t0\t0'
+        var rHtml = r.innerHTML;
+        if(DEBUG){ logOneRed('====1'); log(rText,rHtml); }
+        
+        
+        var viewsRawText_1 = PHP_explode('\n\t\n',rText)[1];
+        var viewsRawText_2 = PHP_explode('\nчеловек\n\t',viewsRawText_1)[0];
+        var viewsRawText_3 = PHP_explode(" / ",viewsRawText_2);
+        if(DEBUG){ logOneRed('====2'); log(viewsRawText_1,viewsRawText_2,viewsRawText_3); }
+        
+        
+        var viewTotal = viewsRawText_3[0];  viewTotal = PHP_str_replace(' ','', viewTotal); // Для цифр больше 1000.
+        var viewViral = viewsRawText_3[1];  viewViral = PHP_str_replace(' ','', viewViral);
+        var viewSubs  = viewTotal - viewViral;
+        if(DEBUG){ logOneRed('====3'); log(viewTotal,viewViral,viewSubs); }
+        
+        
+        
+    
+    
+        var views = viewTotal;
+        
+        
+        //var views = PHP_explode(' / ',   PHP_explode('\n\t\n',rText)[1]   )[0];
+        
+        //    views = PHP_str_replace(' ','', views); // Для цифр больше 1000.
+        
+        //log(rText,rHtml,PHP_explode('\n\t\n',rText),views);
+        
+        
+        var likes = PHP_explode('\t',PHP_explode('\nчеловек\n\t',rText)[1])[0];
+        var percent = Math.floor((likes/views)*100);
+        
+        
+        var dop = '';
+        if(percent >= 15) dop = ' => ###';
+        if(percent >= 20) dop = ' => ### ###';
+        if(percent >= 25) dop = ' => ### ### ###';
+        
+        //rHtml = PHP_str_replace('</div>"></div>','</div>">V</div>',rHtml);
+        rHtml = PHP_str_replace('человек','#  '+percent+'  #'+dop,rHtml);
+        r.innerHTML = rHtml;
+        
+        if(DEBUG){ return; }
+    }
+    
+}
+VK_GroupStatPerform();
+
 
 
 
