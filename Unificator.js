@@ -93,7 +93,7 @@ function str_strPos(text, search){ var i = text.indexOf( search );  return i >= 
 function num_toIntUp  (mixed_var){ return Math.ceil (mixed_var); } // 9.9999999999995 -> 10
 function num_toIntDown(mixed_var){ return Math.floor(mixed_var); } // 9.9999999999995 -> 9
 function num_numberFormat( num, decimals=2 ){  return parseFloat( parseFloat(num).toFixed(decimals) );  } // Тестить
-
+function num_percent( n1 , n2 ){ return Math.floor((n1/n2)*100); } // Целым числом
 
 // ### ### ### ### ### ### ###
 // **/ Работа с массивами  \**
