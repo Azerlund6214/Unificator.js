@@ -314,9 +314,7 @@ function easyParcer_Href( selector ) {
 	var arrElems = document.querySelectorAll(selector);
 	console.log(arrElems.length);
 	
-	
-	arrElems.forEach( function( e , i )
-    {
+	arrElems.forEach( function( e , i ){
 		finalJson[i] = e.href;
 	});
 	
@@ -325,6 +323,16 @@ function easyParcer_Href( selector ) {
 
 // ### ### ### ### ### ### ###
 // **/    Скрипты для VK   \**
+/**
+ * Выдаст полный список VK-Ссылок на все изображения в открытом альбоме.
+ *
+ * Испольнование: 1) Открыть альбом по ссылке формата https://vk.com/album-123123_123123
+ * 2) Полностью отлистать его до низа, чтоб прогрузил все карточки.
+ * 3) Вставить в консоль и вызвать метод. Потом ПКМ-Копировать как объект и вставить в тхт.
+ *
+ * Формат выдачи: JSON с кучей строк "https://vk.com/photo-123123_123123"
+ * Это нужно для последующей работы с этими пикчами через VK-API. (Обычно прикрепить к посту)
+ */
 function VK_AlbumsHrefParcer(  ){
     var resJson = easyParcer_Href( '.photos_row a' );
     var resArr = [];
@@ -334,11 +342,13 @@ function VK_AlbumsHrefParcer(  ){
     
     return resArr;
 }
-//VK_AlbumsHrefParcer();
 
-
-function VK_GroupStatPerform()
-{
+/**
+ * Переситает стандартную таблицу статистик записей и наглядно выведет нужные метрики.
+ * Больше не надо копаться в цифрах и что-то искать.
+ * https://vk.com/stats?act=posts&gid=1112223333
+ */
+function VK_GroupStatPerform( ){
     // Написан в дек22.  Фулл переписан 091123.
     var DEBUG = false;
     
@@ -392,11 +402,10 @@ function VK_GroupStatPerform()
         if(DEBUG){ return; }
     }
     
-    // Вк не дочистил код от старой фичи.
+    // Вк не дочистил код от своей старой фичи.
     // class="stat_group_postsreach__evegreen_mark"
     // https://vk.com/@adminsclub-evergreen
 }
-VK_GroupStatPerform();
 
 
 
