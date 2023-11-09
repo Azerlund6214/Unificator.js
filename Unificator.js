@@ -332,6 +332,7 @@ function easyParcer_Href( selector ) {
  *
  * Формат выдачи: JSON с кучей строк "https://vk.com/photo-123123_123123"
  * Это нужно для последующей работы с этими пикчами через VK-API. (Обычно прикрепить к посту)
+ * Version=091123 0318
  */
 function VK_AlbumsHrefParcer(  ){
     var resJson = easyParcer_Href( '.photos_row a' );
@@ -347,6 +348,7 @@ function VK_AlbumsHrefParcer(  ){
  * Переситает стандартную таблицу статистик записей и наглядно выведет нужные метрики.
  * Больше не надо копаться в цифрах и что-то искать.
  * https://vk.com/stats?act=posts&gid=1112223333
+ * Version=091123 0318
  */
 function VK_GroupStatPerform( ){
     // Написан в дек22.  Фулл переписан 091123.
