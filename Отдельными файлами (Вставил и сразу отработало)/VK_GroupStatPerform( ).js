@@ -8,17 +8,17 @@ function logOneRed  ( t ){ console.log('%c'+t, 'color:red'  ); }
 
 function tag_getAllOrFalse  (target){ var res = document.querySelectorAll(target);  if( ! res.length  ) return false;  else  return res;     }
 
-function num_percent( n1 , n2 ){ return Math.floor((n1/n2)*100); } // Целым числом
+function num_percent( n1 , n2 ){ return Math.floor((n1/n2)*100); } // Р¦РµР»С‹Рј С‡РёСЃР»РѕРј
 
 /* ################################################# */
 
 /** 091123 0318
- * Переситает стандартную таблицу статистик записей и наглядно выведет нужные метрики.
- * Больше не надо копаться в цифрах и что-то искать.
+ * РџРµСЂРµСЃРёС‚Р°РµС‚ СЃС‚Р°РЅРґР°СЂС‚РЅСѓСЋ С‚Р°Р±Р»РёС†Сѓ СЃС‚Р°С‚РёСЃС‚РёРє Р·Р°РїРёСЃРµР№ Рё РЅР°РіР»СЏРґРЅРѕ РІС‹РІРµРґРµС‚ РЅСѓР¶РЅС‹Рµ РјРµС‚СЂРёРєРё.
+ * Р‘РѕР»СЊС€Рµ РЅРµ РЅР°РґРѕ РєРѕРїР°С‚СЊСЃСЏ РІ С†РёС„СЂР°С… Рё С‡С‚Рѕ-С‚Рѕ РёСЃРєР°С‚СЊ.
  * https://vk.com/stats?act=posts&gid=1112223333
  */
 function VK_GroupStatPerform( ){
-    // Написан в дек22.  Фулл переписан 091123.
+    // РќР°РїРёСЃР°РЅ РІ РґРµРє22.  Р¤СѓР»Р» РїРµСЂРµРїРёСЃР°РЅ 091123.
     var DEBUG = false;
     
     var ROWS = tag_getAllOrFalse(".paginated_table_row");
@@ -26,16 +26,16 @@ function VK_GroupStatPerform( ){
     for (let r of ROWS)
     {
         //var r = ROWS[1];
-        var rText = r.innerText; // ' \n1 фотография\n13 дек 2022 в 16:22\n\t\n142 / 117\nчеловек\n\t41\t0\t0'
+        var rText = r.innerText; // ' \n1 С„РѕС‚РѕРіСЂР°С„РёСЏ\n13 РґРµРє 2022 РІ 16:22\n\t\n142В /В 117\nС‡РµР»РѕРІРµРє\n\t41\t0\t0'
         var rHtml = r.innerHTML;
         if(DEBUG){ logOneRed('====1'); log(rText,rHtml); }
         
         var viewsRawText_1 = PHP_explode('\n\t\n',rText)[1];
-        var viewsRawText_2 = PHP_explode('\nчеловек\n\t',viewsRawText_1)[0];
-        var viewsRawText_3 = PHP_explode(" / ",viewsRawText_2);
+        var viewsRawText_2 = PHP_explode('\nС‡РµР»РѕРІРµРє\n\t',viewsRawText_1)[0];
+        var viewsRawText_3 = PHP_explode("В /В ",viewsRawText_2);
         if(DEBUG){ logOneRed('====2'); log(viewsRawText_1,viewsRawText_2,viewsRawText_3); }
         
-        var viewTotal = viewsRawText_3[0];  viewTotal = PHP_str_replace(' ','', viewTotal); // Для цифр больше 1000.
+        var viewTotal = viewsRawText_3[0];  viewTotal = PHP_str_replace(' ','', viewTotal); // Р”Р»СЏ С†РёС„СЂ Р±РѕР»СЊС€Рµ 1000.
         var viewViral = viewsRawText_3[1];  viewViral = PHP_str_replace(' ','', viewViral);
         var viewSubs  = viewTotal - viewViral;
         if(DEBUG){ logOneRed('====3'); log(viewTotal,viewViral,viewSubs); }
@@ -44,7 +44,7 @@ function VK_GroupStatPerform( ){
         var viewSubs_Perc  = 100 - num_percent( viewSubs  , viewTotal);
         if(DEBUG){ logOneRed('====4'); log(viewViral_Perc,viewSubs_Perc); }
         
-        var likes = PHP_explode('\t',PHP_explode('\nчеловек\n\t',rText)[1])[0];
+        var likes = PHP_explode('\t',PHP_explode('\nС‡РµР»РѕРІРµРє\n\t',rText)[1])[0];
         var percentLikes_vTotal = Math.floor((likes/viewTotal)*100);
         
         var dop = '';
@@ -63,7 +63,7 @@ function VK_GroupStatPerform( ){
         rHtml = PHP_str_replace( likesPattern+likes , likesPattern+textFinLike , rHtml);
         
         var textFinSub = '[SUB='+viewSubs_Perc+'% | VIR='+viewViral_Perc+'% | '+dopViral+' ]';
-        rHtml = PHP_str_replace('человек',textFinSub,rHtml);
+        rHtml = PHP_str_replace('С‡РµР»РѕРІРµРє',textFinSub,rHtml);
         
         if(DEBUG){ logOneRed('====5'); log(rHtml,textFinLike); }
         
@@ -71,7 +71,7 @@ function VK_GroupStatPerform( ){
         if(DEBUG){ return; }
     }
     
-    // Вк не дочистил код от своей старой фичи.
+    // Р’Рє РЅРµ РґРѕС‡РёСЃС‚РёР» РєРѕРґ РѕС‚ СЃРІРѕРµР№ СЃС‚Р°СЂРѕР№ С„РёС‡Рё.
     // class="stat_group_postsreach__evegreen_mark"
     // https://vk.com/@adminsclub-evergreen
 }
