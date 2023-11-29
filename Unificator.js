@@ -421,9 +421,7 @@ function VK_GroupStatPerform( ){
  */
 function VK_GroupWall_Check(){  return (document.querySelectorAll( 'div.redesigned-group-info' ).length > 0);  }
 
-
-function VK_GroupWall_GetCardsIds()
-{
+function VK_GroupWall_GetCardsIds(){
     var cardsAllRaw = tag_getAllOrFalse("div._post.post");
     
     var FIN = [ ];
@@ -434,7 +432,6 @@ function VK_GroupWall_GetCardsIds()
     return FIN;
 }
 
-// post-123123_91229
 function VK_GroupWall_GetOneCardInfo(postId){
     var SEL = {
         'CARD': `div#${postId}`,
@@ -467,6 +464,49 @@ function VK_GroupWall_GetOneCardInfo(postId){
     
     return FIN;
 }
+
+function VK_GroupWall_PerformCardOne(CardInfo){
+    var PID = CardInfo.ID;
+    var myDivId = 'myStat';
+    var myDivPlace = `div#${PID} div._post_content div.post_info div.like_wrap div.like_cont div.like_views`;
+    var myDivSelectId = `div#${PID} div._post_content div.post_info div.like_wrap div.like_cont div.like_views div#${myDivId}`;
+    
+    if( document.querySelectorAll( myDivSelectId ).length )
+        document.querySelector( myDivSelectId).remove();
+    
+    // - ####
+    
+    var LikesPerc = Math.floor((CardInfo.LIKE/CardInfo.VIEW)*100);
+    
+    var dop = '';
+    if(LikesPerc >= 10) dop = ' <span style="color:lime;"  >#</span>';
+    if(LikesPerc >= 15) dop = ' <span style="color:yellow;">##</span>';
+    if(LikesPerc >= 20) dop = ' <span style="color:orange;">###</span>';
+    if(LikesPerc >= 25) dop = ' <span style="color:red;"   >####</span>';
+    
+    var preInnerContent = `${dop} ${LikesPerc}% | ${CardInfo.VIEW} |`;
+    
+    // - ####
+    
+    var elemFin = elemCreateFromHtml( `<div id="${myDivId}"> <pre>${preInnerContent} </pre> </div>` );
+    document.querySelector( myDivPlace ).prepend( elemFin ); // Добавит в начало
+    
+    return preInnerContent;
+}
+
+function VK_GroupWall_PerformCardsALL() {
+    var cardIds = VK_GroupWall_GetCardsIds();
+    
+    for (let ID of cardIds)
+    {
+        var INFO = VK_GroupWall_GetOneCardInfo(ID);
+        var CONT = VK_GroupWall_PerformCardOne(INFO);
+        log(INFO,CONT);
+    }
+}
+
+
+
 
 
 
