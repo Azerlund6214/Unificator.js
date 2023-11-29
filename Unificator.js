@@ -47,6 +47,11 @@
 
 
 // ### ### ### ### ### ###
+// **/ Стартовое  \**
+var INIT_BEG = document.timeline.currentTime;
+
+
+// ### ### ### ### ### ###
 // **/ Проверки типов  \**
 // НЕЛЬЗЯ - Проврять только напрямую в коде.   function isUndef( t ){   }
 function isNull( t )  { return (Boolean)( t === null ); }
@@ -1253,16 +1258,19 @@ function dev_makeJsonStr( ){ return '{"a":234,"b":42,"c":[0,1,2],"d":25.837}'; }
 
   window.addEventListener( 'load'           , function(){ logOneRed('#### Страница загружена ####'); });
 document.addEventListener('DOMContentLoaded', function(){ logOneRed('#### Зависимости загружены - DOMContentLoaded ####'); });
+
 const DEF_UNIF_LOADED = true;
+var INIT_END = document.timeline.currentTime;
 
 logLine_11();
 logOneRed('#### Unificator - Объявлен ####')
-logOneRed('#### ENV = '+window.location.href+' ####')
+logOneRed('#### [ENV] '+window.location.href+' ####')
 if( detectRunningInIframe() || detectRunningInIframe_v2() )
 {
-    logOneRed('#### ENV = Во фрейме ####')
+    logOneRed('#### [ENV] = Во фрейме ####')
     log(frames_GetBigInfoArr());
 }
+logOneRed(`#### [TIME] BeforeInit = ${num_numberFormat(INIT_BEG/1000,3)}с | INIT = ${num_numberFormat((INIT_END-INIT_BEG)/1000,3)}с ####`)
 logLine_11();
 
 /* <+++> 123 <+++> */
