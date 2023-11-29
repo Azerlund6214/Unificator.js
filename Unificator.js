@@ -591,7 +591,54 @@ function VK_GroupWall_PerformCardsALL() {
     }
 }
 
-
+/**
+ * Автоматически проверять обновления и делать перерасчеты если надо.
+ * Предназначено для вызова на каждой странице, через расширение хрома.
+ */
+function VK_GroupWall_AUTOMODE()
+{
+    var PREF = 'VK_WALL';
+    var recheckTimeFloatSec = 3;
+    
+    // Если это не стена группы, то не запускать.
+    if( ! VK_GroupWall_Check )
+    {
+        log(`${PREF}: Это не стена - выхожу`);
+        return;
+    }
+    else
+    {
+        log(`${PREF}: Задержка ${recheckTimeFloatSec}сек`);
+    }
+    
+    
+    var iter = 0;
+    var postsCntLast = 0;
+    setInterval(function(){
+        iter += 1;
+        
+        var postsCntNow = VK_GroupWall_GetCardsIds().length;
+        
+        if( postsCntNow > postsCntLast )
+        {
+            logOneRed();
+            log(`${PREF}: Итерация № ${iter} | Всего минут ${parseInt( (iter*recheckTimeFloatSec)/60 )} ]`);
+            log(`${PREF}: Новые посты = [ Было ${postsCntLast} | Сейчас ${postsCntNow} ]`);
+            
+            // TODO: NOTE - Пересчитывает все сразу, а не только новые.
+            VK_GroupWall_PerformCardsALL();
+            
+            postsCntLast = postsCntNow;
+        }
+        else
+        {
+            // Новых нет
+        }
+    
+    }, recheckTimeFloatSec*1000);
+    
+    log(`${PREF}: Конец функции.`);
+}
 
 
 
