@@ -409,6 +409,59 @@ function VK_GroupStatPerform( ){
     // https://vk.com/@adminsclub-evergreen
 }
 
+/**
+ * Открыта ли сейчас страница со стеной группы.
+ * @returns {boolean}
+ */
+function VK_GroupWall_Check(){  return (document.querySelectorAll( 'div.redesigned-group-info' ).length > 0);  }
+
+
+function VK_GroupWall_GetCardsIds()
+{
+    var cardsAllRaw = tag_getAllOrFalse("div._post.post");
+    
+    var FIN = [ ];
+    
+    for (let CARD of cardsAllRaw)
+        FIN.push(CARD.id);
+    
+    return FIN;
+}
+
+// post-123123_91229
+function VK_GroupWall_GetOneCardInfo(postId){
+    var SEL = {
+        'CARD': `div#${postId}`,
+        'DATE': `div#${postId} div._post_content div.PostHeader div.PostHeaderInfo div a time`,
+        'LIKE': `div#${postId} div._post_content div.post_info div.like_wrap div.like_cont div.like_btns div div.PostBottomAction`,
+        'COMM': `div#${postId} div._post_content div.post_info div.like_wrap div.like_cont div.like_btns div.comment`,
+        'REPO': `div#${postId} div._post_content div.post_info div.like_wrap div.like_cont div.like_btns div.share`,
+        'VIEW': `div#${postId} div._post_content div.post_info div.like_wrap div.like_cont div.like_views`,
+    };
+    
+    var CARD = document.querySelector( SEL['CARD'] );
+    
+    var FIN =
+        {
+            'ID': postId,
+            'RAW' : CARD,
+            'TEXT': CARD.outerText,
+            'HTML': CARD.outerHTML,
+            'TIME': document.querySelector( SEL['DATE'] ).textContent,
+            'LIKE': document.querySelector( SEL['LIKE'] ).getAttribute('data-reaction-counts'),
+            'COMM': document.querySelector( SEL['COMM'] ).getAttribute('data-count'),
+            'REPO': document.querySelector( SEL['REPO'] ).getAttribute('data-count'),
+            'VIEW': document.querySelector( SEL['VIEW'] ).getAttribute('title'),
+        };
+    
+    FIN.LIKE = JSON.parse(FIN.LIKE)[0];
+    FIN.COMM = parseInt(FIN.COMM);
+    FIN.REPO = parseInt(FIN.REPO);
+    FIN.VIEW = parseInt(FIN.VIEW.split(' ')[0]);
+    
+    return FIN;
+}
+
 
 
 
@@ -740,6 +793,11 @@ function SERP_GOOGLE_TagsA_Prepare()
     }
 }
 //SERP_GOOGLE_MakeFakeClick(url,num)  получаю   чек что есть   клик    труИлиФолс
+
+
+
+// ### ### ### ### ### ### ### ### ###
+// **/  DEV: В процессе написания  \**
 
 
 
