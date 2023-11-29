@@ -634,7 +634,8 @@ function AJAX_Sync_ForDebug( TARG_URL , DATA_OBJ )
     AX.open("GET", TARG_URL_2, false);
     AX.send(  );
     
-    return { 'STATUS':AX.status , 'RESP_TEXT_RAW':AX.responseText ,
+    return { 'NOTE': 'Это заметки для дебага аякса',
+        'STATUS':AX.status , 'RESP_TEXT_RAW':AX.responseText ,
         'OBJ':AX , 'URL_2':TARG_URL_2 ,
         'DATA': DATA_OBJ ,
         'DATA_JSON':DATA_JSON };
@@ -687,6 +688,9 @@ function sleep_promise(ms){  return new Promise(resolve => setTimeout(resolve, m
 // ### ### ### ### ### ### ### ###
 // **/  Отложенное исполнение  \**
 function timerExecAfter( secFloat , callable ){ logLine_10();   SLEEP(secFloat);  log(callable);  callable(); logLine_01();  }
+
+function timerCyclic( secFloat , callable ){  setInterval(function(){ callable(); }, secFloat*1000);  }
+//timerCyclic(2, function(){ alert(1); } );
 
 
 // ### ### ### ### ### ### ### ### ### ###
