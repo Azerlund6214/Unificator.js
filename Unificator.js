@@ -614,10 +614,9 @@ function VK_GroupWall_PerformCardsALL() {
  * Автоматически проверять обновления и делать перерасчеты если надо.
  * Предназначено для вызова на каждой странице, через расширение хрома.
  */
-function VK_GroupWall_AUTOMODE()
+function VK_GroupWall_AUTOMODE(recheckTimeFloatSec=5)
 {
     var PREF = 'VK_WALL';
-    var recheckTimeFloatSec = 5;
     
     // Если это не стена группы, то не запускать.
     if( ! VK_AnyWall_GetCardsCount() )
@@ -1251,13 +1250,16 @@ function dev_makeJsonStr( ){ return '{"a":234,"b":42,"c":[0,1,2],"d":25.837}'; }
 
 
 
-//console.log( AJAX_Sync_ForDebug( 'https://vkbot.123.space/test/code/202' , getUserInfo_FULL() ) );
 
 
+/* <+++> 123 <+++> */
+// #### #### #### ####
+/* ### *** ### *** ### *** ### *** ### */
+/* #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=# */
 
 
-  window.addEventListener( 'load'           , function(){ logOneRed('#### Страница загружена ####'); });
-document.addEventListener('DOMContentLoaded', function(){ logOneRed('#### Зависимости загружены - DOMContentLoaded ####'); });
+  window.addEventListener( 'load'           , function(){ logOneRed('#### [DOM] Страница загружена ####'); });
+document.addEventListener('DOMContentLoaded', function(){ logOneRed('#### [DOM] Зависимости загружены - DOMContentLoaded ####'); });
 
 const DEF_UNIF_LOADED = true;
 var INIT_END = document.timeline.currentTime;
@@ -1266,16 +1268,17 @@ logLine_11();
 logOneRed('#### Unificator - Объявлен ####')
 logOneRed('#### [ENV] '+window.location.href+' ####')
 if( detectRunningInIframe() || detectRunningInIframe_v2() )
-{
     logOneRed('#### [ENV] = Во фрейме ####')
-    log(frames_GetBigInfoArr());
-}
 logOneRed(`#### [TIME] BeforeInit = ${num_numberFormat(INIT_BEG/1000,3)}с | INIT = ${num_numberFormat((INIT_END-INIT_BEG)/1000,3)}с ####`)
 logLine_11();
 
-/* <+++> 123 <+++> */
-// #### #### #### ####
-/* ### *** ### *** ### *** ### *** ### */
 /* #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=# */
 
+
+//log( AJAX_Sync_ForDebug( 'https://vkbot.123.space/test/code/202' , getUserInfo_FULL() ) );
+
+//logOneRed('[AFTER INIT] @VK_GroupWall_AUTOMODE');  VK_GroupWall_AUTOMODE( 5 );
+
+
+/* #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=# */
 // End
