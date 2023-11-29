@@ -612,17 +612,18 @@ function VK_GroupWall_PerformCardsALL() {
 function VK_GroupWall_AUTOMODE()
 {
     var PREF = 'VK_WALL';
-    var recheckTimeFloatSec = 3;
+    var recheckTimeFloatSec = 5;
     
     // Если это не стена группы, то не запускать.
-    if( ! VK_GroupWall_Check )
+    if( ! VK_AnyWall_GetCardsCount() )
     {
-        log(`${PREF}: Это не стена - выхожу`);
+        log(`${PREF}: Нет карточек - выхожу`);
         return;
     }
     else
     {
         log(`${PREF}: Задержка ${recheckTimeFloatSec}сек`);
+        VK_GroupWall_PerformCardsALL(); // Чтоб сразу, а не ждать первый цикл.
     }
     
     
