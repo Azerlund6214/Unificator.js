@@ -153,9 +153,10 @@ function logOneGreen( t ){ console.log('%c'+t, 'color:green'); }
 
 function log_i( i ){ console.log('##### '+i+' #####'); }
 function logEmpty(height=2){ console.log(''.padStart(height,'\n')) }
-function logCustom(t, fontSize=16, color='black', bgColor='none'){ console.log( '%c'+t , 'color:'+color+'; font-size:'+fontSize+'px; background-color:'+bgColor+';'); }
+function logCustom(t, fontSize=16, color='white', bgColor='none'){ console.log( '%c'+t , 'color:'+color+'; font-size:'+fontSize+'px; background-color:'+bgColor+';'); }
 
-function logLineUniv(symb='#=', len=61, emptyOffsetsTop=1, emptyOffsetsBott=1){ var t='';  t+=''.padStart(emptyOffsetsTop,'\n');  t+=''.padStart(len,symb);  t+=''.padStart(emptyOffsetsBott,'\n');  t+='\n';  console.log( t ); }
+function logLineUniv(symb='#=', len=61, emptyOffsetsTop=1, emptyOffsetsBott=1, color='white'){ var t='';  t+=''.padStart(emptyOffsetsTop,'\n');  t+=''.padStart(len,symb);  t+=''.padStart(emptyOffsetsBott,'\n');  t+='\n';  console.log( '%c'+t , 'color:'+color+';' ); }
+function logLine_10_red(){ logLineUniv('#=',61,1,0, 'red'); }
 function logLine_10(){ logLineUniv('#=',61,1,0); }
 function logLine_11(){ logLineUniv('#=',61,1,1); }
 function logLine_20(){ logLineUniv('#=',61,2,0); }
