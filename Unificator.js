@@ -218,6 +218,12 @@ function tag_getCount       (target){ return document.querySelectorAll(target).l
 function elem_attrAddBlankIfNeed( e ){  if( ! e.getAttribute('target') ){ e.setAttribute('target','_blank'); return true; }  }
 function elem_attrSetStyleColorRed( e ){  e.style = 'color: red';  }
 
+function elemCreateFromHtml(htmlString){
+    const placeholder = document.createElement("div");
+    placeholder.innerHTML = htmlString;
+    return placeholder.firstElementChild;
+}
+//elemCreateFromHtml('<pre>12%<pre>1% </pre> </pre>');
 
 
 // ### ### ### ### ### ### ### ###
