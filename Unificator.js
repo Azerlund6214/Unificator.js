@@ -508,6 +508,10 @@ function VK_GroupStatPerform( ){
  */
 function VK_GroupWall_Check(){  return (document.querySelectorAll( 'div.redesigned-group-info' ).length > 0);  }
 
+function VK_AnyWall_GetCardsCount(){
+    return tag_getCount("div._post.post");
+}
+
 function VK_GroupWall_GetCardsIds(){
     var cardsAllRaw = tag_getAllOrFalse("div._post.post");
     
