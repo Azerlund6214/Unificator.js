@@ -566,16 +566,22 @@ function VK_GroupWall_PerformCardOne(CardInfo){
     var LikesPerc = Math.floor((CardInfo.LIKE/CardInfo.VIEW)*100);
     
     var dop = '';
-    if(LikesPerc >= 10) dop = ' <span style="color:lime;"  >#</span>';
-    if(LikesPerc >= 15) dop = ' <span style="color:yellow;">##</span>';
-    if(LikesPerc >= 20) dop = ' <span style="color:orange;">###</span>';
-    if(LikesPerc >= 25) dop = ' <span style="color:red;"   >####</span>';
+    if(LikesPerc >= 10) dop = '<span style="color:lime;"  >#</span>';
+    if(LikesPerc >= 15) dop = '<span style="color:yellow;">##</span>';
+    if(LikesPerc >= 20) dop = '<span style="color:orange;">###</span>';
+    if(LikesPerc >= 25) dop = '<span style="color:red;"   >####</span>';
+    
+    if(LikesPerc <= 4) LikesPerc = `<span style="color:red;">${LikesPerc}</span>`;
     
     var preInnerContent = `${dop} ${LikesPerc}% | ${CardInfo.VIEW} |`;
     
     // - ####
     
-    var elemFin = elemCreateFromHtml( `<div id="${myDivId}"> <pre>${preInnerContent} </pre> </div>` );
+    var elemFin = elemCreateFromHtml(
+        `<div id="${myDivId}">
+                       <pre style="font-weight: bold;  font-size: 16px;">${preInnerContent} </pre>
+                   </div>` );
+    
     document.querySelector( myDivPlace ).prepend( elemFin ); // Добавит в начало
     
     return preInnerContent;
@@ -584,12 +590,15 @@ function VK_GroupWall_PerformCardOne(CardInfo){
 function VK_GroupWall_PerformCardsALL() {
     var cardIds = VK_GroupWall_GetCardsIds();
     
+    var FIN = [];
     for (let ID of cardIds)
     {
         var INFO = VK_GroupWall_GetOneCardInfo(ID);
         var CONT = VK_GroupWall_PerformCardOne(INFO);
-        log(INFO,CONT);
+        //FIN.push( [INFO,CONT] );
+        FIN[ID] = [INFO,CONT];
     }
+    return FIN;
 }
 
 /**
@@ -622,12 +631,13 @@ function VK_GroupWall_AUTOMODE()
         
         if( postsCntNow > postsCntLast )
         {
-            logOneRed();
+            logLine_10_red();
             log(`${PREF}: Итерация № ${iter} | Всего минут ${parseInt( (iter*recheckTimeFloatSec)/60 )} ]`);
             log(`${PREF}: Новые посты = [ Было ${postsCntLast} | Сейчас ${postsCntNow} ]`);
             
             // TODO: NOTE - Пересчитывает все сразу, а не только новые.
-            VK_GroupWall_PerformCardsALL();
+            var RES = VK_GroupWall_PerformCardsALL();
+            log(RES);
             
             postsCntLast = postsCntNow;
         }
@@ -635,7 +645,10 @@ function VK_GroupWall_AUTOMODE()
         {
             // Новых нет
         }
-    
+        
+        if( iter%100 === 0 )
+            log(`${PREF}: Итерация № ${iter} | Всего минут ${parseInt( (iter*recheckTimeFloatSec)/60 )} ]`);
+        
     }, recheckTimeFloatSec*1000);
     
     log(`${PREF}: Конец функции.`);
