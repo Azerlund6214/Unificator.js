@@ -1256,6 +1256,12 @@ const DEF_UNIF_LOADED = true;
 
 logLine_11();
 logOneRed('#### Unificator - Объявлен ####')
+logOneRed('#### ENV = '+window.location.href+' ####')
+if( detectRunningInIframe() || detectRunningInIframe_v2() )
+{
+    logOneRed('#### ENV = Во фрейме ####')
+    log(frames_GetBigInfoArr());
+}
 logLine_11();
 
 /* <+++> 123 <+++> */
