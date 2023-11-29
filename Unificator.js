@@ -226,6 +226,92 @@ function elemCreateFromHtml(htmlString){
 //elemCreateFromHtml('<pre>12%<pre>1% </pre> </pre>');
 
 
+
+// TODO: Допсать обработчик data-полей  там на 95% готово.
+// Назначение: Вытащить из элемента все потенциально возможные данные, при этом чтоб 100% без вылетов + заменять пустые ключ-словом.
+function elementDataExtractor( e , textForNull='NULL' )
+{
+    var res = { }; // Правило: Лучше чтоб было чем не было - Вписывать все, что хоть раз было нужно.
+    
+    
+    // Проблема: Не могу динамически подставить нужный атрибут в   e.XXX    Тогда можно было бы сделать в цикле по массиву параметров.
+    // Ибо что-то можно получить через getAttribute,  а что-то надо вызывать только через точнку. (напр .innerHTML)
+    
+    // ###  IMG  ###
+    try{ res['src']    = e.src;    }catch(err){ res['src']    = textForNull; }
+    try{ res['width']  = e.width;  }catch(err){ res['width']  = textForNull; }
+    try{ res['height'] = e.height; }catch(err){ res['height'] = textForNull; }
+    try{ res['title']  = e.title;  }catch(err){ res['title']  = textForNull; }
+    try{ res['alt']    = e.alt;    }catch(err){ res['alt']    = textForNull; }
+    
+    // ###  Общее 1  ###
+    try{ res['innerText']   = e.innerText;   }catch(err){ res['innerText']   = textForNull; }
+    try{ res['innerHTML']   = e.innerHTML;   }catch(err){ res['innerHTML']   = textForNull; }
+    try{ res['textContent'] = e.textContent; }catch(err){ res['textContent'] = textForNull; }
+    try{ res['text']        = e.text;        }catch(err){ res['text']        = textForNull; }
+    
+    // ###  Общее 2  ###
+    try{ res['id']    = e.id;    }catch(err){ res['id']    = textForNull; }
+    try{ res['class'] = e.class; }catch(err){ res['class'] = textForNull; }
+    try{ res['style'] = e.getAttribute('style'); }catch(err){ res['style'] = textForNull; }
+    try{ res['href']  = e.href;  }catch(err){ res['href']  = textForNull; }
+    
+    // ###  Редко нужное  ###
+    try{ res['onclick'] = e.onclick; }catch(err){ res['onclick'] = textForNull; }
+    
+    // ###  Meta  ###
+    try{ res['content'] = e.content; }catch(err){ res['content'] = textForNull; }
+    try{ res['name']    = e.name;    }catch(err){ res['name']    = textForNull; }
+    
+    // ###  Input + Form  ###
+    
+    // ###    ###
+    //try{ res[''] = e.; }catch(err){ res[''] = textForNull; }
+    
+    
+    // Проверка на нули и андеф
+    for (const [key, val] of Object.entries( res ))
+    {
+        if( val === '' )       res[key] = textForNull; // + '_empty';
+        if( val === null )     res[key] = textForNull; // + '_null';
+        if( val === undefined) res[key] = textForNull; // + '_undef';
+    }// End for
+    
+    
+    /*  TODO: На доработку,  часть полей undef или null     но в целом все работает как надо
+    try{
+        var datasetVal = e.dataset;
+
+        if( (datasetVal === null) || (datasetVal === undefined) )
+            res['DATASET'] = { };
+        else
+            res['DATASET'] = datasetVal;
+    }catch(err){ res['DATASET'] = { }; }
+
+    if( res['DATASET'].length !== 0 )
+        for (const [key, val] of Object.entries( res['DATASET'] ))
+        {
+            if ((datasetVal === null) || (datasetVal === undefined))
+                res['data-' + key] = textForNull;
+            else
+                res['data-' + key] = val;
+        }
+
+    //if( (val !== null) && (typeof(val) !== "undefined") )
+    // */
+    
+    res['ALL'] = res;
+    
+    //dump(res);
+    //dd(res);
+    return res;
+}
+//elementDataExtractor(tag_getNthOrFalse('div.PostHeaderInfo a.author',1));
+//elementDataExtractor(tag_getNthOrFalse('a',6));
+
+
+
+
 // ### ### ### ### ### ### ### ###
 // **/  Действия на странице   \**
 function action_Click_BySelFirst ( selector ){ document.querySelectorAll(selector)[0].click(); }
@@ -509,90 +595,6 @@ function VK_GroupWall_PerformCardsALL() {
 
 
 
-
-
-// TODO: Допсать обработчик data-полей  там на 95% готово.
-
-// Назначение: Вытащить из элемента все потенциально возможные данные, при этом чтоб 100% без вылетов + заменять пустые ключ-словом.
-function elementDataExtractor( e , textForNull='NULL' )
-{
-    var res = { }; // Правило: Лучше чтоб было чем не было - Вписывать все, что хоть раз было нужно.
-
-
-    // Проблема: Не могу динамически подставить нужный атрибут в   e.XXX    Тогда можно было бы сделать в цикле по массиву параметров.
-    // Ибо что-то можно получить через getAttribute,  а что-то надо вызывать только через точнку. (напр .innerHTML)
-
-    // ###  IMG  ###
-    try{ res['src']    = e.src;    }catch(err){ res['src']    = textForNull; }
-    try{ res['width']  = e.width;  }catch(err){ res['width']  = textForNull; }
-    try{ res['height'] = e.height; }catch(err){ res['height'] = textForNull; }
-    try{ res['title']  = e.title;  }catch(err){ res['title']  = textForNull; }
-    try{ res['alt']    = e.alt;    }catch(err){ res['alt']    = textForNull; }
-
-    // ###  Общее 1  ###
-    try{ res['innerText']   = e.innerText;   }catch(err){ res['innerText']   = textForNull; }
-    try{ res['innerHTML']   = e.innerHTML;   }catch(err){ res['innerHTML']   = textForNull; }
-    try{ res['textContent'] = e.textContent; }catch(err){ res['textContent'] = textForNull; }
-    try{ res['text']        = e.text;        }catch(err){ res['text']        = textForNull; }
-
-    // ###  Общее 2  ###
-    try{ res['id']    = e.id;    }catch(err){ res['id']    = textForNull; }
-    try{ res['class'] = e.class; }catch(err){ res['class'] = textForNull; }
-    try{ res['style'] = e.getAttribute('style'); }catch(err){ res['style'] = textForNull; }
-    try{ res['href']  = e.href;  }catch(err){ res['href']  = textForNull; }
-
-    // ###  Редко нужное  ###
-    try{ res['onclick'] = e.onclick; }catch(err){ res['onclick'] = textForNull; }
-
-    // ###  Meta  ###
-    try{ res['content'] = e.content; }catch(err){ res['content'] = textForNull; }
-    try{ res['name']    = e.name;    }catch(err){ res['name']    = textForNull; }
-
-    // ###  Input + Form  ###
-
-    // ###    ###
-    //try{ res[''] = e.; }catch(err){ res[''] = textForNull; }
-
-
-    // Проверка на нули и андеф
-    for (const [key, val] of Object.entries( res ))
-    {
-        if( val === '' )       res[key] = textForNull; // + '_empty';
-        if( val === null )     res[key] = textForNull; // + '_null';
-        if( val === undefined) res[key] = textForNull; // + '_undef';
-    }// End for
-
-
-    /*  TODO: На доработку,  часть полей undef или null     но в целом все работает как надо
-    try{
-        var datasetVal = e.dataset;
-
-        if( (datasetVal === null) || (datasetVal === undefined) )
-            res['DATASET'] = { };
-        else
-            res['DATASET'] = datasetVal;
-    }catch(err){ res['DATASET'] = { }; }
-
-    if( res['DATASET'].length !== 0 )
-        for (const [key, val] of Object.entries( res['DATASET'] ))
-        {
-            if ((datasetVal === null) || (datasetVal === undefined))
-                res['data-' + key] = textForNull;
-            else
-                res['data-' + key] = val;
-        }
-
-    //if( (val !== null) && (typeof(val) !== "undefined") )
-    // */
-
-    res['ALL'] = res;
-
-    //dump(res);
-    //dd(res);
-    return res;
-}
-//elementDataExtractor(tag_getNthOrFalse('div.PostHeaderInfo a.author',1));
-//elementDataExtractor(tag_getNthOrFalse('a',6));
 
 
 
