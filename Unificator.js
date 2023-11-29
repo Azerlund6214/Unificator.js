@@ -48,7 +48,8 @@
 
 // ### ### ### ### ### ###
 // **/ Стартовое  \**
-var INIT_BEG = document.timeline.currentTime;
+var INIT_BEFORE = document.timeline.currentTime;
+var INIT_BEG = Date.now();
 
 
 // ### ### ### ### ### ###
@@ -1257,19 +1258,23 @@ function dev_makeJsonStr( ){ return '{"a":234,"b":42,"c":[0,1,2],"d":25.837}'; }
 /* ### *** ### *** ### *** ### *** ### */
 /* #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=# */
 
-
   window.addEventListener( 'load'           , function(){ logOneRed('#### [DOM] Страница загружена ####'); });
 document.addEventListener('DOMContentLoaded', function(){ logOneRed('#### [DOM] Зависимости загружены - DOMContentLoaded ####'); });
 
 const DEF_UNIF_LOADED = true;
-var INIT_END = document.timeline.currentTime;
+var INIT_END = Date.now();
+
 
 logLine_11();
 logOneRed('#### Unificator - Объявлен ####')
+
 logOneRed('#### [ENV] '+window.location.href+' ####')
 if( detectRunningInIframe() || detectRunningInIframe_v2() )
     logOneRed('#### [ENV] = Во фрейме ####')
-logOneRed(`#### [TIME] BeforeInit = ${num_numberFormat(INIT_BEG/1000,3)}с | INIT = ${num_numberFormat((INIT_END-INIT_BEG)/1000,3)}с ####`)
+
+logOneRed(`#### [TIME] BeforeInit = ${num_numberFormat(INIT_BEFORE/1000,3)}с | INIT = ${num_numberFormat((INIT_END-INIT_BEG),3)}мс ####`)
+// Точность до 1мс+. Обычно весь скрипт занимает 0мс.   Реагирует на SLEEP и время работы вызванных методов.
+
 logLine_11();
 
 /* #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=# */
