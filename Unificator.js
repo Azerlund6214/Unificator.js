@@ -577,13 +577,19 @@ function VK_GroupWall_GetOneCardInfo(postId){
             'TEXT': CARD.outerText,
             'HTML': CARD.outerHTML,
             'TIME': document.querySelector( SEL['DATE'] ).textContent,
-            'LIKE': document.querySelector( SEL['LIKE'] ).getAttribute('data-reaction-counts'),
+            'LIKE': 0, // Дефолт если нет тега.
             'COMM': document.querySelector( SEL['COMM'] ).getAttribute('data-count'),
             'REPO': document.querySelector( SEL['REPO'] ).getAttribute('data-count'),
             'VIEW': document.querySelector( SEL['VIEW'] ).getAttribute('title'),
         };
     
-    FIN.LIKE = JSON.parse(FIN.LIKE)[0];
+    // Фикс если лайков нет. Найдет тег, но нет атрибута.
+    var likesCntRaw = document.querySelector( SEL['LIKE'] ).getAttribute('data-reaction-counts');
+    if( likesCntRaw !== null )
+    {
+        FIN.LIKE = JSON.parse(likesCntRaw)[0];
+    }
+    
     FIN.COMM = parseInt(FIN.COMM);
     FIN.REPO = parseInt(FIN.REPO);
     FIN.VIEW = parseInt(FIN.VIEW.split(' ')[0]);
