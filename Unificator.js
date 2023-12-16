@@ -519,12 +519,17 @@ function VK_GroupWall_Check(){  return (document.querySelectorAll( 'div.redesign
 // TODO: Не дописано
 function VK_DETECT_PAGE()
 {
-    var arr = {
+    var arr = { // Порядок иногда важен.
+        'USER_WALL': 'div#profile_redesigned', // норм
         'PUB_WALL': 'div.redesigned-group-info',
-        'PUB_POST_SOLO': '222',
-        'DIALOG_LIST': '222',
-        'DIALOG_ONE': '222',
-        'USER_WALL': '222',
+        //'PUB_POST_SOLO': 'div#page_wall_posts', // стена юзера и соло пост и стена группы
+        'PUB_POST_SOLO': 'div#wall_rmenu', // Только соло пост
+        'PUB_STATS_POSTS': 'i.post_like_icon', // норм, только 1 вкладка
+        'PUB_STATS_ANY': 'div#stats_export_link', // норм
+        'DIALOG_ONE': 'div.im-mess-stack', // Только в диалоге
+        'DIALOG_LIST': 'ul.ConvoRecommendList', // Лист и диалог
+        //'DIALOG_LIST': 'div.nim-dialog--content', // Лист и диалог
+        //'DIALOG_LIST': 'div.im-page--dialogs-search', // Лист и диалог
     };
     
     for (const [key, val] of Object.entries( arr ))
@@ -536,6 +541,7 @@ function VK_DETECT_PAGE()
     
     return 'UNDEF';
 }
+//VK_DETECT_PAGE()
 
 function VK_AnyWall_GetCardsCount(){
     return tag_getCount("div._post.post");
