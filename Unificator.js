@@ -420,6 +420,8 @@ function easyParcer_Href( selector ) {
 	return finalJson;
 }
 
+
+
 // ### ### ### ### ### ### ###
 // **/    Скрипты для VK   \**
 /**
@@ -513,6 +515,27 @@ function VK_GroupStatPerform( ){
  * @returns {boolean}
  */
 function VK_GroupWall_Check(){  return (document.querySelectorAll( 'div.redesigned-group-info' ).length > 0);  }
+
+// TODO: Не дописано
+function VK_DETECT_PAGE()
+{
+    var arr = {
+        'PUB_WALL': 'div.redesigned-group-info',
+        'PUB_POST_SOLO': '222',
+        'DIALOG_LIST': '222',
+        'DIALOG_ONE': '222',
+        'USER_WALL': '222',
+    };
+    
+    for (const [key, val] of Object.entries( arr ))
+    {
+        if( document.querySelectorAll(val).length )
+            console.log(`Нашйел: ${key}: ${val}`);
+            //return key;
+    }
+    
+    return 'UNDEF';
+}
 
 function VK_AnyWall_GetCardsCount(){
     return tag_getCount("div._post.post");
