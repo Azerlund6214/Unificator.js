@@ -6,6 +6,36 @@
 
 !!!!!! Парсер вк альбомов.  Для альбомов страницы теперь поисковик = div.vkuiCard div div a = работает 14.01.2024
 
+полу-готовая
+function VK_AlbumsHrefParcer(  ){
+    
+    var resJson = easyParcer_Href( '.photos_row a' ); // Альбом в группе, старый
+    //log(resJson);
+    //log(resJson.length);
+    if( resJson.length === undefined )
+    {
+        // работает 14.01.2024
+        log('юзер');
+        resJson = easyParcer_Href( 'div.vkuiCard div div a' ); // Альбом на странице, новый
+    }
+    else
+    {
+        log('группа');
+    }
+    
+    //log(resJson);
+    
+    
+    //return 999;
+    
+    var resArr = [];
+    for (var key in resJson)
+        resArr[key] = str_explode('?',resJson[key])[0];
+    
+    return resArr;
+}
+
+
 =====
 
 
