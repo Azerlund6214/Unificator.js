@@ -426,6 +426,7 @@ function easyParcer_Href( selector ) {
 // **/    Скрипты для VK   \**
 /**
  * Выдаст полный список VK-Ссылок на все изображения в открытом альбоме.
+ * Работает и для старых и для новых UI альбомов.
  *
  * Испольнование: 1) Открыть альбом по ссылке формата https://vk.com/album-123123_123123
  * 2) Полностью отлистать его до низа, чтоб прогрузил все карточки.
@@ -433,7 +434,7 @@ function easyParcer_Href( selector ) {
  *
  * Формат выдачи: JSON с кучей строк "https://vk.com/photo-123123_123123"
  * Это нужно для последующей работы с этими пикчами через VK-API. (Обычно прикрепить к посту)
- * Version=270124 1530
+ * Version=270124 1630
  */
 function VK_AlbumsHrefParcer(  ){
     var resJson = [];
@@ -446,13 +447,12 @@ function VK_AlbumsHrefParcer(  ){
     if( document.querySelectorAll(selectorNew).length )
         resJson = easyParcer_Href( selectorNew );
     
+    for (var key in resJson) // Work
+        resJson[key] = resJson[key].split('?')[0];
     
-    var resArr = [];
-    for (var key in resJson)
-        resArr[key] = resJson[key].split('?')[0];
-    
-    return resArr;
+    return resJson;
 }
+VK_AlbumsHrefParcer(  )
 
 /**
  * Пересчитает стандартную таблицу статистик записей и наглядно выведет нужные метрики.
