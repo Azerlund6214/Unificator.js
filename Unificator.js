@@ -433,12 +433,21 @@ function easyParcer_Href( selector ) {
  *
  * Формат выдачи: JSON с кучей строк "https://vk.com/photo-123123_123123"
  * Это нужно для последующей работы с этими пикчами через VK-API. (Обычно прикрепить к посту)
- * Version=091123 0318
+ * Version=270124 1530
  */
 function VK_AlbumsHrefParcer(  ){
-    var resJson = easyParcer_Href( '.photos_row a' );
-    var resArr = [];
+    var resJson = [];
     
+    var selectorOld = '.photos_row a';
+    if( document.querySelectorAll(selectorOld).length )
+        resJson = easyParcer_Href( selectorOld );
+    
+    var selectorNew = 'div.vkuiCard div div a'; // работает 14.01.2024
+    if( document.querySelectorAll(selectorNew).length )
+        resJson = easyParcer_Href( selectorNew );
+    
+    
+    var resArr = [];
     for (var key in resJson)
         resArr[key] = resJson[key].split('?')[0];
     
@@ -532,7 +541,7 @@ function VK_DETECT_PAGE()
         //'DIALOG_LIST': 'div.im-page--dialogs-search', // Лист и диалог
         
         'ALBUMS_PUBLIC_OLD': '.photos_row a', // Альбом в группе, старый
-        'ALBUMS_USER_NEW': 'div.vkuiCard div div a', // Альбом на странице, новый
+        'ALBUMS_USER_NEW': 'div.vkuiCard div div a', // Альбом на странице, новый // работает 14.01.2024
     };
     
     for (const [key, val] of Object.entries( arr ))
