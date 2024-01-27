@@ -411,7 +411,7 @@ function easyParcer_Forms_AUTO(  ) {
 function easyParcer_Href( selector ) {
 	var finalJson = { };
 	var arrElems = document.querySelectorAll(selector);
-	console.log(arrElems.length);
+	console.log('easyParcer_Href = '+selector+' = '+arrElems.length);
 	
 	arrElems.forEach( function( e , i ){
 		finalJson[i] = e.href;
@@ -440,7 +440,7 @@ function VK_AlbumsHrefParcer(  ){
     var resArr = [];
     
     for (var key in resJson)
-        resArr[key] = str_explode('?',resJson[key])[0];
+        resArr[key] = resJson[key].split('?')[0];
     
     return resArr;
 }
