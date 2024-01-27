@@ -530,13 +530,18 @@ function VK_DETECT_PAGE()
         'DIALOG_LIST': 'ul.ConvoRecommendList', // Лист и диалог
         //'DIALOG_LIST': 'div.nim-dialog--content', // Лист и диалог
         //'DIALOG_LIST': 'div.im-page--dialogs-search', // Лист и диалог
+        
+        'ALBUMS_PUBLIC_OLD': '.photos_row a', // Альбом в группе, старый
+        'ALBUMS_USER_NEW': 'div.vkuiCard div div a', // Альбом на странице, новый
     };
     
     for (const [key, val] of Object.entries( arr ))
     {
         if( document.querySelectorAll(val).length )
-            console.log(`Нашйел: ${key}: ${val}`);
-            //return key;
+        {
+            console.log(`Нашел: ${key}: ${val}`);
+            return key;
+        }
     }
     
     return 'UNDEF';
