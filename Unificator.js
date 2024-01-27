@@ -452,7 +452,6 @@ function VK_AlbumsHrefParcer(  ){
     
     return resJson;
 }
-VK_AlbumsHrefParcer(  )
 
 /**
  * Пересчитает стандартную таблицу статистик записей и наглядно выведет нужные метрики.
