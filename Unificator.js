@@ -832,7 +832,13 @@ function base64_decodeEngRus ( data ) {
 }
 function base64_encodeEngOnly( text ){ return btoa(text); } // Норм для англ
 function base64_decodeEngOnly( text ){ return atob(text); }
-// MD5
+
+// https://pajhome.org.uk/crypt/md5/  много всех
+// MD5 http://www.webtoolkit.info/javascript-md5.html  длинный
+// SHA-1: http://www.webtoolkit.info/javascript-sha1.html
+// SHA-256: http://www.webtoolkit.info/javascript-sha256.html
+function hashCustom(str) { return Array.from(str).reduce((hash, char) => 0 | (31 * hash + char.charCodeAt(0)), 0); } // Work, вернет число.
+
 
 
 // ### ### ### ### ### ### ###
