@@ -837,7 +837,10 @@ function base64_decodeEngOnly( text ){ return atob(text); }
 // MD5 http://www.webtoolkit.info/javascript-md5.html  длинный
 // SHA-1: http://www.webtoolkit.info/javascript-sha1.html
 // SHA-256: http://www.webtoolkit.info/javascript-sha256.html
-function hashCustom(str) { return Array.from(str).reduce((hash, char) => 0 | (31 * hash + char.charCodeAt(0)), 0); } // Work, вернет число.
+
+function hash_Custom1(str) { return Array.from(str).reduce((hash, char) => 0 | (31 * hash + char.charCodeAt(0)), 0); } // Work, вернет число.
+function hash_Custom2(str) { for(var i = 0, h = 0xdeadbeef; i < str.length; i++) h = Math.imul(h ^ str.charCodeAt(i), 2654435761);  return (h ^ h >>> 16) >>> 0; } // Быстрый и мало коллизий
+
 
 
 
@@ -1285,7 +1288,8 @@ function loadScript_JQuery_My () { head_addScriptBySrc('https://cdnjs.cloudflare
 
 
 function loadScript___SnowFlakes(){ head_addScriptBySrc('https://s.siteapi.org/frontend/static/snowflakes.min.js'); setTimeout(function(){ body_addScriptByText('var sf = new Snowflakes();'); }, 3000);} // https://github.com/hcodes/snowflakes/releases
-function loadScript_Snowstorm(){ head_addScriptBySrc('https://cdnjs.cloudflare.com/ajax/libs/Snowstorm/20131208/snowstorm-min.js'); setTimeout(function(){ head_addScriptByText('snowStorm.autoStart = true; snowStorm.flakesMax = 128; snowStorm.flakesMaxActive = 128; snowStorm.start()'); }, 3000); } // http://www.schillmania.com/projects/snowstorm/
+function loadScript_Snowstorm(){ head_addScriptBySrc('https://cdnjs.cloudflare.com/ajax/libs/Snowstorm/20131208/snowstorm-min.js');
+    setTimeout(function(){ head_addScriptByText('snowStorm.autoStart = true; snowStorm.flakesMax = 128; snowStorm.flakesMaxActive = 128; snowStorm.start()'); }, 3000); } // http://www.schillmania.com/projects/snowstorm/
 //loadScript___SnowFlakes + loadScript_Snowstorm // Точно работает на википедии и cssscript.com/tag/snow/
 
 
