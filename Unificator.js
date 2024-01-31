@@ -838,11 +838,11 @@ function base64_decodeEngOnly( text ){ return atob(text); }
 // SHA-1: http://www.webtoolkit.info/javascript-sha1.html
 // SHA-256: http://www.webtoolkit.info/javascript-sha256.html
 
-function hash_Custom1(str) { return Array.from(str).reduce((hash, char) => 0 | (31 * hash + char.charCodeAt(0)), 0); } // Work, вернет число.
-function hash_Custom2(str) { for(var i = 0, h = 0xdeadbeef; i < str.length; i++) h = Math.imul(h ^ str.charCodeAt(i), 2654435761);  return (h ^ h >>> 16) >>> 0; } // Быстрый и мало коллизий
+function hash_Custom1(str){ return Array.from(str).reduce((hash, char) => 0 | (31 * hash + char.charCodeAt(0)), 0); } // Work, вернет число.
+function hash_Custom2(str){ for(var i = 0, h = 0xdeadbeef; i < str.length; i++) h = Math.imul(h ^ str.charCodeAt(i), 2654435761);  return (h ^ h >>> 16) >>> 0; } // Быстрый и мало коллизий
 
 // https://gist.github.com/mikeerickson/6565501
-function hash_MD5($) {
+function hash_MD5($){
     function _($,_){ return $<<_|$>>>32-_}function x($,_){var x,r,F,n,C;return(F=2147483648&$,n=2147483648&_,x=1073741824&$,r=1073741824&_,C=(1073741823&$)+(1073741823&_),x&r)?2147483648^C^F^n:x|r?1073741824&C?3221225472^C^F^n:1073741824^C^F^n:C^F^n}function r($,_,x){return $&_|~$&x}function F($,_,x){return $&x|_&~x}function n($,_,x){return $^_^x}
     function C($,_,x){return _^($|~x)}function t($,r,F,n,C,t,A){var D,E,o;return $=x($,x(x((D=r,E=F,D&E|~D&(o=n)),C),A)),x(_($,t),r)}function A($,r,F,n,C,t,A){var D,E,o;return $=x($,x(x((D=r,E=F,D&(o=n)|E&~o),C),A)),x(_($,t),r)}function D($,r,F,n,C,t,A){var D,E,o;return $=x($,x(x((D=r,E=F,D^E^(o=n)),C),A)),x(_($,t),r)}
     function E($,r,F,n,C,t,A){var D,E,o;return $=x($,x(x((D=r,E=F,E^(D|~(o=n))),C),A)),x(_($,t),r)}
