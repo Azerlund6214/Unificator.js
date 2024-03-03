@@ -733,7 +733,7 @@ function VK_GroupWall_AUTOMODE(recheckTimeFloatSec=5)
 
 // ### ### ### ### ### ### ###
 // **/ Скрипты для YouTube \**
-
+var YT_PL_BaseSel = 'ytd-browse[page-subtype="playlist"] div#primary div#contents';
 // https://www.youtube.com/playlist?list=
 function YT_Playlist_ThumbnailsUrls()
 {
