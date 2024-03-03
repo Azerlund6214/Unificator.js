@@ -751,6 +751,32 @@ function YT_Playlist_VideoLengthsText()
     return easyParcer_TextInner(YT_PL_BaseSel+'div#time-status span');
 }
 
+function YT_Playlist_VideoLengthSUM_Sec()
+{
+    var timesArr = YT_Playlist_VideoLengthsText();
+    var t_Hou = 0;
+    var t_Min = 0;
+    var t_Sec = 0;
+    
+    //times.forEach( function( e , i )
+    for (var key in timesArr)
+    {
+        var t = str_explode(':', timesArr[key] );
+        
+        if( t.length === 2 ){
+            t_Min += Math.floor( t[0] ); // Чтоб '04' -> 4
+            t_Sec += Math.floor( t[1] );
+        }
+        if( t.length === 3 ){
+            t_Hou += t[0];
+            t_Min += Math.floor( t[1] );
+            t_Sec += Math.floor( t[2] );
+        }
+    }
+    
+    
+    return (t_Hou*3600 + t_Min*60 + t_Sec);
+}
 
 
 
