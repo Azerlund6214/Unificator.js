@@ -38,8 +38,9 @@ for (const [key, val] of Object.entries( массивДляПеребора ))
   console.log(`${key}: ${val}`);
 }
 
-for (key in haystack)
-
+// Перебор JSON
+for (var key in haystack){ }
+// timesArr[key]
 
 ================================================================
 
