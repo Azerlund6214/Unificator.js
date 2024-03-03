@@ -733,20 +733,20 @@ function VK_GroupWall_AUTOMODE(recheckTimeFloatSec=5)
 
 // ### ### ### ### ### ### ###
 // **/ Скрипты для YouTube \**
-var YT_PL_BaseSel = 'ytd-browse[page-subtype="playlist"] div#primary div#contents';
+var YT_PL_BaseSel = 'ytd-browse[page-subtype="playlist"] div#primary div#contents ';
 // https://www.youtube.com/playlist?list=
 function YT_Playlist_ThumbnailsUrls()
 {
-    return easyParcer_Src('div#contents ytd-playlist-video-renderer ytd-thumbnail a yt-image img.yt-core-image');
+    return easyParcer_Src(YT_PL_BaseSel+'ytd-playlist-video-renderer ytd-thumbnail a yt-image img.yt-core-image');
 }
 function YT_Playlist_VideoUrls()
 {
-    return easyParcer_Href('div#contents ytd-playlist-video-renderer ytd-thumbnail a');
+    return easyParcer_Href(YT_PL_BaseSel+'ytd-playlist-video-renderer ytd-thumbnail a');
 }
 
-function YT_Playlist_VideoLengthSec()
+function YT_Playlist_VideoLengthsText()
 {
-    return easyParcer_TextInner('ytd-browse[page-subtype="playlist"] div#contents div#time-status span');
+    return easyParcer_TextInner(YT_PL_BaseSel+'div#time-status span');
 }
 
 
