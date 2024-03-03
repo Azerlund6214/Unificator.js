@@ -733,8 +733,10 @@ function VK_GroupWall_AUTOMODE(recheckTimeFloatSec=5)
 
 // ### ### ### ### ### ### ###
 // **/ Скрипты для YouTube \**
+
+// https://www.youtube.com/playlist?list=123
 var YT_PL_BaseSel = 'ytd-browse[page-subtype="playlist"] div#primary div#contents ';
-// https://www.youtube.com/playlist?list=
+
 function YT_Playlist_ThumbnailsUrls()
 {
     return easyParcer_Src(YT_PL_BaseSel+'ytd-playlist-video-renderer ytd-thumbnail a yt-image img.yt-core-image');
