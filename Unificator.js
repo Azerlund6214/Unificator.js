@@ -737,19 +737,16 @@ function VK_GroupWall_AUTOMODE(recheckTimeFloatSec=5)
 // https://www.youtube.com/playlist?list=
 function YT_Playlist_ThumbnailsUrls()
 {
-    var sel = 'div#contents ytd-playlist-video-renderer ytd-thumbnail a yt-image img.yt-core-image';
-    return easyParcer_Src(sel);
+    return easyParcer_Src('div#contents ytd-playlist-video-renderer ytd-thumbnail a yt-image img.yt-core-image');
 }
 function YT_Playlist_VideoUrls()
 {
-    var sel = 'div#contents ytd-playlist-video-renderer ytd-thumbnail a';
-    return easyParcer_Href(sel);
+    return easyParcer_Href('div#contents ytd-playlist-video-renderer ytd-thumbnail a');
 }
 
 function YT_Playlist_VideoLengthSec()
 {
-    var sel = 'ytd-browse[page-subtype="playlist"] div#contents div#time-status span';
-    return easyParcer_Href(sel);
+    return easyParcer_TextInner('ytd-browse[page-subtype="playlist"] div#contents div#time-status span');
 }
 
 
