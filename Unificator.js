@@ -431,6 +431,13 @@ function easyParcer_UNIV( selector , whatNeed ){
     return finalJson;
 }
 
+function easyParcer_Href( selector ) { return easyParcer_UNIV(selector,'href'); }
+function easyParcer_Src ( selector ) { return easyParcer_UNIV(selector,'src' ); }
+function easyParcer_TextInner( selector ) { return easyParcer_UNIV(selector,'textInn'); }
+function easyParcer_TextOuter( selector ) { return easyParcer_UNIV(selector,'textOut'); }
+function easyParcer_TextRawFull( selector ) { return easyParcer_UNIV(selector,'textRawFull'); }
+
+
 
 // ### ### ### ### ### ### ###
 // **/    Скрипты для VK   \**
