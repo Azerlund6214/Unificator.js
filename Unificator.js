@@ -419,7 +419,17 @@ function easyParcer_Href( selector ) {
 	
 	return finalJson;
 }
-
+function easyParcer_Src( selector ) {
+    var finalJson = { };
+    var arrElems = document.querySelectorAll(selector);
+    console.log('easyParcer_Src = '+selector+' = '+arrElems.length);
+    
+    arrElems.forEach( function( e , i ){
+        finalJson[i] = e.src;
+    });
+    
+    return finalJson;
+}
 
 
 // ### ### ### ### ### ### ###
