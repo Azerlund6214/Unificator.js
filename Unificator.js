@@ -408,24 +408,24 @@ function easyParcer_Forms_AUTO(  ) {
 
     console.log(finalJson);
 }
-function easyParcer_Href( selector ) {
-	var finalJson = { };
-	var arrElems = document.querySelectorAll(selector);
-	console.log('easyParcer_Href = '+selector+' = '+arrElems.length);
-	
-	arrElems.forEach( function( e , i ){
-		finalJson[i] = e.href;
-	});
-	
-	return finalJson;
-}
-function easyParcer_Src( selector ) {
+
+function easyParcer_UNIV( selector , whatNeed ){
     var finalJson = { };
     var arrElems = document.querySelectorAll(selector);
-    console.log('easyParcer_Src = '+selector+' = '+arrElems.length);
+    console.log('easyParcer - '+whatNeed+' = '+selector+' = '+arrElems.length);
     
-    arrElems.forEach( function( e , i ){
-        finalJson[i] = e.src;
+    arrElems.forEach( function( e , i )
+    {
+        var res = '';
+        switch (whatNeed)
+        {
+            case 'href':   res = e.href;   break;
+            case  'src':   res = e.src ;   break;
+            case 'textOut':     res = e.outerText;   break; // '5:32'
+            case 'textInn':     res = e.innerText;   break; // '5:32'
+            case 'textRawFull': res = e.textContent; break; // '\n    5:32\n  '
+        }
+        finalJson[i] = res;
     });
     
     return finalJson;
