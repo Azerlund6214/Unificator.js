@@ -737,28 +737,15 @@ function VK_GroupWall_AUTOMODE(recheckTimeFloatSec=5)
 // https://www.youtube.com/playlist?list=123
 var YT_PL_BaseSel = 'ytd-browse[page-subtype="playlist"] div#primary div#contents ';
 
-function YT_Playlist_ThumbnailsUrls()
-{
-    return easyParcer_Src(YT_PL_BaseSel+'ytd-playlist-video-renderer ytd-thumbnail a yt-image img.yt-core-image');
-}
-function YT_Playlist_VideoUrls()
-{
-    return easyParcer_Href(YT_PL_BaseSel+'ytd-playlist-video-renderer ytd-thumbnail a');
-}
+function YT_Playlist_VideoLenTexts() { return easyParcer_TextInner(YT_PL_BaseSel+'div#time-status span'); }
+function YT_Playlist_ThumbnailsUrls(){ return easyParcer_Src(    YT_PL_BaseSel+'yt-image img.yt-core-image'); }
+function YT_Playlist_VideoUrls(){      return easyParcer_Href(YT_PL_BaseSel+'ytd-thumbnail a'); }
 
-function YT_Playlist_VideoLengthsText()
+function YT_Playlist_VideoLength_SumSec()
 {
-    return easyParcer_TextInner(YT_PL_BaseSel+'div#time-status span');
-}
-
-function YT_Playlist_VideoLengthSUM_Sec()
-{
-    var timesArr = YT_Playlist_VideoLengthsText();
-    var t_Hou = 0;
-    var t_Min = 0;
-    var t_Sec = 0;
+    var timesArr = YT_Playlist_VideoLenTexts();
+    var t_Hou = 0;  var t_Min = 0;  var t_Sec = 0;
     
-    //times.forEach( function( e , i )
     for (var key in timesArr)
     {
         var t = str_explode(':', timesArr[key] );
@@ -773,11 +760,8 @@ function YT_Playlist_VideoLengthSUM_Sec()
             t_Sec += Math.floor( t[2] );
         }
     }
-    
-    
     return (t_Hou*3600 + t_Min*60 + t_Sec);
 }
-
 
 
 
