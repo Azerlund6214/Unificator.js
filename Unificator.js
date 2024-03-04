@@ -743,11 +743,16 @@ function YT_Playlist_VideoUrls(){      return easyParcer_Href(YT_PL_BaseSel+'ytd
 
 function YT_Playlist_VideoLength_SumSec()
 {
+    // При часах в видео больше 1000 будет NaN тк там формат '12 123:12:12'
+    // TODO: Добавить проверку в ===3    t[0] >= 3часов  то скип.
     var timesArr = YT_Playlist_VideoLenTexts();
     var t_Hou = 0;  var t_Min = 0;  var t_Sec = 0;
     
     for (var key in timesArr)
     {
+        //logLine_10(); log(timesArr[key]);
+        //log( t_Hou + 'h / ' + t_Min + 'm / ' + t_Sec + 's =>' + (t_Hou*3600 + t_Min*60 + t_Sec));
+        
         var t = str_explode(':', timesArr[key] );
         
         if( t.length === 2 ){
@@ -755,14 +760,15 @@ function YT_Playlist_VideoLength_SumSec()
             t_Sec += Math.floor( t[1] );
         }
         if( t.length === 3 ){
-            t_Hou += t[0];
+            t_Hou += Math.floor( t[0] ); // Все равно надо, чтоб не строка, иначе баги.
             t_Min += Math.floor( t[1] );
             t_Sec += Math.floor( t[2] );
         }
+        //log( t_Hou + 'h / ' + t_Min + 'm / ' + t_Sec + 's =>' + (t_Hou*3600 + t_Min*60 + t_Sec));
     }
     return (t_Hou*3600 + t_Min*60 + t_Sec);
 }
-
+//logOneRed(YT_Playlist_VideoLength_SumSec());
 
 
 // ### ### ### ### ### ### ###
