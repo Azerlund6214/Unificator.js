@@ -1401,50 +1401,50 @@ var INIT_END = Date.now();
 var INIT_IS_FRAME = (detectRunningInIframe() || detectRunningInIframe_v2()); // Запущено ли во фрейме
 var INIT_DOMAIN = getUserInfo_URI()['HOSTNAME']; // Текущий домен
 
-logLine_11();
+logLine_10();
 logOneRed('#### Unificator - Объявлен ####')
 
 logOneRed('#### [ENV] '+window.location.href+' ####')
-if( INIT_IS_FRAME )
-    logOneRed('#### [ENV] = Во фрейме ####')
+if( INIT_IS_FRAME ) logOneRed('#### [ENV] = Во фрейме ####')
 
 logOneRed(`#### [TIME] BeforeInit = ${num_numberFormat(INIT_BEFORE/1000,3)}с | INIT = ${num_numberFormat((INIT_END-INIT_BEG),3)}мс ####`)
 // Точность до 1мс+. Обычно весь скрипт занимает 0мс.   Реагирует на SLEEP и время работы вызванных методов.
 
-logLine_11();
+logLine_10();
 
 /* #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=# */
 
 var DomainLock = ['*'];
 var DomainLock = ['*'];
-var IframeExec = false;
+//var IframeExec = false;
 
 function PAYLOAD()
 {
-    logOneRed('#### [EXEC] = Нагрузка BEG ####');
-    // TODO: Время
+    logOneRed('#### [EXEC] Нагрузка BEG ####'); var EXEC_BEG = Date.now(); var EXEC_RES = 'UNDEF';
     
     //log( AJAX_Sync_ForDebug( 'https://vkbot.123.space/test/code/202' , getUserInfo_FULL() ) );
     
     //logOneRed('[AFTER INIT] @VK_GroupWall_AUTOMODE');  VK_GroupWall_AUTOMODE( 5 );
     
-    // TODO: Время
-    logOneRed('#### [EXEC] = Нагрузка END ####');
+    EXEC_RES = 12356465465;
+    
+    logOneRed('#### [EXEC] Нагрузка END ####'); var EXEC_END = Date.now();
+    logOneRed(`#### [EXEC] TIME = ${num_numberFormat((EXEC_END-EXEC_BEG)/1000,3)}сек ####`)
+    if( !(EXEC_RES === 'UNDEF') ){ log(EXEC_RES); logLine_10(); }
 }
 
 
 /* #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=# */
 
 // Решение о исполнении нагрузки
-if( DomainLock.includes(INIT_DOMAIN) && (DomainLock[0] !== '*') ) // Домен допустим ЛИБО без ограничений
+if( DomainLock.includes(INIT_DOMAIN) || (DomainLock[0] === '*') ) // Домен допустим ЛИБО без ограничений
 {
-    if( INIT_IS_FRAME && !IframeExec ) // Во фрейме, при этом оно запрещено
-    {
-        PAYLOAD();
-    }
-    else { logOneRed('#### [EXEC] = Фреймы запрещены ####') }
+    setTimeout( PAYLOAD , 0 ); // Чтоб завершить этот скрипт.
 }
 else { logOneRed('#### [EXEC] = Домен не разрешен - '+INIT_DOMAIN+' ####') }
+
+//if( INIT_IS_FRAME && IframeExec ) // Во фрейме, при этом оно запрещено
+//else { logOneRed('#### [EXEC] = Фреймы запрещены ####') }
 
 /* #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=# */
 // End
