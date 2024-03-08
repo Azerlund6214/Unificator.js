@@ -1415,10 +1415,26 @@ logLine_11();
 
 /* #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=# */
 
+DomainLock = ['*']; // ['*']
+IframeExec = false;
 
-//log( AJAX_Sync_ForDebug( 'https://vkbot.123.space/test/code/202' , getUserInfo_FULL() ) );
+function PAYLOAD()
+{
+    //log( AJAX_Sync_ForDebug( 'https://vkbot.123.space/test/code/202' , getUserInfo_FULL() ) );
+    
+    //logOneRed('[AFTER INIT] @VK_GroupWall_AUTOMODE');  VK_GroupWall_AUTOMODE( 5 );
+    
+}
 
-//logOneRed('[AFTER INIT] @VK_GroupWall_AUTOMODE');  VK_GroupWall_AUTOMODE( 5 );
+
+
+if( DomainLock.includes(INIT_DOMAIN) && (DomainLock[0] !== '*') ) // Домен допустим ЛИБО без ограничений
+{
+    if( INIT_IS_FRAME && !IframeExec )
+    {
+    
+    }
+}
 
 
 /* #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=# */
