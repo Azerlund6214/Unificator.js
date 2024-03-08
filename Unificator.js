@@ -729,7 +729,15 @@ function VK_GroupWall_AUTOMODE(recheckTimeFloatSec=5)
     log(`${PREF}: Конец функции.`);
 }
 
-
+/**
+ * Удалить бесяций блок реакций, который не дает помечать сообщения.
+ * Интерфейсы у них 12/10 просто....    080324
+ */
+function VK_Chat_DeleteReactionsBlock()
+{
+    document.querySelector('div.im-navigation-buttons').remove();
+    // Аналог CSS = .im-navigation-buttons { width: 9%;   или   visibility: hidden; }
+}
 
 // ### ### ### ### ### ### ###
 // **/ Скрипты для YouTube \**
