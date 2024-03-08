@@ -1415,27 +1415,36 @@ logLine_11();
 
 /* #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=# */
 
-DomainLock = ['*']; // ['*']
-IframeExec = false;
+var DomainLock = ['*'];
+var DomainLock = ['*'];
+var IframeExec = false;
 
 function PAYLOAD()
 {
+    logOneRed('#### [EXEC] = Нагрузка BEG ####');
+    // TODO: Время
+    
     //log( AJAX_Sync_ForDebug( 'https://vkbot.123.space/test/code/202' , getUserInfo_FULL() ) );
     
     //logOneRed('[AFTER INIT] @VK_GroupWall_AUTOMODE');  VK_GroupWall_AUTOMODE( 5 );
     
+    // TODO: Время
+    logOneRed('#### [EXEC] = Нагрузка END ####');
 }
 
 
+/* #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=# */
 
+// Решение о исполнении нагрузки
 if( DomainLock.includes(INIT_DOMAIN) && (DomainLock[0] !== '*') ) // Домен допустим ЛИБО без ограничений
 {
-    if( INIT_IS_FRAME && !IframeExec )
+    if( INIT_IS_FRAME && !IframeExec ) // Во фрейме, при этом оно запрещено
     {
-    
+        PAYLOAD();
     }
+    else { logOneRed('#### [EXEC] = Фреймы запрещены ####') }
 }
-
+else { logOneRed('#### [EXEC] = Домен не разрешен - '+INIT_DOMAIN+' ####') }
 
 /* #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=# */
 // End
