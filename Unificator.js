@@ -1,7 +1,7 @@
 // #########################################
 // #### Новизна: Не изменялся | (000023) ###
 // #########################################
-// #### var TAG = document.createElement(tagName); TAG.src = 'Ссылка'; TAG.type = 'text/javascript'; document.head.appendChild(TAG);
+// #### var TAG = document.createElement('script'); TAG.src = 'Ссылка'; TAG.type = 'text/javascript'; document.head.appendChild(TAG);
 // #########################################
 
 // ### ### ### ### ### ###
