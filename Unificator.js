@@ -1401,7 +1401,7 @@ var INIT_END = Date.now();
 var INIT_IS_FRAME = (detectRunningInIframe() || detectRunningInIframe_v2()); // Запущено ли во фрейме
 var INIT_DOMAIN = getUserInfo_URI()['HOSTNAME']; // Текущий домен
 
-logLine_10();
+logEmpty(2); logLine_20();
 logOneRed('#### Unificator - Объявлен ####')
 
 logOneRed('#### [ENV] '+window.location.href+' ####')
@@ -1421,16 +1421,19 @@ var DomainLock = ['*'];
 function PAYLOAD()
 {
     logOneRed('#### [EXEC] Нагрузка BEG ####'); var EXEC_BEG = Date.now(); var EXEC_RES = 'UNDEF';
+    /* #=#=#=#=#=# */
     
     //log( AJAX_Sync_ForDebug( 'https://vkbot.123.space/test/code/202' , getUserInfo_FULL() ) );
     
     //logOneRed('[AFTER INIT] @VK_GroupWall_AUTOMODE');  VK_GroupWall_AUTOMODE( 5 );
     
-    EXEC_RES = 12356465465;
+    //EXEC_RES = 12356465465;
     
+    
+    /* #=#=#=#=#=# */
     logOneRed('#### [EXEC] Нагрузка END ####'); var EXEC_END = Date.now();
     logOneRed(`#### [EXEC] TIME = ${num_numberFormat((EXEC_END-EXEC_BEG)/1000,3)}сек ####`)
-    if( !(EXEC_RES === 'UNDEF') ){ log(EXEC_RES); logLine_10(); }
+    if( !(EXEC_RES === 'UNDEF') ){ log(EXEC_RES); logLine_10(); } else { logOneRed('#### [EXEC] Без вывода'); logLine_10(); }
 }
 
 
@@ -1439,9 +1442,10 @@ function PAYLOAD()
 // Решение о исполнении нагрузки
 if( DomainLock.includes(INIT_DOMAIN) || (DomainLock[0] === '*') ) // Домен допустим ЛИБО без ограничений
 {
-    setTimeout( PAYLOAD , 0 ); // Чтоб завершить этот скрипт.
+    //var id = setTimeout( function(){ PAYLOAD(); } ,0 ); // Чтоб завершить этот скрипт.
+    PAYLOAD();
 }
-else { logOneRed('#### [EXEC] = Домен не разрешен - '+INIT_DOMAIN+' ####') }
+else { logOneRed('#### [EXEC] = Домен не разрешен - '+INIT_DOMAIN+' ####'); }
 
 //if( INIT_IS_FRAME && IframeExec ) // Во фрейме, при этом оно запрещено
 //else { logOneRed('#### [EXEC] = Фреймы запрещены ####') }
