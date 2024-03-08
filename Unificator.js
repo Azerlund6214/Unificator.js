@@ -732,11 +732,11 @@ function VK_GroupWall_AUTOMODE(recheckTimeFloatSec=5)
 /**
  * Удалить бесяций блок реакций, который не дает помечать сообщения.
  * Интерфейсы у них 12/10 просто....    080324
+ * Удаление этого малозначимого блока полностью ломает загрузку чатов.  Опять 12/10.  Придется просто скрывать.
  */
-function VK_Chat_DeleteReactionsBlock()
+function VK_Chat_HideReactionsBlock()
 {
-    document.querySelector('div.im-navigation-buttons').remove();
-    // Аналог CSS = .im-navigation-buttons { width: 9%;   или   visibility: hidden; }
+    document.querySelector('div.im-navigation-buttons').style.visibility = 'hidden';  // Удалять тег нельзя.
 }
 
 // ### ### ### ### ### ### ###
