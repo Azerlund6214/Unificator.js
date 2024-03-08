@@ -1381,25 +1381,31 @@ function dev_makeJsonStr( ){ return '{"a":234,"b":42,"c":[0,1,2],"d":25.837}'; }
 
 
 
-
-
 /* <+++> 123 <+++> */
 // #### #### #### ####
 /* ### *** ### *** ### *** ### *** ### */
 /* #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=# */
+
+
+
+
+
+/* #=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=# */
+/* <+++> Базовые вещи <+++> */
 
   window.addEventListener( 'load'           , function(){ logOneRed('#### [DOM] Страница загружена ####'); });
 document.addEventListener('DOMContentLoaded', function(){ logOneRed('#### [DOM] Зависимости загружены - DOMContentLoaded ####'); });
 
 const DEF_UNIF_LOADED = true;
 var INIT_END = Date.now();
-
+var INIT_IS_FRAME = (detectRunningInIframe() || detectRunningInIframe_v2()); // Запущено ли во фрейме
+var INIT_DOMAIN = getUserInfo_URI()['HOSTNAME']; // Текущий домен
 
 logLine_11();
 logOneRed('#### Unificator - Объявлен ####')
 
 logOneRed('#### [ENV] '+window.location.href+' ####')
-if( detectRunningInIframe() || detectRunningInIframe_v2() )
+if( INIT_IS_FRAME )
     logOneRed('#### [ENV] = Во фрейме ####')
 
 logOneRed(`#### [TIME] BeforeInit = ${num_numberFormat(INIT_BEFORE/1000,3)}с | INIT = ${num_numberFormat((INIT_END-INIT_BEG),3)}мс ####`)
