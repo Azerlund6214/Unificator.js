@@ -40,7 +40,7 @@ function VK_AlbumsHrefParcer(  ){
 	for (var key in resJson) // Work
 		resJson[key] = resJson[key].split('?')[0];
 	
-	return resJson;
+	return Object.values(resJson); // Чтоб только строки без ключей.
 }
 
 VK_AlbumsHrefParcer(  );
