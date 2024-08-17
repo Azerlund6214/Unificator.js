@@ -3,13 +3,21 @@ https://civitai.com/images
 Ставит первую реакцию если она не стоит.
 Работает на 10.08.2024.  Не банит.
 
+var SelFirstBtn = "div.mantine-Group-root.__mantine-ref-info div.mantine-Group-root button:nth-child(1).mantine-Button-root.mantine-4ijnyf";  было 10авг
+
+// document.querySelectorAll(SelFirstBtn).item(0).click();
+
 ====
 
 function sleep(milliseconds) {
   const date = Date.now();  let currentDate = null;
   do { currentDate = Date.now();  } while (currentDate - date < milliseconds);   }
 
-var SelFirstBtn = "div.mantine-Group-root.__mantine-ref-info div.mantine-Group-root button:nth-child(1).mantine-Button-root.mantine-4ijnyf";
+
+//var SelFirstBtn = "div.mantine-Group-root div.mantine-Group-root button:nth-child(1).mantine-Button-root.mantine-4ijnyf";
+
+//врапер                 див  столбцы с картами    один столбец    карта  
+var SelFirstBtn = "div.mantine-Stack-root div div.mantine-63e7k9 div.mantine-16xlp3a div div.absolute div div.mantine-n1z9jx button:nth-child(1).mantine-Button-root.mantine-4ijnyf";
 
 var Nodes = document.querySelectorAll(SelFirstBtn)
 console.log('Всего='+Nodes.length); // Считает только 1 смайл     Вернет только где он не нажат
@@ -21,7 +29,7 @@ for(i=0 ; i < Nodes.length ; i++)
 	console.log('i='+i);
 	Nodes.item(i).click();
 	if( i === MaxCnt-1 ) break;
-	sleep(2000); // +2  =  2=все разом  5=тоже
+	sleep(1000); // +2  =  2=все разом  5=тоже
 }
 
 
