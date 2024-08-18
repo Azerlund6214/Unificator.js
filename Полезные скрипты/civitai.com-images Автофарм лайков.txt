@@ -9,6 +9,9 @@ var SelFirstBtn = "div.mantine-Group-root.__mantine-ref-info div.mantine-Group-r
 
 ====
 
+if (typeof(total) === "undefined")
+	var total = 0;
+
 function sleep(milliseconds) {
   const date = Date.now();  let currentDate = null;
   do { currentDate = Date.now();  } while (currentDate - date < milliseconds);   }
@@ -26,8 +29,9 @@ console.log('Всего='+Nodes.length); // Считает только 1 сма
 var MaxCnt = 10;
 for(i=0 ; i < Nodes.length ; i++)
 {
-	console.log('i='+i);
-	Nodes.item(i).click();
+	Nodes.item(i).click();	
+	total += 1;
+	console.log('i='+ (i+1) + '/' + Nodes.length + ' ('+total+')');
 	if( i === MaxCnt-1 ) break;
 	sleep(1000); // +2  =  2=все разом  5=тоже
 }
