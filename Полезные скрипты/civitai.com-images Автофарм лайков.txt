@@ -9,6 +9,9 @@ var SelFirstBtn = "div.mantine-Group-root.__mantine-ref-info div.mantine-Group-r
 
 ====
 
+// ### https://civitai.com/images
+// ### Work 100%: 210824
+
 if (typeof(total) === "undefined")
 	var total = 0;
 
