@@ -11,6 +11,7 @@ var SelFirstBtn = "div.mantine-Group-root.__mantine-ref-info div.mantine-Group-r
 
 // ### https://civitai.com/images
 // ### Work 100%: 210824
+// ### Во время выполнения полностью вешает все потоки страницы.
 
 if (typeof(total) === "undefined")
 	var total = 0;
@@ -24,12 +25,14 @@ function sleep(milliseconds) {
 
 //врапер                 див  столбцы с картами    один столбец    карта  
 var SelFirstBtn = "div.mantine-Stack-root div div.mantine-63e7k9 div.mantine-16xlp3a div div.absolute div div.mantine-n1z9jx button:nth-child(1).mantine-Button-root.mantine-4ijnyf";
-
-var Nodes = document.querySelectorAll(SelFirstBtn)
-console.log('Всего='+Nodes.length); // Считает только 1 смайл     Вернет только где он не нажат
 // Верстка пикч - горизонтальные колонки.
 
-var MaxCnt = 10;
+var Nodes = document.querySelectorAll(SelFirstBtn)
+console.log('Всего='+Nodes.length); // Считает только первый смайл. Вернет только где он не нажат.
+
+var MaxCnt = 10; // Кликов подряд за раз.
+if( total >= 50 )  MaxCnt = 3; // Если уже накрутили, дальше крутим понемногу тк обычно 2-5 из 50 не засчитывает.
+
 for(i=0 ; i < Nodes.length ; i++)
 {
 	Nodes.item(i).click();	
@@ -38,6 +41,8 @@ for(i=0 ; i < Nodes.length ; i++)
 	if( i === MaxCnt-1 ) break;
 	sleep(1000); // +2  =  2=все разом  5=тоже
 }
+
+
 
 
 123
