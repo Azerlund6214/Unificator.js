@@ -4,6 +4,23 @@
 
 
 =====
+Вытащить селекторы в рефки
+/*
+	    document.querySelector("#textInput-2").focus()  # ничего
+	    document.querySelector("#textInput-2").select() # выделит 500к серым
+	    document.querySelector("#textInput-2").value='145000'  # при нажат сбросит до 500
+	    document.querySelector("").focus()
+	    document.querySelector("body > input[type=text]").focus()
+		document.querySelector("body > input[type=text]").select()
+	    .value='123'
+	    document.getElementById('cardNumber-input').value = 'Значение';
+	    .click()  тыенется    валуем вставит, но потом не сохранит
+	    document.querySelector("#textInput-62").value='29.06.1987'
+	    
+	    const elem = document.querySelector('#textInput-62');
+	    */
+
+
 
 =====
 
